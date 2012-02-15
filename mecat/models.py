@@ -17,7 +17,7 @@ class DatasetWrapper(models.Model):
     objects = OracleSafeManager()
 
     def __unicode__(self):
-       return 'wrapper for' + dataset.description
+       return 'wrapper for' + self.dataset.description
 
 
 
