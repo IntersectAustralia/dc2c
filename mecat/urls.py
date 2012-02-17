@@ -17,7 +17,6 @@ embargo_urls = patterns('mecat.embargo',
                         (r'^set_expiry/(?P<experiment_id>\d+)/$', 'set_expiry'),
                         )
 
-
 urlpatterns = patterns('',
                        (r'^$', 'tardis.tardis_portal.views.experiment_index'),
                        (r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /vbl/", mimetype="text/plain")),
@@ -30,6 +29,7 @@ urlpatterns = patterns('',
                        (r'^accounts/register/', no_view),
                        (r'^experiment/create/$', no_view),
                        (r'^experiment/view/(?P<experiment_id>\d+)/publish/', no_view),
+                       (r'^ajax/experiment_samples/(?P<experiment_id>\d+)/$', 'mecat.views.experiment_samples'),
                        (r'^ansto_media/(?P<path>.*)$', 'django.views.static.serve',
                         {'document_root': settings.ANSTO_MEDIA_ROOT}),
                        (r'^embargo/', include(embargo_urls)),
