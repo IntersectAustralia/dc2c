@@ -12,6 +12,7 @@ from tardis.tardis_portal.search_query import FacetFixedSearchQuery
 from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, SearchQueryString
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset
+from mecat.models import Sample, DatasetWrapper
 
 @never_cache
 @authz.experiment_access_required
@@ -72,6 +73,9 @@ def experiment_samples(request, experiment_id):
         c['highlighted_datasets'] = None
         c['highlighted_dataset_files'] = None
         c['file_matched_datasets'] = None
+
+    c['samples'] = \
+         Sample.objects.filter(experiment=experiment_id)
 
     c['datasets'] = \
          Dataset.objects.filter(experiment=experiment_id)
