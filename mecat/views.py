@@ -94,3 +94,10 @@ def experiment_samples(request, experiment_id):
         c['error'] = request.GET['error']
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/experiment_samples.html', c))
+
+def retrieve_datasets(request, sample_id):
+    datasetwrappers = DatasetWrapper.objects.filter(sample=sample_id)
+    datasets = [wrapper.dataset for wrapper in datasetwrappers]
+    c = Context({'datasets' : datasets})
+    return HttpResponse(render_response_index(request,
+                        'tardis_portal/ajax/dataset.html', c))

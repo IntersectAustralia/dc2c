@@ -1,5 +1,5 @@
 {% load basiccomparisonfilters %}
-<div id="datasets">
+<div id="datasets" class="sample_datasets">
     {% for dataset in datasets %} <!-- all datasets belonging to a sample %}-->
     <div class="dataset{% if dataset.pk in highlighted_datasets %} search_match{% endif %}{% if dataset.pk in file_matched_datasets %} datafile_match{% endif %}">
         <div class="dataset_title">

@@ -80,14 +80,21 @@
         <div>
           <div class="sample_title">
              <input type="checkbox" class="sample_checkbox" name="sample" value="{{sample.id}}" />
-             <strong><span style="color: #5e5e5e">SAMPLE {{ forloop.counter }}</span></strong>   
+             <strong><span style="color: #5e5e5e">SAMPLE {{ forloop.counter }}
+             </span></strong>
+             <a id="sample_datasets_toggle_{{sample.id}}" title="Show/Hide" class="sample_datasets_toggle metadata_hidden fg-button small ui-state-default fg-button-icon-solo ui-corner-all" href="/ajax/sample_datasets/{{sample.id}}/">
+                <span class="ui-icon ui-icon-circle-triangle-e"></span>
+                Show/Hide
+             </a>
           </div>
           <div class="sample_info">  
               <div class="dataset_description">
                   <strong>Description</strong>: {{ sample.description|safe }} <br />
               </div> 
           </div>
-          {% display_dataset sample.id%}
+          <div class="sample_datasets"> 
+          </div>
+
         </div>  
         
       {% endfor %}
