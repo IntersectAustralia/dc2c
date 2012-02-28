@@ -1,5 +1,10 @@
 from django import forms
+from django.forms.widgets import Textarea
 
+class SampleForm(forms.Form):
+    sample_name = forms.CharField(max_length=40, required=True)
+    sample_description = forms.CharField(required=False, widget=Textarea)
+    
 
 class RegisterMetamanForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)

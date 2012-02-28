@@ -81,7 +81,7 @@
           <div class="sample_title">
              <div class="sample_title_with_checkbox"> 
                  <input type="checkbox" class="sample_checkbox" name="sample" value="{{sample.id}}" />
-                 <strong><span style="color: #5e5e5e">SAMPLE {{ forloop.counter }}
+                 <strong><span style="color: #5e5e5e"><a href="">SAMPLE {{ forloop.counter }}</a>
                  </span></strong>
              </div>
              <a id="sample_datasets_toggle_{{sample.id}}" title="Show/Hide" class="sample_datasets_toggle metadata_hidden fg-button small ui-state-default fg-button-icon-solo ui-corner-all" href="/ajax/sample_datasets/{{sample.id}}/">
@@ -104,7 +104,8 @@
     </div><!-- samples --> 
 
     
-    <div><input type="submit" value="New Sample" /></div>
+    <strong><a href="/experiment/newsample/{{experiment.id}}">Add New Sample to Experiment</a></strong><br/>
+    <div><input type="submit" value="Delete Selected Samples" /></div>
     <div><input type="submit" value="Download Selected Files" /></div>
   </form>  
   

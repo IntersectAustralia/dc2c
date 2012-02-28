@@ -1,5 +1,6 @@
 
 from django.views.decorators.cache import never_cache
+from django.shortcuts import redirect
 from tardis.tardis_portal.auth import decorators as authz
 from django.template import Context
 from django.core.urlresolvers import reverse
@@ -13,6 +14,10 @@ from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, Search
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset
 from mecat.models import Sample, DatasetWrapper
+from . import forms
+
+def _redirect(experiment_id):
+    return redirect(reverse('tardis.tardis_portal.views.view_experiment', args=[experiment_id]))
 
 @never_cache
 @authz.experiment_access_required
@@ -99,6 +104,30 @@ def experiment_samples(request, experiment_id):
         
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/experiment_samples.html', c))
+
+def new_sample(request, experiment_id):
+    c = Context()
+    try:
+        experiment = Experiment.safe.get(request, experiment_id)
+    except PermissionDenied:
+        return return_response_error(request)
+    except Experiment.DoesNotExist:
+        return return_response_not_found(request)
+    c['experiment'] = experiment
+    samples = Sample.objects.filter(experiment=experiment_id)
+    c['sample_count'] = len(samples) + 1
+
+    if request.POST:
+        form = forms.SampleForm(request.POST)
+        if form.is_valid():
+            from .samples import SampleFormHandler
+            SampleFormHandler(experiment_id).add_sample(form.cleaned_data)
+            return _redirect(experiment_id)
+        else:
+            form = forms.SampleForm()
+        
+    return HttpResponse(render_response_index(request,
+                        'tardis_portal/experiment_sample.html', c))
 
 def retrieve_datasets(request, sample_id):
     datasetwrappers = DatasetWrapper.objects.filter(sample=sample_id)
