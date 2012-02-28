@@ -119,6 +119,37 @@
         margin: 10px;
 }
 
+.sample_title {
+    display: inline;
+    padding: 10px;
+}
+
+.sample_title_with_checkbox {
+        float: left;
+        margin-right: 5px;
+        margin-bottom: 5px;
+}
+
+.sample_datasets_toggle {
+        margin-top: 5px;
+}
+
+.sample_description {
+        text-align: left;
+        border-width: 1px;
+        border-color: black;
+        border-style: solid;
+        margin: 2px;
+        padding: 5px;
+}
+
+.sample_info {
+        border-width: 2px;
+        border-color: gray;
+        padding: 10px;
+        margin-bottom: 30px;
+}
+
 a.filelink {
         color: #9b3430;
 }

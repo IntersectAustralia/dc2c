@@ -16,11 +16,11 @@
             </div>
             <!-- dataset_description -->
             <div class="dataset_extrainfo">
-                <strong style="float:left; margin-right: 5px">Dataset</strong>
+                <strong style="float:left; margin-right: 5px;">Dataset</strong>
                 {% if has_write_permissions %}{% if not experiment.public %}{% if not dataset.immutable %} <a title="Add" href="{% url tardis.tardis_portal.views.add_dataset_par dataset.id %}"
                 class="fg-button small ui-state-default fg-button-icon-solo ui-corner-all jqModalDsAdd" data-toggle_selector="#dataset_metadata_toggle_{{dataset.id}}"> <span class="ui-icon ui-icon-plusthick"></span> Add </a>
                 {% endif %}{% endif %}{% endif %} <a id="dataset_metadata_toggle_{{dataset.id}}" title="Show/Hide" class="dataset_metadata_toggle metadata_hidden fg-button small ui-state-default fg-button-icon-solo ui-corner-all" href="/ajax/dataset_metadata/{{dataset.id}}/"> <span class="ui-icon ui-icon-circle-triangle-e"></span> Show/Hide </a>
-                <div styexperiment.dataset_set.allle="clear:both;"></div>
+                <div style="clear:both;"></div>
                 <div class="dataset_metadata"></div>
                 <!-- dataset metadata -->
                 <div class="dataset_datafiles">

@@ -239,7 +239,7 @@ $(document).ready(function() {
         evt.preventDefault();
         var $this = $(this);
         //var $sample_datasets = $this.siblings('.sample_datasets');
-        var $sample_datasets = $this.parents('.sample_title').siblings('.sample_datasets')
+        var $sample_datasets = $this.parents('.sample_title').siblings('.sample_info').children('.sample_datasets')
         var $icon = $this.find('span');
 
         $this.toggleClass('metadata_shown metadata_hidden');
