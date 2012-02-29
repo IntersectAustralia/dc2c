@@ -3,6 +3,7 @@ from django.views.decorators.cache import never_cache
 from django.shortcuts import redirect
 from tardis.tardis_portal.auth import decorators as authz
 from django.template import Context
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from tardis.tardis_portal.shortcuts import render_response_index, \
@@ -105,27 +106,29 @@ def experiment_samples(request, experiment_id):
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/experiment_samples.html', c))
 
-def new_sample(request, experiment_id):
-    c = Context()
+def new_sample(request, experiment_id):  
     try:
         experiment = Experiment.safe.get(request, experiment_id)
     except PermissionDenied:
         return return_response_error(request)
     except Experiment.DoesNotExist:
         return return_response_not_found(request)
+    
+    c = Context()
     c['experiment'] = experiment
     samples = Sample.objects.filter(experiment=experiment_id)
     c['sample_count'] = len(samples) + 1
-
+    
     if request.POST:
         form = forms.SampleForm(request.POST)
         if form.is_valid():
             from .samples import SampleFormHandler
             SampleFormHandler(experiment_id).add_sample(form.cleaned_data)
             return _redirect(experiment_id)
-        else:
-            form = forms.SampleForm()
+    else:
+        form = forms.SampleForm()
         
+    c['form'] = form    
     return HttpResponse(render_response_index(request,
                         'tardis_portal/experiment_sample.html', c))
 
@@ -135,3 +138,13 @@ def retrieve_datasets(request, sample_id):
     c = Context({'datasets' : datasets})
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/dataset.html', c))
+
+@never_cache
+@login_required()
+def retrieve_sample_forcodes(request):
+    import json
+    forcodes = [ {"subject_code" : "00012", "subject_name" : "my subject A"}, 
+                 {"subject_code" : "10012", "subject_name" : "manotehr subject"}]
+    return HttpResponse(json.dumps(forcodes))
+    
+    

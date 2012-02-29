@@ -2,8 +2,12 @@ from django import forms
 from django.forms.widgets import Textarea
 
 class SampleForm(forms.Form):
-    sample_name = forms.CharField(max_length=40, required=True)
-    sample_description = forms.CharField(required=False, widget=Textarea)
+    name = forms.CharField(max_length=40, required=True)
+    description = forms.CharField(required=True, widget=Textarea)
+    forcode_1 = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    forcode_2 = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    forcode_3 = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    notes = forms.CharField(required=False, widget=Textarea)
     
 
 class RegisterMetamanForm(forms.Form):

@@ -4,6 +4,11 @@ from tardis.tardis_portal.models import *
 class Sample(models.Model):
     experiment = models.ForeignKey(Experiment)
     description = models.TextField(blank=True)
+    name = models.TextField(blank=True)
+    forcode1 = models.TextField(blank=True)
+    forcode2 = models.TextField(blank=True)
+    forcode3 = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
     immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()
 

@@ -16,7 +16,18 @@ class SampleFormHandler(object):
         logger.debug('adding sample')
         logger.debug(cleaned_data)
         
-        sample_name = cleaned_data['sample_name']
+        sample_name = cleaned_data['name']
+        sample_description = cleaned_data['description']
+        sample_forcode1 = cleaned_data['forcode_1']
+        sample_forcode2 = cleaned_data['forcode_2']
+        sample_forcode3 = cleaned_data['forcode_3']
         
-        new_sample = Sample(description=sample_name, experiment_id=self.experiment_id)
+        new_sample = Sample(experiment_id=self.experiment_id,
+                            name=sample_name,
+                            description=sample_description,
+                            forcode1=sample_forcode1,
+                            forcode2=sample_forcode2,
+                            forcode3=sample_forcode3)
         new_sample.save()
+        
+        

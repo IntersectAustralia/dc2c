@@ -2,6 +2,21 @@
 
 {% block script %}
 
+<script>
+$(function(){
+    $(".sample_forcode").autocomplete('/ajax/sample_forcode_list/', {      
+        matchContains:false,
+        minChars:1, 
+        autoFill:false,
+        mustMatch:true,
+        cacheLength:20,
+        max:20
+    });
+});
+    
+</script>
+
+
 {% endblock %}
 
 {% block content %}
@@ -20,49 +35,46 @@
      <div>
         <h1 class="title"><a name="abouttardis">{{experiment.title}} > Sample {{sample_count}} </a></h1>
         <form id="add_sample_form" action="" method="POST">
-                    {{ form.non_field_errors }}
-                    <div class="msg_list">
-                      <p class="exp_head">Sample Information</p>  
-                      <div class="exp_body">
-                         <div class="fieldWrapper">
-                               {{ form.sample_name.errors }}
-                               <label for="id_sample_name">Sample Name:</label><br/>
-                               <input id="sample_name" type="text" maxlength="400" name="sample_name"/>
-                         </div>
-                         
-                         <div class="fieldWrapper">
-                               {{ form.sample_description.errors }}
-                               <label for="id_sample_description">Sample Description:</label><br/>
-                               <textarea id="sample_description" name="sample_description" cols="40" rows="10">
-                               </textarea>
-                               {{ form.sample_description }}
-                         </div>
-                         <div class="fieldWrapper">
-                               {{ form.for_code_1.errors }}
-                               <label for="id_for_code_1">FOR Code:</label><br/>
-                               <input id="for_code_1" type="text" maxlength="400" name="for_code_1">
-                         </div>
-                         <div class="fieldWrapper">
-                               {{ form.for_code_2.errors }}
-                               <label for="id_for_code_2">FOR Code:</label><br/>
-                               <input id="for_code_2" type="text" maxlength="400" name="for_code_2">
-                         </div>                                   
-                         <div class="fieldWrapper">
-                               {{ form.for_code_3.errors }}
-                               <label for="id_for_code_2">FOR Code:</label><br/>
-                               <input id="for_code_3" type="text" maxlength="400" name="for_code_3">
-                         </div>                                            
-                          <div class="fieldWrapper">
-                               {{ form.sample_notes.errors }}
-                               <label for="id_notes">Notes:</label><br/>
-                               <textarea id="notes" name="notes" cols="40" rows="10">
-                               </textarea>
-                         </div>                        
-                      </div>
-                    </div>
-                    <input id="button" type="submit" value="Save"/>
-                    
-                </form>
+            {{ form.non_field_errors }}
+            <div class="msg_list">
+              <p class="exp_head">Sample Information</p>  
+              <div class="exp_body">
+                 <div class="fieldWrapper">
+                       {{ form.name.errors }}
+                       <label for="id_sample_name">Sample Name:</label><br/>
+                       {{ form.name }}
+                 </div>
+                 
+                 <div class="fieldWrapper">
+                       {{ form.description.errors }}
+                       <label for="id_sample_description">Sample Description:</label><br/>
+                       {{ form.description }}
+                 </div>
+                 <div class="fieldWrapper">
+                       {{ form.forcode_1.errors }}
+                       <label for="id_for_code_1">FOR Code 1:</label><br/>
+                       {{ form.forcode_1 }}
+                 </div>
+                 <div class="fieldWrapper">
+                       {{ form.forcode_2.errors }}
+                       <label for="id_for_code_2">FOR Code 2:</label><br/>
+                       {{ form.forcode_2 }}
+                 </div>                                   
+                 <div class="fieldWrapper">
+                       {{ form.forcode_3.errors }}
+                       <label for="id_for_code_2">FOR Code 3:</label><br/>
+                       {{ form.forcode_3 }}
+                 </div>                                            
+                  <div class="fieldWrapper">
+                       {{ form.notes.errors }}
+                       <label for="id_notes">Notes:</label><br/>
+                       {{ form.notes }}
+                 </div>                        
+              </div>
+            </div>
+            <input id="button" type="submit" value="Save"/>
+            <a href="{% url tardis.tardis_portal.views.view_experiment experiment.id %}" >Cancel</a>
+        </form>
 
      </div>   
     

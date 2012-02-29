@@ -22,10 +22,22 @@ class ModelTestCase(TestCase):
     def test_sample(self):
         from mecat.models import Sample
         desc = "My Description for Sample created in test_sample()"
-        sample = Sample(experiment=self.experiment, description=desc)    
+        sample = Sample(experiment=self.experiment, description=desc)
+        name = "Sample 1"
+        forcode1 = "0001"
+        forcode2 = "0002"
+        forcode3 = "0003 - three"
+        sample.name = name
+        sample.forcode1 = forcode1
+        sample.forcode2 = forcode2
+        sample.forcode3 = forcode3
         sample.save()
         self.assertEqual(sample.description, desc)
         self.assertEqual(sample.experiment, self.experiment)
+        self.assertEqual(sample.name, name)
+        self.assertEqual(sample.forcode1, forcode1)
+        self.assertEqual(sample.forcode2, forcode2)
+        self.assertEqual(sample.forcode3, forcode3)
         
         sample_from_db = Sample.objects.get(description=desc)
         self.assertEqual(sample_from_db.experiment, self.experiment)
