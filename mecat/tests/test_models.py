@@ -27,10 +27,12 @@ class ModelTestCase(TestCase):
         forcode1 = "0001"
         forcode2 = "0002"
         forcode3 = "0003 - three"
+        notes = "A note that is not that long"
         sample.name = name
         sample.forcode1 = forcode1
         sample.forcode2 = forcode2
         sample.forcode3 = forcode3
+        sample.notes = notes
         sample.save()
         self.assertEqual(sample.description, desc)
         self.assertEqual(sample.experiment, self.experiment)
@@ -38,6 +40,7 @@ class ModelTestCase(TestCase):
         self.assertEqual(sample.forcode1, forcode1)
         self.assertEqual(sample.forcode2, forcode2)
         self.assertEqual(sample.forcode3, forcode3)
+        self.assertEqual(sample.notes, notes)
         
         sample_from_db = Sample.objects.get(description=desc)
         self.assertEqual(sample_from_db.experiment, self.experiment)
