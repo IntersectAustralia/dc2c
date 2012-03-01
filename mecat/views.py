@@ -81,7 +81,7 @@ def experiment_samples(request, experiment_id):
         c['file_matched_datasets'] = None
 
     c['samples'] = \
-         Sample.objects.filter(experiment=experiment_id)
+         Sample.objects.filter(experiment=experiment_id).order_by("id")
 
     c['datasets'] = \
          Dataset.objects.filter(experiment=experiment_id)
@@ -106,6 +106,37 @@ def experiment_samples(request, experiment_id):
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/experiment_samples.html', c))
 
+@never_cache
+@authz.experiment_access_required
+def edit_sample(request, experiment_id, sample_id):
+    try:
+        experiment = Experiment.safe.get(request, experiment_id)
+    except PermissionDenied:
+        return return_response_error(request)
+    except Experiment.DoesNotExist:
+        return return_response_not_found(request)
+    c = Context()
+    c['experiment'] = experiment
+    sample = Sample.objects.get(id=sample_id)
+    c['sample_count'] = sample.name
+    
+    from .samples import SampleFormHandler
+    if request.POST:
+        form = forms.SampleForm(request.POST)
+        if form.is_valid():
+            SampleFormHandler(experiment_id).edit_sample(form.cleaned_data, sample_id)
+            return _redirect(experiment_id)
+    else:
+        sample_handler = SampleFormHandler(experiment_id)
+        form = forms.SampleForm(initial=sample_handler.form_data(sample_id))
+        
+    c['form'] = form    
+    return HttpResponse(render_response_index(request,
+                        'tardis_portal/experiment_sample.html', c))
+
+
+@never_cache
+@authz.experiment_access_required
 def new_sample(request, experiment_id):  
     try:
         experiment = Experiment.safe.get(request, experiment_id)
