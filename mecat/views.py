@@ -148,7 +148,7 @@ def new_sample(request, experiment_id):
     c = Context()
     c['experiment'] = experiment
     samples = Sample.objects.filter(experiment=experiment_id)
-    c['sample_count'] = len(samples) + 1
+    c['sample_count'] = samples.count() + 1
     
     if request.POST:
         form = forms.SampleForm(request.POST)
