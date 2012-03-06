@@ -120,8 +120,7 @@
 }
 
 .sample_title {
-    display: inline;
-    padding: 10px;
+    padding-bottom: 12px;
 }
 
 .sample_title_with_checkbox {
@@ -140,7 +139,10 @@
         border-color: black;
         border-style: solid;
         margin: 2px;
-        padding: 5px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .sample_info {
