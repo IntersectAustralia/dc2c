@@ -174,8 +174,10 @@ def retrieve_datasets(request, sample_id):
 @login_required()
 def retrieve_sample_forcodes(request):
     import json
-    forcodes = [ {"subject_code" : "00012", "subject_name" : "my subject A"}, 
-                 {"subject_code" : "10012", "subject_name" : "manotehr subject"}]
-    return HttpResponse(json.dumps(forcodes))
-    
+    forcodes = [
+		 { "subject_name" : "SA", "subject_code" : "1234" },
+		 { "subject_name" : "SB", "subject_code" : "4342" }
+               ] 
+    return HttpResponse(json.dumps(forcodes), mimetype='application/json')
+  
     

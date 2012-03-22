@@ -10,7 +10,25 @@ $(function(){
         autoFill:false,
         mustMatch:true,
         cacheLength:20,
-        max:20
+        max:20,
+        parse: function(data) {
+		var parsed = []
+		for (var i=0; i < data.length; i++) {
+			parsed.push(
+			{
+			  data:data[i],
+			  value: data[i].subject_name,
+			  result: data[i].subject_code
+			});
+			
+		}
+		return parsed;
+	},
+	formatItem: function(item) {
+		var name = '';
+		name = item.subject_name + " - " + item.subject_code
+		return name;
+	}
     });
 });
     
