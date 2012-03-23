@@ -15,6 +15,7 @@ from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, Search
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset
 from mecat.models import Sample, DatasetWrapper
+from mecat.subject_codes import FOR_CODE_LIST
 from . import forms
 
 def _redirect(experiment_id):
@@ -174,10 +175,6 @@ def retrieve_datasets(request, sample_id):
 @login_required()
 def retrieve_sample_forcodes(request):
     import json
-    forcodes = [
-		 { "subject_name" : "SA", "subject_code" : "1234" },
-		 { "subject_name" : "SB", "subject_code" : "4342" }
-               ] 
-    return HttpResponse(json.dumps(forcodes), mimetype='application/json')
+    return HttpResponse(json.dumps(FOR_CODE_LIST), mimetype='application/json')
   
     
