@@ -1,6 +1,13 @@
 from django import forms
 from django.forms.widgets import Textarea
 
+class ExperimentForm(forms.Form):
+    """
+    This handles the complex experiment forms.
+
+    TODO
+    """
+    
 class SampleForm(forms.Form):
     name = forms.CharField(max_length=40, required=True)
     description = forms.CharField(required=True, widget=Textarea)

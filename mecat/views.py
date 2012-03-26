@@ -3,7 +3,7 @@ from django.views.decorators.cache import never_cache
 from django.shortcuts import redirect
 from tardis.tardis_portal.auth import decorators as authz
 from django.template import Context
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from tardis.tardis_portal.shortcuts import render_response_index, \
@@ -13,10 +13,14 @@ from tardis.tardis_portal.search_query import FacetFixedSearchQuery
 
 from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, SearchQueryString
 from haystack.query import SearchQuerySet
-from tardis.tardis_portal.models import Experiment, Dataset
+from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
 from mecat.models import Sample, DatasetWrapper
 from mecat.subject_codes import FOR_CODE_LIST
 from . import forms
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 def _redirect(experiment_id):
     return redirect(reverse('tardis.tardis_portal.views.view_experiment', args=[experiment_id]))
@@ -177,4 +181,24 @@ def retrieve_sample_forcodes(request):
     import json
     return HttpResponse(json.dumps(FOR_CODE_LIST), mimetype='application/json')
   
-    
+@permission_required('tardis_portal.add_experiment')
+@login_required
+def create_experiment(request,
+                      template_name='tardis_portal/create_experiment.html'):
+
+    """Create a new experiment view.
+
+    :param request: a HTTP Request instance
+    :type request: :class:`django.http.HttpRequest`
+    :param template_name: the path of the template to render
+    :type template_name: string
+    :rtype: :class:`django.http.HttpResponse`
+
+    """
+    logger.debug('my new create experiment')
+    c = Context({
+        'subtitle': 'Create Experiment',
+        'user_id': request.user.id,
+        })
+
+    return HttpResponse(render_response_index(request, template_name, c))
