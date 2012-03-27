@@ -45,7 +45,6 @@ class FullExperimentModel(UserDict):
                 if not smp.instance.immutable:
                     smp.instance.delete()
 
-
 class ExperimentForm(forms.ModelForm):
     """
     This handles the complex experiment forms.
@@ -190,7 +189,13 @@ class ExperimentForm(forms.ModelForm):
                                     'authors': authors,
                                     'samples': samples})
         
-        
+class ExperimentWrapperForm(ExperimentForm):
+    forcode_1 = forms.CharField(max_length=100, required=False, initial="060112 Structural Biology", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    forcode_2 = forms.CharField(max_length=100, required=False, initial="060199 Biochemistry and cell Biology not elsewhere classified", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    forcode_3 = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    notes = forms.CharField(required=False, widget=Textarea)    
+    
+            
 class SampleForm(forms.Form):
     name = forms.CharField(max_length=40, required=True)
     description = forms.CharField(required=True, widget=Textarea)
