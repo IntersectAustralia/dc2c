@@ -1,5 +1,4 @@
 from tardis.tardis_portal.models import *
-  
 
 class Sample(models.Model):
     experiment = models.ForeignKey(Experiment)

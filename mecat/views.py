@@ -2,22 +2,26 @@
 from django.views.decorators.cache import never_cache
 from django.shortcuts import redirect
 from tardis.tardis_portal.auth import decorators as authz
+from django.conf import settings
 from django.template import Context
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
+from tardis.tardis_portal.auth.localdb_auth import django_user
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from tardis.tardis_portal.shortcuts import render_response_index, \
     return_response_error, return_response_not_found, \
     render_response_search
 from tardis.tardis_portal.search_query import FacetFixedSearchQuery
-
+from tardis.tardis_portal.staging import get_full_staging_path
 from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, SearchQueryString
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
 from mecat.models import Sample, DatasetWrapper
+from mecat.forms import ExperimentForm
 from mecat.subject_codes import FOR_CODE_LIST
 from . import forms
 import logging
+
 
 
 logger = logging.getLogger(__name__)
@@ -184,7 +188,7 @@ def retrieve_sample_forcodes(request):
 @permission_required('tardis_portal.add_experiment')
 @login_required
 def create_experiment(request,
-                      template_name='tardis_portal/create_experiment.html'):
+                      template_name='tardis_portal/create_experiment_with_samples.html'):
 
     """Create a new experiment view.
 
@@ -193,12 +197,104 @@ def create_experiment(request,
     :param template_name: the path of the template to render
     :type template_name: string
     :rtype: :class:`django.http.HttpResponse`
-
+    
     """
-    logger.debug('my new create experiment')
     c = Context({
         'subtitle': 'Create Experiment',
         'user_id': request.user.id,
         })
+    staging = get_full_staging_path(request.user.username)
+    if staging:
+        c['directory_listing'] = staging_traverse(staging)
+        c['staging_mount_prefix'] = settings.STAGING_MOUNT_PREFIX
+    
+    if request.method == 'POST':
+        form = ExperimentForm(request.POST)
+        if form.is_valid():
+            full_experiment = form.save(commit=False)
 
+            # group/owner assignment stuff, soon to be replaced
+
+            experiment = full_experiment['experiment']
+            experiment.created_by = request.user
+            full_experiment.save_m2m()
+
+            # add defaul ACL
+            acl = ExperimentACL(experiment=experiment,
+                                pluginId=django_user,
+                                entityId=str(request.user.id),
+                                canRead=True,
+                                canWrite=True,
+                                canDelete=True,
+                                isOwner=True,
+                                aclOwnershipType=ExperimentACL.OWNER_OWNED)
+            acl.save()
+
+            request.POST = {'status': "Experiment Created."}
+            return HttpResponseRedirect(reverse(
+                'tardis.tardis_portal.views.view_experiment',
+                args=[str(experiment.id)]) + "#created")
+
+        c['status'] = "Errors exist in form."
+        c["error"] = 'true'
+
+    else:
+        form = ExperimentForm(extra=1)
+
+    c['form'] = form
+    c['default_institution'] = settings.DEFAULT_INSTITUTION
+    
     return HttpResponse(render_response_index(request, template_name, c))
+
+@login_required
+@permission_required('tardis_portal.change_experiment')
+@authz.write_permissions_required
+def edit_experiment(request, experiment_id,
+                      template="tardis_portal/create_experiment_with_samples.html"):
+    """Edit an existing experiment.
+
+    :param request: a HTTP Request instance
+    :type request: :class:`django.http.HttpRequest`
+    :param experiment_id: the ID of the experiment to be edited
+    :type experiment_id: string
+    :param template_name: the path of the template to render
+    :type template_name: string
+    :rtype: :class:`django.http.HttpResponse`
+
+    """
+    experiment = Experiment.objects.get(id=experiment_id)
+
+    c = Context({'subtitle': 'Edit Experiment',
+                 'user_id': request.user.id,
+                 'experiment_id': experiment_id,
+              })
+
+    staging = get_full_staging_path(
+                                request.user.username)
+    if staging:
+        c['directory_listing'] = staging_traverse(staging)
+        c['staging_mount_prefix'] = settings.STAGING_MOUNT_PREFIX
+
+    if request.method == 'POST':
+        form = ExperimentForm(request.POST, request.FILES,
+                              instance=experiment, extra=0)
+        if form.is_valid():
+            full_experiment = form.save(commit=False)
+            experiment = full_experiment['experiment']
+            experiment.created_by = request.user
+            full_experiment.save_m2m()
+
+            request.POST = {'status': "Experiment Saved."}
+            return HttpResponseRedirect(reverse(
+                'tardis.tardis_portal.views.view_experiment',
+                args=[str(experiment.id)]) + "#saved")
+
+        c['status'] = "Errors exist in form."
+        c["error"] = 'true'
+    else:
+        form = ExperimentForm(instance=experiment, extra=0)
+
+    c['form'] = form
+
+    return HttpResponse(render_response_index(request,
+                        template, c))
