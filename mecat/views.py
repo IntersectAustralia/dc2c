@@ -17,9 +17,8 @@ from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, Search
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
 from mecat.models import Sample, DatasetWrapper
-from mecat.forms import ExperimentForm, ExperimentWrapperForm
+from mecat.forms import ExperimentForm, ExperimentWrapperForm, SampleForm
 from mecat.subject_codes import FOR_CODE_LIST
-from . import forms
 import logging
 
 
@@ -131,13 +130,13 @@ def edit_sample(request, experiment_id, sample_id):
     
     from .samples import SampleFormHandler
     if request.POST:
-        form = forms.SampleForm(request.POST)
+        form = SampleForm(request.POST)
         if form.is_valid():
             SampleFormHandler(experiment_id).edit_sample(form.cleaned_data, sample_id)
             return _redirect(experiment_id)
     else:
         sample_handler = SampleFormHandler(experiment_id)
-        form = forms.SampleForm(initial=sample_handler.form_data(sample_id))
+        form = SampleForm(initial=sample_handler.form_data(sample_id))
         
     c['form'] = form    
     return HttpResponse(render_response_index(request,
@@ -160,13 +159,15 @@ def new_sample(request, experiment_id):
     c['sample_count'] = samples.count() + 1
     
     if request.POST:
-        form = forms.SampleForm(request.POST)
+        form = SampleForm(request.POST, experiment_id)
         if form.is_valid():
-            from .samples import SampleFormHandler
-            SampleFormHandler(experiment_id).add_sample(form.cleaned_data)
+            form.save(experiment_id, commit=False)
+            request.POST = {'status': "Sample Created."}
             return _redirect(experiment_id)
+        c['status'] = "Errors exist in form."
+        c["error"] = 'true'
     else:
-        form = forms.SampleForm()
+        form = SampleForm(extra=1)
         
     c['form'] = form    
     return HttpResponse(render_response_index(request,

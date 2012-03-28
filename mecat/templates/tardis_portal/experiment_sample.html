@@ -1,113 +1,237 @@
 {% extends "tardis_portal/portal_template.html" %}
 
 {% block script %}
+{% include "tardis_portal/javascript_libraries.html" %} <script type="text/javascript" src="{{ STATIC_URL }}/js/lib/jquery.customised-formset.js" ></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        //hide the all of the element with class msg_body
+        //toggle the componenet with class msg_body
 
-<script>
-$(function(){
-    $(".sample_forcode").autocomplete('/ajax/sample_forcode_list/', {      
-        matchContains:false,
-        minChars:1, 
-        autoFill:false,
-        mustMatch:true,
-        cacheLength:20,
-        max:20,
-        parse: function(data) {
-		var parsed = []
-		for (var i=0; i < data.length; i++) {
-			parsed.push(
-			{
-			  data:data[i],
-			  value: data[i].subject_name,
-			  result: data[i].subject_code
-			});
-			
-		}
-		return parsed;
-	},
-	formatItem: function(item) {
-		var name = '';
-		name = item.subject_code + " " + item.subject_name
-		return name;
-	}
+        $(".msg_head").live('click', function() {
+            if($(this).next(".msg_body").is(':visible')) {
+                $(this).css('background-color', '#878787');
+                $(this).css('color', 'white');
+                $(this).next(".msg_body").hide();
+            } else {
+                var dataset_number = $(this).parent().find(":input").attr('id').match(new RegExp("id_dataset-(\\d+)-.*"))[1];
+                $('#id_dataset-' + dataset_number + "-DELETE", $(this).parent()).attr('value', '0');
+                $(this).css('background-color', '#dcdcdc');
+                $(this).css('color', '#404040');
+                $(this).next(".msg_body").show();
+            }
+        });
     });
-});
-    
+
+    $(document).ready(function() {
+        $("#fuzz").css("height", $(document).height());
+        $('#jqmAlertLoading').jqm({
+            ajax : '',
+            target : '',
+            overlay : 0,
+        });
+
+        $(window).bind("resize", function() {
+            $("#fuzz").css("height", $(window).height());
+        });
+
+        $("#button").click(function() {
+            $('#jqmAlertLoading').jqmShow();
+            $("#fuzz").fadeIn();
+            $("#add_dataset_form").submit();
+        });
+    });
+    $(function() {
+        $(".dataset_forcode").autocomplete('/ajax/dataset_forcode_list/', {
+            matchContains : false,
+            minChars : 1,
+            autoFill : false,
+            mustMatch : true,
+            cacheLength : 20,
+            max : 20,
+            parse : function(data) {
+                var parsed = []
+                for(var i = 0; i < data.length; i++) {
+                    parsed.push({
+                        data : data[i],
+                        value : data[i].subject_name,
+                        result : data[i].subject_code
+                    });
+
+                }
+                return parsed;
+            },
+            formatItem : function(item) {
+                var name = '';
+                name = item.subject_code + " " + item.subject_name
+                return name;
+            }
+        });
+    });
+
 </script>
-
-
 {% endblock %}
 
 {% block content %}
 <div class="jqmAlertLoading" id="jqmAlertLoading">
-  <div class="jqmAlertWindowLoading">
-    <div class="jqmAlertTitle clearfix">
-      <h1>Please Wait...</h1>
-    </div>
-    <div align="center" class="jqmAlertContentLoading" id="jqmAlertContentLoading">
-      <img src="{{ STATIC_URL }}/images/ajax-loader-big.gif">
-      </div>
+    <div class="jqmAlertWindowLoading">
+        <div class="jqmAlertTitle clearfix">
+            <h1>Please Wait...</h1>
+        </div>
+        <div align="center" class="jqmAlertContentLoading" id="jqmAlertContentLoading">
+            <img src="{{ STATIC_URL }}/images/ajax-loader-big.gif">
+        </div>
     </div>
 </div>
-
 <div id="content">
-     <div>
-        <h1 class="title">{{experiment.title}} > Sample {{sample_count}}</h1>
-        <form id="add_sample_form" action="" method="POST">
-            {{ form.non_field_errors }}
-            <div class="msg_list">
-              <p class="exp_head">Sample Information</p>  
-              <div class="exp_body">
-                 <div class="fieldWrapper">
-                       {{ form.name.errors }}
-                       <label for="id_sample_name">Sample Name:</label><br/>
-                       {{ form.name }}
-                 </div>
-                 
-                 <div class="fieldWrapper">
-                       {{ form.description.errors }}
-                       <label for="id_sample_description">Sample Description:</label><br/>
-                       {{ form.description }}
-                 </div>
-                 <div class="fieldWrapper">
-                       {{ form.forcode_1.errors }}
-                       <label for="id_for_code_1">FOR Code 1:</label><br/>
-                       {{ form.forcode_1 }}
-                 </div>
-                 <div class="fieldWrapper">
-                       {{ form.forcode_2.errors }}
-                       <label for="id_for_code_2">FOR Code 2:</label><br/>
-                       {{ form.forcode_2 }}
-                 </div>                                   
-                 <div class="fieldWrapper">
-                       {{ form.forcode_3.errors }}
-                       <label for="id_for_code_2">FOR Code 3:</label><br/>
-                       {{ form.forcode_3 }}
-                 </div>                                            
-                  <div class="fieldWrapper">
-                       {{ form.notes.errors }}
-                       <label for="id_notes">Notes:</label><br/>
-                       {{ form.notes }}
-                 </div>                        
-              </div>
+    <div>
+        <h1 class="title">{{experiment.title}} > Sample {{dataset_count}}</h1>
+        <div class="entry">
+            <div style="display:none;" class="fsTemplate">
+                <p class="msg_head">
+                    Dataset
+                </p>
+                <div class="msg_body">
+                    <div class="fieldWrapper">
+                        <input type="hidden" name="dataset-0-sample" value="{{sample_id}}" id="id_dataset-0-sample" />
+                        <input type="hidden" name="dataset-0-id" value id="id_dataset-0-id" />
+                        Description:
+                        <input name="dataset-0-description" value="" type="text" id="id_dataset-0-description" size="80" />
+                        <input type="hidden" name="dataset-0-immutable" value="False" id="id_dataset-0-immutable" />
+                    </div>
+                </div>
             </div>
-            <input id="button" type="submit" value="Save"/>
-            <a href="{% url tardis.tardis_portal.views.view_experiment experiment.id %}" >Cancel</a>
-        </form>
+            <form id="add_dataset_form" action="" method="POST">
+                {{ form.non_field_errors }}
+                <div class="msg_list">
+                    <p class="exp_head">
+                        Sample Information
+                    </p>
+                    <div class="exp_body">
+                        <div class="fieldWrapper">
+                            {{ form.name.errors }} <label for="id_dataset_name">Sample Name:</label>
+                            <br/>
+                            {{ form.name }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.description.errors }} <label for="id_dataset_description">Sample Description:</label>
+                            <br/>
+                            {{ form.description }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.forcode1.errors }} <label for="id_for_code_1">FOR Code 1:</label>
+                            <br/>
+                            {{ form.forcode1 }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.forcode2.errors }} <label for="id_for_code_2">FOR Code 2:</label>
+                            <br/>
+                            {{ form.forcode2 }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.forcode3.errors }} <label for="id_for_code_2">FOR Code 3:</label>
+                            <br/>
+                            {{ form.forcode3 }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.notes.errors }} <label for="id_notes">Notes:</label>
+                            <br/>
+                            {{ form.notes }}
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        function findLastDataset() {
+                            forms = $('.dataset_container').not('.formset-custom-template');
+                            return forms.length - 1;
+                        }
 
-     </div>   
-    
+                        var dsPrefix = "dataset";
+                        // converting DOM element to jquery
+                        function updateDSidCB(ndx, row) {
+                            updateDSid(ndx, $(row));
+                        }
+
+                        function updateDSid(ndx, row) {
+                            row.find('input,select,textarea,label').each(function() {
+                                var prefix = "dataset";
+                                var idRegex = new RegExp('(' + prefix + '-\\d+-)');
+                                var replacement = prefix + '-' + ndx + '-';
+                                if($(this).attr('id'))
+                                    $(this).attr('id', $(this).attr('id').replace(idRegex, replacement));
+                                if($(this).attr('name'))
+                                    $(this).attr('name', $(this).attr('name').replace(idRegex, replacement));
+                            });
+                        }
+
+                        function addDSCB(row) {
+                            var ndx = findLastDataset();
+                            updateDSid(ndx, row);
+                            row.find('[name$=TOTAL_FORMS]').val("0");
+                            row.find('[name$=INITIAL_FORMS]').val("0");
+                        }
+
+                        function updateDSids() {
+                            $(".dataset_container").not('.formset-custom-template').each(updateDSidCB);
+                        }
+
+                        function removeDSCB(row) {
+                            updateDSids();
+                        }
+
+
+                        $(document).ready(function() {
+                            $('.dataset_container').formset({
+                                addText : "Add another Dataset",
+                                prefix : dsPrefix,
+                                added : addDSCB,
+                                removed : removeDSCB,
+                                deleteText : 'Remove Dataset',
+                                formCssClass : "dataset_container",
+                                formTemplate : ".fsTemplate",
+                            });
+
+                            $(document).find('.dataset_container.immutable').find('.delete-row').hide();
+                            $(document).find('.dataset_container.immutable').find('.remove_file').hide();
+
+                        });
+
+                    </script>
+                    <!-- show each dataset with add/remove links -->
+                    <div class="datasets">
+                        {% for dataset_form in form.get_datasets %}
+                        <div class="dataset_container {% if dataset_form.instance.immutable %}immutable{% endif %}"  id="{{ dataset_form.prefix }}-row">
+                            <p class="msg_head">
+                                Dataset {% if dataset_form.instance.immutable %}(Immutable){% endif %}
+                            </p>
+                            <div class="msg_body">
+                                <div class="fieldWrapper">
+                                    {{ dataset_form.description.errors }}
+
+                                    {% for fld in dataset_form.hidden_fields %}{{ fld }}{% endfor %}
+                                    {% if dataset_form.instance.pk %}{{ dataset_form.DELETE }}{% endif %}
+                                    Description: {{ dataset_form.description }}
+                                    {{ dataset_form.immutable.as_hidden }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {{ form.datasets.management_form }}
+                    </div>
+                    <br/>
+                    <input id="button" type="submit" value="Save"/>
+                    <a href="{% url tardis.tardis_portal.views.view_experiment experiment.id %}" >Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <br/>
-
-
 {% endblock %}
 {% block sidebar %}
-  <ul>
+<ul>
     <li>
-      <h2></h2>
-      <ul>
-      </ul>
+        <h2></h2>
+        <ul></ul>
     </li>
-  </ul>
-  <p>
-{% endblock %}
+</ul>
+<p>
+    {% endblock %}

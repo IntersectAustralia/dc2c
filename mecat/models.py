@@ -29,6 +29,7 @@ class Sample(models.Model):
 
 class DatasetWrapper(models.Model):
     sample = models.ForeignKey(Sample)
+    description = models.TextField(blank=True) # temporary
     dataset = models.ForeignKey(Dataset)
     objects = OracleSafeManager()
 

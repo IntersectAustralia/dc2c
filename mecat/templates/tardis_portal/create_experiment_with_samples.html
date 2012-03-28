@@ -179,7 +179,8 @@
                         });
 
                     </script>
-                    <div class="all_samples">
+                    <!-- show each sample with add/remove links -->
+                    <div class="samples">
                         {% for sample_form in form.get_samples %}
                         <div class="sample_container {% if sample_form.instance.immutable %}immutable{% endif %}"  id="{{ sample_form.prefix }}-row">
                             <p class="msg_head">
@@ -199,6 +200,7 @@
                         {% endfor %}
                         {{ form.samples.management_form }}
                     </div>
+                    
                     <br/>
                     <input id="button" type="button" value="Save"/>
                     {% if experiment_id %} <a href="{% url tardis.tardis_portal.views.view_experiment experiment_id %}" >Cancel</a>

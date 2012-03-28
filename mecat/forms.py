@@ -3,10 +3,13 @@ from django.forms.util import ErrorList
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import Textarea, TextInput
 from UserDict import UserDict
-from mecat.models import Experiment, Sample
+from mecat.models import Sample, DatasetWrapper
 from tardis.tardis_portal import models
 from tardis.tardis_portal.fields import MultiValueCommaSeparatedField
 from tardis.tardis_portal.widgets import CommaSeparatedInput
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Author_Experiment(forms.ModelForm):
 
@@ -52,13 +55,12 @@ class ExperimentForm(forms.ModelForm):
     """
 
     class Meta:
-        model = Experiment
+        model = models.Experiment
         exclude = ('authors', 'handle', 'approved', 'created_by')
     
     def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=':',
                  empty_permitted=False, instance=None, extra=0):
-        
         self.author_experiments = []
         self.samples = {}
         super(ExperimentForm, self).__init__(data=data,
@@ -81,7 +83,7 @@ class ExperimentForm(forms.ModelForm):
         if instance == None or instance.sample_set.count() == 0:
             extra = 1
         sample_formset = inlineformset_factory(
-            Experiment,
+            models.Experiment,
             Sample,
             formfield_callback=custom_sample_field,
             extra=extra, can_delete=True) 
@@ -195,15 +197,89 @@ class ExperimentWrapperForm(ExperimentForm):
     forcode_3 = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
     notes = forms.CharField(required=False, widget=Textarea)    
     
-            
-class SampleForm(forms.Form):
-    name = forms.CharField(max_length=40, required=True)
-    description = forms.CharField(required=True, widget=Textarea)
-    forcode_1 = forms.CharField(max_length=100, required=False, initial="060112 Structural Biology", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
-    forcode_2 = forms.CharField(max_length=100, required=False, initial="060199 Biochemistry and cell Biology not elsewhere classified", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
-    forcode_3 = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
-    notes = forms.CharField(required=False, widget=Textarea)
+class SampleForm(forms.ModelForm):
+
+    class Meta:
+        model = Sample
+        exclude = ('immutable')
+        
+    def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
+                 initial=None, error_class=ErrorList, label_suffix=':',
+                 empty_permitted=False, instance=None, extra=0, experiment_id=None):
+        self.experiment_id = experiment_id
+        self.datasets = {}
+        super(SampleForm, self).__init__(data=data,
+                                             files=files,
+                                             auto_id=auto_id,
+                                             prefix=prefix,
+                                             initial=initial,
+                                             instance=instance,
+                                             error_class=error_class,
+                                             label_suffix=label_suffix,
+                                             empty_permitted=False)
+        
+        def custom_dataset_field(field):
+            if field.name == 'description':
+                return field.formfield(
+                    widget=TextInput(attrs={'size': '80'}))
+            else:
+                return field.formfield()             
+                    
+        # initialise formsets
+        if instance == None or instance.dataset_set.count() == 0:
+            extra = 1
+        dataset_formset = inlineformset_factory(
+            Sample,
+            DatasetWrapper,
+            formfield_callback=custom_dataset_field,
+            extra=extra, can_delete=True) 
     
+        # fill formsets
+        self.datasets = dataset_formset(data=data,
+                                        instance=instance,
+                                        prefix="dataset")      
+        
+        for i, ds in enumerate(self.datasets.forms):
+            if 'immutable' in ds.initial:
+                if ds.initial['immutable']:
+                    ds.fields['description'].widget.attrs['readonly'] = True
+                    ds.fields['description'].editable = False
+                    ds.fields['immutable'].editable = False
+                    ds.fields['immutable'].widget.attrs['readonly'] = True
+                    
+        
+    def get_datasets(self):
+        """
+        Return datasets
+        """
+        for number, form in enumerate(self.datasets.forms):
+            yield form
+                
+        
+            
+    def save(self, experiment_id, commit=True):   
+        # remove m2m field before saving
+        sample = super(SampleForm, self).save(commit)
+        sample.experiment = self.experiment_id
+        datasets = []
+        for key, dataset in enumerate(self.datasets.forms):
+            if dataset not in self.datasets.deleted_forms:
+                # XXX for some random reason the link between
+                # the instance needs
+                # to be reinitialised
+                dataset.instance.sample = sample
+                o_dataset = dataset.save(commit)
+                datasets.append(o_dataset)
+                mutable = True
+                if 'immutable' in dataset.initial:
+                    if dataset.initial['immutable']:
+                        mutable = False
+        
+        if hasattr(self.datasets, 'deleted_forms'):
+            for ds in self.datasets.deleted_forms:
+                if not ds.instance.immutable:
+                    ds.instance.delete()
+              
 
 class RegisterMetamanForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)
