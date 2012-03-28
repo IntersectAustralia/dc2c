@@ -14,11 +14,11 @@ class ExperimentWrapper(models.Model):
     
 class Sample(models.Model):
     experiment = models.ForeignKey(Experiment)
-    description = models.TextField(blank=True)
-    name = models.TextField(blank=True)
-    forcode1 = models.TextField(blank=True)
-    forcode2 = models.TextField(blank=True)
-    forcode3 = models.TextField(blank=True)
+    description = models.TextField(blank=False)
+    name = models.CharField(max_length=100, blank=False)
+    forcode1 = models.CharField(max_length=100, blank=True, default="060112 Structural Biology")
+    forcode2 = models.CharField(max_length=100, blank=True, default="060199 Biochemistry and cell Biology not elsewhere classified")
+    forcode3 = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True)
     immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()

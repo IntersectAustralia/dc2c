@@ -41,7 +41,7 @@
         });
     });
     $(function() {
-        $(".dataset_forcode").autocomplete('/ajax/dataset_forcode_list/', {
+        $('input[id^="forcode"]').autocomplete('/ajax/sample_forcode_list/', {
             matchContains : false,
             minChars : 1,
             autoFill : false,
@@ -217,6 +217,7 @@
                         {{ form.datasets.management_form }}
                     </div>
                     <br/>
+                    <input type="hidden" name="experiment" value="{{experiment.id}}" id="experiment" />
                     <input id="button" type="submit" value="Save"/>
                     <a href="{% url tardis.tardis_portal.views.view_experiment experiment.id %}" >Cancel</a>
                 </div>

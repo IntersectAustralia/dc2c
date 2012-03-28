@@ -201,12 +201,10 @@ class SampleForm(forms.ModelForm):
 
     class Meta:
         model = Sample
-        exclude = ('immutable')
         
     def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=':',
-                 empty_permitted=False, instance=None, extra=0, experiment_id=None):
-        self.experiment_id = experiment_id
+                 empty_permitted=False, instance=None, extra=0):
         self.datasets = {}
         super(SampleForm, self).__init__(data=data,
                                              files=files,
@@ -260,27 +258,47 @@ class SampleForm(forms.ModelForm):
     def save(self, experiment_id, commit=True):   
         # remove m2m field before saving
         sample = super(SampleForm, self).save(commit)
-        sample.experiment = self.experiment_id
         datasets = []
         for key, dataset in enumerate(self.datasets.forms):
-            if dataset not in self.datasets.deleted_forms:
-                # XXX for some random reason the link between
-                # the instance needs
-                # to be reinitialised
-                dataset.instance.sample = sample
-                o_dataset = dataset.save(commit)
-                datasets.append(o_dataset)
-                mutable = True
-                if 'immutable' in dataset.initial:
-                    if dataset.initial['immutable']:
-                        mutable = False
+            #if dataset not in self.datasets.deleted_forms:
+            # XXX for some random reason the link between
+            # the instance needs
+            # to be reinitialised
+            dataset.instance.sample = sample
+            exp = models.Experiment.objects.get(pk=experiment_id)
+            real_dataset = models.Dataset(experiment=exp, description="dummy")
+            real_dataset.save()
+            dataset.instance.dataset = real_dataset
+            o_dataset = dataset.save(commit)
+            datasets.append(o_dataset)
+            mutable = True
+            if 'immutable' in dataset.initial:
+                if dataset.initial['immutable']:
+                    mutable = False
         
         if hasattr(self.datasets, 'deleted_forms'):
             for ds in self.datasets.deleted_forms:
                 if not ds.instance.immutable:
                     ds.instance.delete()
               
-
+class DatasetWrapperForm(forms.ModelForm):
+    class Meta:
+            model = DatasetWrapper
+            
+    def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
+             initial=None, error_class=ErrorList, label_suffix=':',
+             empty_permitted=False, instance=None, extra=0):
+        self.datasets = {}
+        super(DatasetWrapperForm, self).__init__(data=data,
+                                             files=files,
+                                             auto_id=auto_id,
+                                             prefix=prefix,
+                                             initial=initial,
+                                             instance=instance,
+                                             error_class=error_class,
+                                             label_suffix=label_suffix,
+                                             empty_permitted=False)
+    
 class RegisterMetamanForm(forms.Form):
     username = forms.CharField(max_length=30, required=True)
     password = forms.CharField(max_length=30, required=True,

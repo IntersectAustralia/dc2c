@@ -159,7 +159,7 @@ def new_sample(request, experiment_id):
     c['sample_count'] = samples.count() + 1
     
     if request.POST:
-        form = SampleForm(request.POST, experiment_id)
+        form = SampleForm(request.POST)
         if form.is_valid():
             form.save(experiment_id, commit=False)
             request.POST = {'status': "Sample Created."}
@@ -170,6 +170,7 @@ def new_sample(request, experiment_id):
         form = SampleForm(extra=1)
         
     c['form'] = form    
+    c['status'] = form.errors
     return HttpResponse(render_response_index(request,
                         'tardis_portal/experiment_sample.html', c))
 
