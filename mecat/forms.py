@@ -256,25 +256,24 @@ class SampleForm(forms.ModelForm):
         
             
     def save(self, experiment_id, commit=True):   
-        # remove m2m field before saving
         sample = super(SampleForm, self).save(commit)
         datasets = []
         for key, dataset in enumerate(self.datasets.forms):
-            #if dataset not in self.datasets.deleted_forms:
-            # XXX for some random reason the link between
-            # the instance needs
-            # to be reinitialised
-            dataset.instance.sample = sample
-            exp = models.Experiment.objects.get(pk=experiment_id)
-            real_dataset = models.Dataset(experiment=exp, description="dummy")
-            real_dataset.save()
-            dataset.instance.dataset = real_dataset
-            o_dataset = dataset.save(commit)
-            datasets.append(o_dataset)
-            mutable = True
-            if 'immutable' in dataset.initial:
-                if dataset.initial['immutable']:
-                    mutable = False
+            if dataset not in self.datasets.deleted_forms:
+                # XXX for some random reason the link between
+                # the instance needs
+                # to be reinitialised
+                dataset.instance.sample = sample
+                exp = models.Experiment.objects.get(pk=experiment_id)
+                real_dataset = models.Dataset(experiment=exp, description="dummy")
+                real_dataset.save()
+                dataset.instance.dataset = real_dataset
+                o_dataset = dataset.save(commit)
+                datasets.append(o_dataset)
+                mutable = True
+                if 'immutable' in dataset.initial:
+                    if dataset.initial['immutable']:
+                        mutable = False
         
         if hasattr(self.datasets, 'deleted_forms'):
             for ds in self.datasets.deleted_forms:

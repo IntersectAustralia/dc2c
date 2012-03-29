@@ -40,33 +40,63 @@
             $("#add_dataset_form").submit();
         });
     });
+    
+    var isInt = false; 
     $(function() {
+
         $('input[id^="forcode"]').autocomplete('/ajax/sample_forcode_list/', {
-            matchContains : false,
             minChars : 1,
             autoFill : false,
-            mustMatch : true,
+            mustMatch : false,
             cacheLength : 20,
             max : 20,
-            parse : function(data) {
+            parse : function(data) {   
                 var parsed = []
                 for(var i = 0; i < data.length; i++) {
-                    parsed.push({
-                        data : data[i],
-                        value : data[i].subject_name,
-                        result : data[i].subject_code
-                    });
-
-                }
-                return parsed;
-            },
-            formatItem : function(item) {
-                var name = '';
+                    var item = data[i];
+                    if (isInt) {
+                        parsed.push({
+                            data : item,
+                            value : item.subject_code,
+                            result : item.subject_code + " " + item.subject_name
+                        });                         
+                    } else {
+                        parsed.push({
+                            data : item,
+                            value : item.subject_name,
+                            result : item.subject_code + " " + item.subject_name
+                                });                      
+                            }
+      
+      
+                        }
+                        return parsed;
+                    },
+                    formatItem : function(item) {
+                        var name = '';
                 name = item.subject_code + " " + item.subject_name
                 return name;
             }
+        });          
+    });
+       
+   
+    $(function() {
+
+        $('input[id^="forcode"]').keypress(function(event) {
+            var val = String.fromCharCode(event.which);
+             var check_int_result = parseInt(val);
+            if (!isNaN(check_int_result)) {
+
+                isInt = true;
+            } else {
+                isInt = false;
+            } 
         });
     });
+
+        
+
 
 </script>
 {% endblock %}
