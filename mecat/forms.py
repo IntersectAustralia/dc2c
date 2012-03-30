@@ -284,8 +284,12 @@ class SampleForm(forms.ModelForm):
             for ds in self.datasets.deleted_forms:
                 if not ds.instance.immutable:
                     ds.instance.delete()
-        # TODO m2m?
+        # save all models
         sample.save()
+        for ds in datasets:
+            if not ds.immutable:
+                ds.experiment = ds.experiment
+                ds.save()        
               
 class DatasetWrapperForm(forms.ModelForm):
     class Meta:
@@ -306,6 +310,9 @@ class DatasetWrapperForm(forms.ModelForm):
                                              empty_permitted=False)
     
 class RegisterMetamanForm(forms.Form):
+    '''
+    This is needed for the experiment register feature
+    '''
     username = forms.CharField(max_length=30, required=True)
     password = forms.CharField(max_length=30, required=True,
                                widget=forms.PasswordInput)

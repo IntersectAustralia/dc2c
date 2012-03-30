@@ -13,11 +13,39 @@ class ModelTestCase(TestCase):
         pwd = 'secret'
         email = ''
         self.user = User.objects.create_user(user, email, pwd)
+        self.desc = "Some Experiment's Description"
         from tardis.tardis_portal.models import Experiment
         self.experiment = Experiment(title='test exp1', 
+                             description=self.desc,
                              institution_name='usyd',
                              created_by=self.user)        
         self.experiment.save()
+        
+    def test_experiment_wrapper(self):     
+        from mecat.models import ExperimentWrapper
+        desc = "My Description for Experiment created in test_experiment()"
+        experiment = ExperimentWrapper(experiment=self.experiment)
+        forcode1 = "0001"
+        forcode2 = "0002"
+        forcode3 = "0003 - three"
+        funded_by = "NHMRC"
+        notes = "A note that is not that long"
+        experiment.forcode1 = forcode1
+        experiment.forcode2 = forcode2
+        experiment.forcode3 = forcode3
+        experiment.funded_by = funded_by
+        experiment.notes = notes
+        experiment.save()
+        self.assertEqual(experiment.experiment, self.experiment)
+        self.assertEqual(experiment.forcode1, forcode1)
+        self.assertEqual(experiment.forcode2, forcode2)
+        self.assertEqual(experiment.forcode3, forcode3)
+        self.assertEqual(experiment.notes, notes)
+        self.assertEqual(experiment.funded_by, funded_by)
+        
+        experiment_from_db = ExperimentWrapper.objects.get(experiment__description=self.desc)
+        self.assertEqual(experiment_from_db.experiment, self.experiment)
+        
         
     def test_sample(self):
         from mecat.models import Sample
