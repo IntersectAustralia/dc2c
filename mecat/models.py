@@ -5,7 +5,8 @@ class ExperimentWrapper(models.Model):
     forcode1 = models.TextField(blank=True)
     forcode2 = models.TextField(blank=True)
     forcode3 = models.TextField(blank=True)
-    notes = models.TextField(blank=True)
+    funded_by = models.TextField(blank=True)
+    notes = models.CharField(blank=True, max_length=100)
     immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()
 
@@ -14,7 +15,7 @@ class ExperimentWrapper(models.Model):
     
 class Sample(models.Model):
     experiment = models.ForeignKey(Experiment)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=False)
     name = models.CharField(max_length=100, blank=False)
     forcode1 = models.CharField(max_length=100, blank=True, default="060112 Structural Biology")
     forcode2 = models.CharField(max_length=100, blank=True, default="060199 Biochemistry and cell Biology not elsewhere classified")

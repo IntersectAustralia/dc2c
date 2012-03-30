@@ -19,12 +19,14 @@ class ExperimentFormHandler(object):
         experiment_forcode1 = cleaned_data['forcode_1']
         experiment_forcode2 = cleaned_data['forcode_2']
         experiment_forcode3 = cleaned_data['forcode_3']
+        experiment_funded_by = cleaned_data['funded_by']
         experiment_notes = cleaned_data['notes']
         
         new_exp_wrapper= ExperimentWrapper(experiment_id=self.experiment_id,
                             forcode1=experiment_forcode1,
                             forcode2=experiment_forcode2,
                             forcode3=experiment_forcode3,
+                            funded_by=experiment_funded_by,
                             notes=experiment_notes)
         new_exp_wrapper.save()
     
@@ -36,12 +38,14 @@ class ExperimentFormHandler(object):
         experiment_forcode1 = cleaned_data['forcode_1']
         experiment_forcode2 = cleaned_data['forcode_2']
         experiment_forcode3 = cleaned_data['forcode_3']
+        experiment_funded_by = cleaned_data['funded_by']
         experiment_notes = cleaned_data['notes']
         
         experiment = ExperimentWrapper.objects.get(experiment=experiment_id)
         experiment.forcode1 = experiment_forcode1
         experiment.forcode2 = experiment_forcode2
         experiment.forcode3 = experiment_forcode3
+        experiment.funded_by = experiment_funded_by
         experiment.notes = experiment_notes
         
         experiment.save()
@@ -52,6 +56,7 @@ class ExperimentFormHandler(object):
         data['forcode_1'] = experiment.forcode1
         data['forcode_2'] = experiment.forcode2
         data['forcode_3'] = experiment.forcode3
+        data['funded_by']= experiment.funded_by
         data['notes'] = experiment.notes
         return data
 

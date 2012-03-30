@@ -73,7 +73,7 @@ class ExperimentForm(forms.ModelForm):
                                              label_suffix=label_suffix,
                                              empty_permitted=False)
         def custom_sample_field(field):
-            if field.name == 'description':
+            if field.name == 'description' or field.name == 'name':
                 return field.formfield(
                     widget=TextInput(attrs={'size': '80'}))
             else:
@@ -166,20 +166,21 @@ class ExperimentForm(forms.ModelForm):
             ae.instance.experiment = ae.instance.experiment
             o_ae = ae.save(commit=commit)
             author_experiments.append(o_ae)
-            
+     
         for key, sample in enumerate(self.samples.forms):
-            if sample not in self.samples.deleted_forms:
-                # XXX for some random reason the link between
-                # the instance needs
-                # to be reinitialised
-                sample.instance.experiment = experiment
-                o_sample = sample.save(commit)
-                samples.append(o_sample)
-                # save any datafiles if the data set has any
-                mutable = True
-                if 'immutable' in sample.initial:
-                    if sample.initial['immutable']:
-                        mutable = False
+            if sample.is_valid(): 
+                if sample not in self.samples.deleted_forms:
+                    # XXX for some random reason the link between
+                    # the instance needs
+                    # to be reinitialised
+                    sample.instance.experiment = experiment
+                    o_sample = sample.save(commit)
+                    samples.append(o_sample)
+                    # save any datafiles if the data set has any
+                    mutable = True
+                    if 'immutable' in sample.initial:
+                        if sample.initial['immutable']:
+                            mutable = False
         
         if hasattr(self.samples, 'deleted_forms'):
             for smp in self.samples.deleted_forms:
@@ -192,9 +193,14 @@ class ExperimentForm(forms.ModelForm):
                                     'samples': samples})
         
 class ExperimentWrapperForm(ExperimentForm):
+    FUNDED_BY = [(None, u''),
+                 ("Australian Research Council (ARC)", "Australian Research Council (ARC)"),
+                 ("Medical Research Council (NHMRC)", "Medical Research Council (NHMRC)")]
+    
     forcode_1 = forms.CharField(max_length=100, required=False, initial="060112 Structural Biology", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
     forcode_2 = forms.CharField(max_length=100, required=False, initial="060199 Biochemistry and cell Biology not elsewhere classified", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
     forcode_3 = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
+    funded_by = forms.ChoiceField(initial=None, choices=FUNDED_BY, required=False)
     notes = forms.CharField(required=False, widget=Textarea)    
     
 class SampleForm(forms.ModelForm):
@@ -243,8 +249,7 @@ class SampleForm(forms.ModelForm):
                     ds.fields['description'].widget.attrs['readonly'] = True
                     ds.fields['description'].editable = False
                     ds.fields['immutable'].editable = False
-                    ds.fields['immutable'].widget.attrs['readonly'] = True
-                    
+                    ds.fields['immutable'].widget.attrs['readonly'] = True                   
         
     def get_datasets(self):
         """
@@ -253,32 +258,34 @@ class SampleForm(forms.ModelForm):
         for number, form in enumerate(self.datasets.forms):
             yield form
                 
-        
             
     def save(self, experiment_id, commit=True):   
         sample = super(SampleForm, self).save(commit)
         datasets = []
         for key, dataset in enumerate(self.datasets.forms):
-            if dataset not in self.datasets.deleted_forms:
-                # XXX for some random reason the link between
-                # the instance needs
-                # to be reinitialised
-                dataset.instance.sample = sample
-                exp = models.Experiment.objects.get(pk=experiment_id)
-                real_dataset = models.Dataset(experiment=exp, description="dummy")
-                real_dataset.save()
-                dataset.instance.dataset = real_dataset
-                o_dataset = dataset.save(commit)
-                datasets.append(o_dataset)
-                mutable = True
-                if 'immutable' in dataset.initial:
-                    if dataset.initial['immutable']:
-                        mutable = False
+            if dataset.is_valid():
+                if dataset not in self.datasets.deleted_forms:
+                    # XXX for some random reason the link between
+                    # the instance needs
+                    # to be reinitialised
+                    dataset.instance.sample = sample
+                    exp = models.Experiment.objects.get(pk=experiment_id)
+                    real_dataset = models.Dataset(experiment=exp, description="dummy")
+                    real_dataset.save()
+                    dataset.instance.dataset = real_dataset
+                    o_dataset = dataset.save(commit)
+                    datasets.append(o_dataset)
+                    mutable = True
+                    if 'immutable' in dataset.initial:
+                        if dataset.initial['immutable']:
+                            mutable = False
         
         if hasattr(self.datasets, 'deleted_forms'):
             for ds in self.datasets.deleted_forms:
                 if not ds.instance.immutable:
                     ds.instance.delete()
+        # TODO m2m?
+        sample.save()
               
 class DatasetWrapperForm(forms.ModelForm):
     class Meta:
