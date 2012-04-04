@@ -271,7 +271,7 @@ class SampleForm(forms.ModelForm):
             yield form
                 
             
-    def save(self, experiment_id, commit=True):   
+    def save(self, experiment_id, commit=True): 
         sample = super(SampleForm, self).save(commit)
         datasets = []
         for key, dataset in enumerate(self.datasets.forms):
@@ -303,6 +303,19 @@ class SampleForm(forms.ModelForm):
                 ds.experiment = ds.experiment
                 ds.save()        
               
+              
+    def clean_description(self):
+        data = self.cleaned_data['description'].strip()
+        if data == '':
+            raise forms.ValidationError("Description cannot be empty")
+        return data
+        
+    def clean_name(self):
+        data = self.cleaned_data['name'].strip()
+        if data == '':
+            raise forms.ValidationError("Name cannot be empty")
+        return data 
+    
 class DatasetWrapperForm(forms.ModelForm):
     class Meta:
             model = DatasetWrapper

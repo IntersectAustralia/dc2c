@@ -39,9 +39,9 @@ class SampleFormHandler(object):
         
         sample_name = cleaned_data['name']
         sample_description = cleaned_data['description']
-        sample_forcode1 = cleaned_data['forcode_1']
-        sample_forcode2 = cleaned_data['forcode_2']
-        sample_forcode3 = cleaned_data['forcode_3']
+        sample_forcode1 = cleaned_data['forcode1']
+        sample_forcode2 = cleaned_data['forcode2']
+        sample_forcode3 = cleaned_data['forcode3']
         sample_notes = cleaned_data['notes']
         
         sample = Sample.objects.get(id=sample_id)

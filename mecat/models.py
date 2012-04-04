@@ -27,7 +27,6 @@ class Sample(models.Model):
     def __unicode__(self):
         return self.description
 
-
 class DatasetWrapper(models.Model):
     sample = models.ForeignKey(Sample)
     description = models.TextField(blank=False) # temporary
