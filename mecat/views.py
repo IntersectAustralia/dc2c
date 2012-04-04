@@ -17,7 +17,7 @@ from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, Search
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
 from mecat.models import Sample, DatasetWrapper
-from mecat.forms import ExperimentForm, ExperimentWrapperForm, SampleForm
+from mecat.forms import ExperimentForm, ProjectForm, SampleForm
 from mecat.subject_codes import FOR_CODE_LIST
 import logging
 
@@ -211,7 +211,7 @@ def create_experiment(request,
         c['staging_mount_prefix'] = settings.STAGING_MOUNT_PREFIX
     
     if request.method == 'POST':
-        form = ExperimentWrapperForm(request.POST)
+        form = ProjectForm(request.POST)
         if form.is_valid():
             full_experiment = form.save(commit=False)
 
@@ -233,10 +233,7 @@ def create_experiment(request,
             acl.save()
 
             request.POST = {'status': "Experiment Created."}
-            # Add wrapper information
-            from .experiments import ExperimentFormHandler
-            ExperimentFormHandler(experiment.id).add_experiment(form.cleaned_data)
-            
+
             return HttpResponseRedirect(reverse(
                 'tardis.tardis_portal.views.view_experiment',
                 args=[str(experiment.id)]) + "#created")
@@ -245,7 +242,7 @@ def create_experiment(request,
         c["error"] = 'true'
 
     else:
-        form = ExperimentWrapperForm(extra=1)
+        form = ProjectForm(extra=1)
 
     c['form'] = form
     c['default_institution'] = settings.DEFAULT_INSTITUTION
@@ -269,6 +266,7 @@ def edit_experiment(request, experiment_id,
 
     """
     experiment = Experiment.objects.get(id=experiment_id)
+    project = experiment.project
 
     c = Context({'subtitle': 'Edit Experiment',
                  'user_id': request.user.id,
@@ -281,19 +279,15 @@ def edit_experiment(request, experiment_id,
         c['directory_listing'] = staging_traverse(staging)
         c['staging_mount_prefix'] = settings.STAGING_MOUNT_PREFIX
  
-    from .experiments import ExperimentFormHandler
     if request.method == 'POST':
-        form = ExperimentWrapperForm(request.POST, request.FILES,
-                              instance=experiment, extra=0)
+        form = ProjectForm(request.POST, request.FILES,
+                              instance=project, extra=0)
         if form.is_valid():
             full_experiment = form.save(commit=False)
             experiment = full_experiment['experiment']
             experiment.created_by = request.user
             full_experiment.save_m2m()
             
-            # Get Wrapper information
-            ExperimentFormHandler(experiment_id).edit_experiment(form.cleaned_data, experiment_id)
-
             request.POST = {'status': "Experiment Saved."}
             return HttpResponseRedirect(reverse(
                 'tardis.tardis_portal.views.view_experiment',
@@ -302,8 +296,7 @@ def edit_experiment(request, experiment_id,
         c['status'] = "Errors exist in form."
         c["error"] = 'true'
     else:
-        experiment_handler = ExperimentFormHandler(experiment_id)
-        form = ExperimentWrapperForm(initial=experiment_handler.form_data(experiment_id), instance=experiment, extra=0)
+        form = ProjectForm(instance=project, extra=0)
 
     c['form'] = form
 

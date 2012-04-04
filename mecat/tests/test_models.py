@@ -21,30 +21,42 @@ class ModelTestCase(TestCase):
                              created_by=self.user)        
         self.experiment.save()
         
-    def test_experiment_wrapper(self):     
-        from mecat.models import ExperimentWrapper
-        desc = "My Description for Experiment created in test_experiment()"
-        experiment = ExperimentWrapper(experiment=self.experiment)
+    def test_project(self):     
+        from mecat.models import Experiment, Project
+        title = "Project 1"
+        desc = "My Description for Project created in test_project()"
         forcode1 = "0001"
         forcode2 = "0002"
         forcode3 = "0003 - three"
         funded_by = "NHMRC"
         notes = "A note that is not that long"
-        experiment.forcode1 = forcode1
-        experiment.forcode2 = forcode2
-        experiment.forcode3 = forcode3
-        experiment.funded_by = funded_by
-        experiment.notes = notes
-        experiment.save()
-        self.assertEqual(experiment.experiment, self.experiment)
-        self.assertEqual(experiment.forcode1, forcode1)
-        self.assertEqual(experiment.forcode2, forcode2)
-        self.assertEqual(experiment.forcode3, forcode3)
-        self.assertEqual(experiment.notes, notes)
-        self.assertEqual(experiment.funded_by, funded_by)
+        inst = 'usyd'
+        project = Project(title=title, description=desc, institution_name=inst,
+                          forcode1 = forcode1, forcode2 = forcode2, 
+                          forcode3 = forcode3, funded_by = funded_by,
+                          notes = notes, created_by=self.user)
+        project.save()
+        self.assertEquals(project.title, title)
+        self.assertEquals(project.description, desc)
+        self.assertEquals(project.institution_name, inst)
+        self.assertEquals(project.created_by, self.user)
+        self.assertEqual(project.forcode1, forcode1)
+        self.assertEqual(project.forcode2, forcode2)
+        self.assertEqual(project.forcode3, forcode3)
+        self.assertEqual(project.notes, notes)
+        self.assertEqual(project.funded_by, funded_by)
         
-        experiment_from_db = ExperimentWrapper.objects.get(experiment__description=self.desc)
-        self.assertEqual(experiment_from_db.experiment, self.experiment)
+        # Check that the Experiment is created
+        experiment_from_db = Experiment.objects.get(description=desc)
+        self.assertEquals(experiment_from_db.title, title)
+        self.assertEquals(experiment_from_db.description, desc)
+        self.assertEquals(experiment_from_db.institution_name, inst)
+        self.assertEquals(experiment_from_db.created_by, self.user)
+        
+        # Check that the Project is created        
+        project_from_db = Project.objects.get(description=desc)
+        # Check that the project and experiment are linked
+        self.assertEquals(experiment_from_db.project.id, project_from_db.id) 
         
         
     def test_sample(self):

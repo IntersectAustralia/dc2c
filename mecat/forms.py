@@ -3,7 +3,7 @@ from django.forms.util import ErrorList
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import Textarea, TextInput
 from UserDict import UserDict
-from mecat.models import Sample, DatasetWrapper
+from mecat.models import Project, Sample, DatasetWrapper
 from tardis.tardis_portal import models
 from tardis.tardis_portal.fields import MultiValueCommaSeparatedField
 from tardis.tardis_portal.widgets import CommaSeparatedInput
@@ -53,10 +53,6 @@ class ExperimentForm(forms.ModelForm):
     This handles the complex experiment forms.
 
     """
-
-    class Meta:
-        model = models.Experiment
-        exclude = ('authors', 'handle', 'approved', 'created_by')
     
     def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=':',
@@ -191,17 +187,16 @@ class ExperimentForm(forms.ModelForm):
                                     'author_experiments': author_experiments,
                                     'authors': authors,
                                     'samples': samples})
-        
-class ExperimentWrapperForm(ExperimentForm):
-    FUNDED_BY = [(None, u''),
-                 ("Australian Research Council (ARC)", "Australian Research Council (ARC)"),
-                 ("Medical Research Council (NHMRC)", "Medical Research Council (NHMRC)")]
-    
-    forcode_1 = forms.CharField(max_length=100, required=False, initial="060112 Structural Biology", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
-    forcode_2 = forms.CharField(max_length=100, required=False, initial="060199 Biochemistry and cell Biology not elsewhere classified", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
-    forcode_3 = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
-    funded_by = forms.ChoiceField(initial=None, choices=FUNDED_BY, required=False)
-    notes = forms.CharField(required=False, widget=Textarea)    
+   
+class ProjectForm(ExperimentForm):
+    class Meta:
+        exclude = ('authors', 'handle', 'approved', 'created_by')
+        FORCODE_CLASS_ATTR = {'class':'sample_forcode'}
+        model = Project
+        widgets = { 'forcode1' : forms.TextInput(attrs=FORCODE_CLASS_ATTR),
+                    'forcode2' : forms.TextInput(attrs=FORCODE_CLASS_ATTR),
+                    'forcode3' : forms.TextInput(attrs=FORCODE_CLASS_ATTR)
+                   }       
     
 class SampleForm(forms.ModelForm):
 
