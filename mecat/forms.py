@@ -153,7 +153,19 @@ class ExperimentForm(forms.ModelForm):
         """
         for number, form in enumerate(self.samples.forms):
             yield form
-                
+            
+    def _is_samples_valid(self):
+        for key, sample in enumerate(self.samples.forms):
+            if not sample.is_valid():
+                return False           
+        return True
+      
+    def is_valid(self):
+        experiment_fields_valid = super(ExperimentForm, self).is_valid()
+        samples_valid = self._is_samples_valid()
+        return experiment_fields_valid and samples_valid
+        
+
     def save(self, commit=True):
         # remove m2m field before saving
         del self.cleaned_data['authors']
