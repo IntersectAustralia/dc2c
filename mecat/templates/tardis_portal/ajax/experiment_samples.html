@@ -80,7 +80,12 @@
           <div class="sample_title">
              <div class="sample_title_with_checkbox"> 
                  <input type="checkbox" class="sample_checkbox" name="sample" value="{{sample.id}}" />
-                 <strong><span style="color: #5e5e5e"><a href="/experiment/{{experiment.id}}/edit_sample/{{sample.id}}">SAMPLE {{ forloop.counter }}</a>
+                 <strong><span style="color: #5e5e5e">
+                 	{% if has_write_permissions and not experiment.public and not sample.immutable %}
+                 	<a href="/experiment/{{experiment.id}}/edit_sample/{{sample.id}}">SAMPLE {{ forloop.counter }}</a>
+                 	{% else %}
+                 	SAMPLE {{ forloop.counter }}
+                 	{% endif %}
                  </span></strong>
              </div>
              <a id="sample_datasets_toggle_{{sample.id}}" title="Show/Hide" class="sample_datasets_toggle metadata_hidden fg-button small ui-state-default fg-button-icon-solo ui-corner-all" href="/ajax/sample_datasets/{{sample.id}}/">
@@ -102,8 +107,9 @@
         
     </div><!-- samples --> 
 
-    
-    <strong><a href="/experiment/newsample/{{experiment.id}}">Add New Sample to Experiment</a></strong><br/>
+    {% if has_write_permissions and not experiment.public and not sample.immutable %}
+    	<strong><a href="/experiment/newsample/{{experiment.id}}">Add New Sample to Experiment</a></strong><br/>
+    {% endif %}
     <div><input type="submit" value="Delete Selected Samples" /></div>
     <div><input type="submit" value="Download Selected Files" /></div>
   </form>  

@@ -115,7 +115,7 @@ def experiment_samples(request, experiment_id):
                         'tardis_portal/ajax/experiment_samples.html', c))
 
 @never_cache
-@authz.experiment_access_required
+@authz.write_permissions_required
 def edit_sample(request, experiment_id, sample_id):
     try:
         experiment = Experiment.safe.get(request, experiment_id)
@@ -144,7 +144,7 @@ def edit_sample(request, experiment_id, sample_id):
 
 
 @never_cache
-@authz.experiment_access_required
+@authz.write_permissions_required
 def new_sample(request, experiment_id):  
     try:
         experiment = Experiment.safe.get(request, experiment_id)
