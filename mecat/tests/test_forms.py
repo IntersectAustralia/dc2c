@@ -4,10 +4,78 @@ test_forms.py
 
 from django.test import TestCase          
 from mecat.models import Sample
-from mecat.forms import ExperimentWrapperForm
+from mecat.forms import SampleForm, ExperimentWrapperForm
 from tardis.tardis_portal import models
 from django.contrib.auth.models import User
 
+class SampleFormTestCase(TestCase):
+    
+    def setUp(self):        
+        user = 'tardis_user1'
+        pwd = 'secret'
+        email = ''
+        self.user = User.objects.create_user(user, email, pwd)
+        
+    def _create_experiment(self): 
+        exp = models.Experiment(title='my experiment',
+                                institution_name='some institution',
+                                description='some description',
+                                created_by=User.objects.get(id=self.user.pk),
+                                )
+        exp.save()
+        return exp
+    
+    def _data_to_post(self, data=None):
+        from django.http import QueryDict
+        experiment = self._create_experiment()
+        data = data or [('name', 'test sample'),
+                        ('description', 'experiment description here'),
+                        ('forcode_1', '010101112 Structural Biology'),
+                        ('forcode_2', '010101113 General Biology'),
+                        ('notes', 'some random notes'),
+                        ('dataset-MAX_NUM_FORMS', ''),
+                        ('dataset-INITIAL_FORMS', '0'),
+                        ('dataset-TOTAL_FORMS', '0'),
+                        ('experiment', experiment.id)
+                        ]
+        data = QueryDict('&'.join(['%s=%s' % (k, v) for k, v in data]))
+        return data     
+    
+    def test_validation_correct_data(self):
+        post = self._data_to_post()
+        f = SampleForm(post)
+        self.assertTrue(f.is_valid())   
+        
+    def test_validation_blank_data(self):
+        experiment = self._create_experiment()
+        post = self._data_to_post([('name', ''),
+                                    ('description', ''),
+                                    ('dataset-MAX_NUM_FORMS', ''),
+                                    ('dataset-INITIAL_FORMS', '0'),
+                                    ('dataset-TOTAL_FORMS', '0'),
+                                    ('experiment', experiment.id)
+                                   ])        
+        f = SampleForm(post)
+
+        self.assertFalse(f.is_valid())
+        self.assertTrue('name' in f.errors)
+        self.assertTrue('description' in f.errors)
+    
+    def test_validation_spaces_strings(self):
+        experiment = self._create_experiment()
+        post = self._data_to_post([('name', '  '),
+                                    ('description', '  '),
+                                    ('dataset-MAX_NUM_FORMS', ''),
+                                    ('dataset-INITIAL_FORMS', '0'),
+                                    ('dataset-TOTAL_FORMS', '0'),
+                                    ('experiment', experiment.id)
+                                   ])        
+        f = SampleForm(post)
+
+        self.assertFalse(f.is_valid())
+        self.assertTrue('name' in f.errors)
+        self.assertTrue('description' in f.errors)
+    
 class ExperimentFormTestCase(TestCase):
     
     def setUp(self):
