@@ -1,5 +1,10 @@
 from tardis.tardis_portal.models import *
 
+def validate_spaces(value):
+    from django.core.exceptions import ValidationError
+    if value.strip() == '':
+        raise ValidationError(u'Value cannot be empty')
+
 class ExperimentWrapper(models.Model):
     experiment = models.ForeignKey(Experiment)
     forcode1 = models.TextField(blank=True)
@@ -15,8 +20,8 @@ class ExperimentWrapper(models.Model):
     
 class Sample(models.Model):
     experiment = models.ForeignKey(Experiment)
-    description = models.TextField(blank=False)
-    name = models.CharField(max_length=100, blank=False)
+    description = models.TextField(blank=False, validators=[validate_spaces])
+    name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
     forcode1 = models.CharField(max_length=100, blank=True, default="060112 Structural Biology")
     forcode2 = models.CharField(max_length=100, blank=True, default="060199 Biochemistry and cell Biology not elsewhere classified")
     forcode3 = models.CharField(max_length=100, blank=True)
@@ -35,6 +40,4 @@ class DatasetWrapper(models.Model):
 
     def __unicode__(self):
        return 'wrapper for ' + self.dataset.description
-
-
 

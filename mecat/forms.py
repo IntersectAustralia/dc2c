@@ -163,8 +163,8 @@ class ExperimentForm(forms.ModelForm):
     def is_valid(self):
         experiment_fields_valid = super(ExperimentForm, self).is_valid()
         samples_valid = self._is_samples_valid()
-        return experiment_fields_valid and samples_valid
-        
+        return experiment_fields_valid and samples_valid  
+
 
     def save(self, commit=True):
         # remove m2m field before saving
@@ -304,18 +304,6 @@ class SampleForm(forms.ModelForm):
                 ds.save()        
               
               
-    def clean_description(self):
-        data = self.cleaned_data['description'].strip()
-        if data == '':
-            raise forms.ValidationError("Description cannot be empty")
-        return data
-        
-    def clean_name(self):
-        data = self.cleaned_data['name'].strip()
-        if data == '':
-            raise forms.ValidationError("Name cannot be empty")
-        return data 
-    
 class DatasetWrapperForm(forms.ModelForm):
     class Meta:
             model = DatasetWrapper
