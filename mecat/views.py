@@ -161,7 +161,8 @@ def new_sample(request, experiment_id):
     if request.POST:
         form = SampleForm(request.POST)
         if form.is_valid():
-            form.save(experiment_id, commit=False)
+            sample = form.save(experiment_id, commit=False)
+            sample.save_m2m()
             request.POST = {'status': "Sample Created."}
             return _redirect(experiment_id)
         c['status'] = "Errors exist in form."
@@ -177,7 +178,11 @@ def new_sample(request, experiment_id):
 def retrieve_datasets(request, sample_id):
     datasetwrappers = DatasetWrapper.objects.filter(sample=sample_id)
     datasets = [wrapper.dataset for wrapper in datasetwrappers]
-    c = Context({'datasets' : datasets})
+    sample = Sample.objects.get(pk=sample_id)
+    has_write_permissions = \
+        authz.has_write_permissions(request, sample.experiment.id)
+            
+    c = Context({'datasets' : datasets, 'has_write_permissions' : has_write_permissions})
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/dataset.html', c))
 

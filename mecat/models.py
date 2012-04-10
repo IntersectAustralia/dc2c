@@ -34,10 +34,16 @@ class Sample(models.Model):
 
 class DatasetWrapper(models.Model):
     sample = models.ForeignKey(Sample)
-    description = models.TextField(blank=False) # temporary
-    dataset = models.ForeignKey(Dataset)
+    description = models.TextField(blank=True) # temporary
+    dataset = models.ForeignKey(Dataset, null=True)
+    immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()
 
     def __unicode__(self):
-       return 'wrapper for ' + self.dataset.description
+       if self.dataset and self.dataset.description:
+           return 'wrapper for ' + self.dataset.description
+       elif self.description:
+           return 'wrapper: ' + self.description
+       else:
+           return 'wrapper for empty dataset'
 

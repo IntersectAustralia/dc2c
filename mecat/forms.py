@@ -17,6 +17,29 @@ class Author_Experiment(forms.ModelForm):
         model = models.Author_Experiment
         exclude = ('experiment',)
 
+class FullSampleModel(UserDict):
+    def save_m2m(self):
+        """
+        {
+        'sample': sample, 
+        'dataset_wrappers' : [(dataset_wrapper, dataset),..]
+        }
+        """        
+        sample = self.data['sample']
+        sample.save()
+        for dw, ds in self.data['dataset_wrappers']:
+            if not dw.immutable:
+                ds.description = dw.description
+                ds.save()
+                dw.dataset = ds
+                dw.sample = sample
+                dw.save() 
+                
+        if hasattr(self.data['dataset_wrappers'], 'deleted_forms'):
+            for dw, ds in self.data['dataset_wrappers'].deleted_forms:
+                if not dw.instance.immutable:
+                    dw.instance.delete() 
+
 class FullExperimentModel(UserDict):
     """
     This is a dict wrapper that store the values returned from
@@ -238,6 +261,8 @@ class SampleForm(forms.ModelForm):
             if field.name == 'description':
                 return field.formfield(
                     widget=TextInput(attrs={'size': '80'}))
+            elif field.name == 'dataset':
+                return None
             else:
                 return field.formfield()             
                     
@@ -273,54 +298,30 @@ class SampleForm(forms.ModelForm):
             
     def save(self, experiment_id, commit=True): 
         sample = super(SampleForm, self).save(commit)
-        datasets = []
-        for key, dataset in enumerate(self.datasets.forms):
-            if dataset.is_valid():
-                if dataset not in self.datasets.deleted_forms:
+        dataset_wrappers = []
+        for key, dw in enumerate(self.datasets.forms):
+            if dw.is_valid():
+                if dw not in self.datasets.deleted_forms:
                     # XXX for some random reason the link between
                     # the instance needs
                     # to be reinitialised
-                    dataset.instance.sample = sample
+                    dw.instance.sample = sample
                     exp = models.Experiment.objects.get(pk=experiment_id)
-                    real_dataset = models.Dataset(experiment=exp, description="dummy")
-                    real_dataset.save()
-                    dataset.instance.dataset = real_dataset
-                    o_dataset = dataset.save(commit)
-                    datasets.append(o_dataset)
-                    mutable = True
-                    if 'immutable' in dataset.initial:
-                        if dataset.initial['immutable']:
-                            mutable = False
-        
-        if hasattr(self.datasets, 'deleted_forms'):
-            for ds in self.datasets.deleted_forms:
-                if not ds.instance.immutable:
-                    ds.instance.delete()
-        # save all models
-        sample.save()
-        for ds in datasets:
-            if not ds.immutable:
-                ds.experiment = ds.experiment
-                ds.save()        
-              
-              
-class DatasetWrapperForm(forms.ModelForm):
-    class Meta:
-            model = DatasetWrapper
+                    # create real dw
+                    real_dataset = models.Dataset(experiment=exp)
+                    real_dataset.save(commit)
+                    dw_instance = dw.save(commit)  
+                    dataset_wrappers.append((dw_instance,real_dataset))
+            else:
+                raise Exception(self.datasets)
             
-    def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
-             initial=None, error_class=ErrorList, label_suffix=':',
-             empty_permitted=False, instance=None, extra=0):
-        self.datasets = {}
-        super(DatasetWrapperForm, self).__init__(data=data,
-                                             files=files,
-                                             auto_id=auto_id,
-                                             prefix=prefix,
-                                             initial=initial,
-                                             instance=instance,
-                                             error_class=error_class,
-                                             label_suffix=label_suffix,
-                                             empty_permitted=False)
+        if hasattr(self.datasets, 'deleted_forms'):
+            for dw in self.datasets.deleted_forms:
+                if not dw.instance.immutable:
+                    dw.instance.delete() 
+        
+        return FullSampleModel({'sample': sample, 'dataset_wrappers': dataset_wrappers})      
+              
     
 class RegisterMetamanForm(forms.Form):
     '''
