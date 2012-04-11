@@ -275,7 +275,7 @@ def edit_experiment(request, experiment_id,
     """
     experiment = Experiment.objects.get(id=experiment_id)
 
-    c = Context({'subtitle': 'Edit Experiment',
+    c = Context({'subtitle': 'Edit Project',
                  'user_id': request.user.id,
                  'experiment_id': experiment_id,
               })
