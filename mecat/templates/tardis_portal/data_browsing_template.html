@@ -3,7 +3,7 @@
 {% block sidebar %}
     <ul>
         <li>
-            <h2>Browse Experiments</h2>
+            <h2>Browse Projects</h2>
             <ul>
                 <li><a href="{% url tardis.tardis_portal.views.experiment_index %}">Index</a></li>
                 <li><a href="{% url tardis.tardis_portal.views.search_experiment %}">Search</a></li>
@@ -12,8 +12,8 @@
                 <br />
                 <h2>Controls</h2>
                 <ul>
-                    <li><a href="{% url tardis.tardis_portal.views.create_experiment %}">Create Experiment</a></li>
-                    <li><a href="{% url tardis.tardis_portal.views.control_panel %}">Experiment Access</a></li>
+                    <li><a href="{% url tardis.tardis_portal.views.create_experiment %}">Create Project</a></li>
+                    <li><a href="{% url tardis.tardis_portal.views.control_panel %}">Project Access</a></li>
                     <li><a href="{% url tardis.tardis_portal.views.manage_groups %}">Group Management</a></li>
                 </ul>
             {% endif %}

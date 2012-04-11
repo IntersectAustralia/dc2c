@@ -207,7 +207,7 @@ def create_experiment(request,
     
     """
     c = Context({
-        'subtitle': 'Create Experiment',
+        'subtitle': 'Create Project',
         'user_id': request.user.id,
         })
     staging = get_full_staging_path(request.user.username)

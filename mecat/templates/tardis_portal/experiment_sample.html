@@ -114,7 +114,7 @@
 </div>
 <div id="content">
     <div>
-        <h1 class="title">{{experiment.title}} > Sample {{dataset_count}}</h1>
+        <h1 class="title">{{experiment.title}} > Experiment {{sample_count}}</h1>
         <div class="entry">
             <div style="display:none;" class="fsTemplate">
                 <p class="msg_head">
@@ -135,16 +135,16 @@
                 {{ form.non_field_errors }}
                 <div class="msg_list">
                     <p class="exp_head">
-                        Sample Information
+                        Experiment Information
                     </p>
                     <div class="exp_body">
                         <div class="fieldWrapper">
-                            {{ form.name.errors }} <label for="id_dataset_name">Sample Name:</label>
+                            {{ form.name.errors }} <label for="id_dataset_name">Experiment Name:</label>
                             <br/>
                             {{ form.name }}
                         </div>
                         <div class="fieldWrapper">
-                            {{ form.description.errors }} <label for="id_dataset_description">Sample Description:</label>
+                            {{ form.description.errors }} <label for="id_dataset_description">Experiment Description:</label>
                             <br/>
                             {{ form.description }}
                         </div>

@@ -112,7 +112,7 @@
         <div class="entry">
             <div style="display:none;" class="fsTemplate">
                 <p class="msg_head">
-                    Sample
+                    Experiment
                 </p>
                 <div class="msg_body">
                     <div class="fieldWrapper">
@@ -130,7 +130,7 @@
                 {{ form.non_field_errors }}
                 <div class="msg_list">
                     <p class="exp_head">
-                        Experiment Information
+                        Project Information
                     </p>
                     <div class="exp_body">
                         <div class="fieldWrapper">
@@ -221,11 +221,11 @@
 
                         $(document).ready(function() {
                             $('.sample_container').formset({
-                                addText : "Add another Sample",
+                                addText : "Add another Experiment",
                                 prefix : smpPrefix,
                                 added : addSampleCB,
                                 removed : removeSampleCB,
-                                deleteText : 'Remove Sample',
+                                deleteText : 'Remove Experiment',
                                 formCssClass : "sample_container",
                                 formTemplate : ".fsTemplate",
                             });
@@ -241,7 +241,7 @@
                         {% for sample_form in form.get_samples %}
                         <div class="sample_container {% if sample_form.instance.immutable %}immutable{% endif %}"  id="{{ sample_form.prefix }}-row">
                             <p class="msg_head">
-                                Sample {% if sample_form.instance.immutable %}(Immutable){% endif %}
+                                Experiment {% if sample_form.instance.immutable %}(Immutable){% endif %}
                             </p>
                             <div class="msg_body">
                                 <div class="fieldWrapper">
