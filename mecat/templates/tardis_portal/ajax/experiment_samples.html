@@ -82,9 +82,9 @@
                  <input type="checkbox" class="sample_checkbox" name="sample" value="{{sample.id}}" />
                  <strong><span style="color: #5e5e5e">
                  	{% if has_write_permissions and not experiment.public and not sample.immutable %}
-                 	<a href="/experiment/{{experiment.id}}/edit_sample/{{sample.id}}">SAMPLE {{ forloop.counter }}</a>
+                 	<a href="/experiment/{{experiment.id}}/edit_sample/{{sample.id}}">EXPERIMENT {{ forloop.counter }}</a>
                  	{% else %}
-                 	SAMPLE {{ forloop.counter }}
+                 	EXPERIMENT {{ forloop.counter }}
                  	{% endif %}
                  </span></strong>
              </div>
@@ -108,7 +108,7 @@
     </div><!-- samples --> 
 
     {% if has_write_permissions and not experiment.public and not sample.immutable %}
-    	<strong><a href="/experiment/newsample/{{experiment.id}}">Add New Sample to Experiment</a></strong><br/>
+    	<strong><a href="/experiment/newsample/{{experiment.id}}">Add New Experiment to Project</a></strong><br/>
     {% endif %}
     <div><input type="submit" value="Delete Selected Samples" /></div>
     <div><input type="submit" value="Download Selected Files" /></div>
