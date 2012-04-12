@@ -17,7 +17,7 @@ from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, Search
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
 from mecat.models import Sample, DatasetWrapper
-from mecat.forms import ExperimentWrapperForm, SampleForm
+from mecat.forms import ProjectForm, SampleForm
 from mecat.subject_codes import FOR_CODE_LIST
 import logging
 
@@ -216,7 +216,7 @@ def create_experiment(request,
         c['staging_mount_prefix'] = settings.STAGING_MOUNT_PREFIX
     
     if request.method == 'POST':
-        form = ExperimentWrapperForm(request.POST)
+        form = ProjectForm(request.POST)
         if form.is_valid():
             full_experiment = form.save(commit=False)
 
@@ -250,7 +250,7 @@ def create_experiment(request,
         c["error"] = 'true'
 
     else:
-        form = ExperimentWrapperForm(extra=1)
+        form = ProjectForm(extra=1)
 
     c['form'] = form
     c['default_institution'] = settings.DEFAULT_INSTITUTION
@@ -288,7 +288,7 @@ def edit_experiment(request, experiment_id,
  
     from .experiments import ExperimentFormHandler
     if request.method == 'POST':
-        form = ExperimentWrapperForm(request.POST, request.FILES,
+        form = ProjectForm(request.POST, request.FILES,
                               instance=experiment, extra=0)
         if form.is_valid():
             full_experiment = form.save(commit=False)
@@ -308,7 +308,7 @@ def edit_experiment(request, experiment_id,
         c["error"] = 'true'
     else:
         experiment_handler = ExperimentFormHandler(experiment_id)
-        form = ExperimentWrapperForm(initial=experiment_handler.form_data(experiment_id), instance=experiment, extra=0)
+        form = ProjectForm(initial=experiment_handler.form_data(experiment_id), instance=experiment, extra=0)
 
     c['form'] = form
 

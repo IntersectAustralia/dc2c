@@ -3,7 +3,7 @@ import logging
 from django.conf import settings
 from django.db import transaction
 
-from mecat.models import ExperimentWrapper
+from mecat.models import Project
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ class ExperimentFormHandler(object):
         experiment_funded_by = cleaned_data['funded_by']
         experiment_notes = cleaned_data['notes']
         
-        new_exp_wrapper= ExperimentWrapper(experiment_id=self.experiment_id,
+        new_exp_wrapper= Project(experiment_id=self.experiment_id,
                             forcode1=experiment_forcode1,
                             forcode2=experiment_forcode2,
                             forcode3=experiment_forcode3,
@@ -41,7 +41,7 @@ class ExperimentFormHandler(object):
         experiment_funded_by = cleaned_data['funded_by']
         experiment_notes = cleaned_data['notes']
         
-        experiment = ExperimentWrapper.objects.get(experiment=experiment_id)
+        experiment = Project.objects.get(experiment=experiment_id)
         experiment.forcode1 = experiment_forcode1
         experiment.forcode2 = experiment_forcode2
         experiment.forcode3 = experiment_forcode3
@@ -51,7 +51,7 @@ class ExperimentFormHandler(object):
         experiment.save()
     
     def form_data(self, experiment_id):
-        experiment = ExperimentWrapper.objects.get(experiment=experiment_id)
+        experiment = Project.objects.get(experiment=experiment_id)
         data = {}
         data['forcode_1'] = experiment.forcode1
         data['forcode_2'] = experiment.forcode2

@@ -227,7 +227,7 @@ class ExperimentForm(forms.ModelForm):
                                     'authors': authors,
                                     'samples': samples})
         
-class ExperimentWrapperForm(ExperimentForm):
+class ProjectForm(ExperimentForm):
     FUNDED_BY = [(None, u''),
                  ("Australian Research Council (ARC)", "Australian Research Council (ARC)"),
                  ("Medical Research Council (NHMRC)", "Medical Research Council (NHMRC)")]

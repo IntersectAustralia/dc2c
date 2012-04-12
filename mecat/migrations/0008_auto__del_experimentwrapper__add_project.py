@@ -8,14 +8,40 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Changing field 'DatasetWrapper.dataset'
-        db.alter_column('mecat_datasetwrapper', 'dataset_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tardis_portal.Dataset'], null=True))
+        # Deleting model 'ExperimentWrapper'
+        db.delete_table('mecat_experimentwrapper')
+
+        # Adding model 'Project'
+        db.create_table('mecat_project', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('experiment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tardis_portal.Experiment'])),
+            ('forcode1', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('forcode2', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('forcode3', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('funded_by', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('notes', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('immutable', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal('mecat', ['Project'])
 
 
     def backwards(self, orm):
         
-        # User chose to not deal with backwards NULL issues for 'DatasetWrapper.dataset'
-        raise RuntimeError("Cannot reverse this migration. 'DatasetWrapper.dataset' and its values cannot be restored.")
+        # Adding model 'ExperimentWrapper'
+        db.create_table('mecat_experimentwrapper', (
+            ('funded_by', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('forcode2', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('experiment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tardis_portal.Experiment'])),
+            ('forcode1', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('notes', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('immutable', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('forcode3', self.gf('django.db.models.fields.TextField')(blank=True)),
+        ))
+        db.send_create_signal('mecat', ['ExperimentWrapper'])
+
+        # Deleting model 'Project'
+        db.delete_table('mecat_project')
 
 
     models = {
@@ -57,14 +83,14 @@ class Migration(SchemaMigration):
         },
         'mecat.datasetwrapper': {
             'Meta': {'object_name': 'DatasetWrapper'},
-            'dataset': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['tardis_portal.Dataset']", 'null': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'dataset': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['tardis_portal.Dataset']"}),
+            'description': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'immutable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'sample': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['mecat.Sample']"})
         },
-        'mecat.experimentwrapper': {
-            'Meta': {'object_name': 'ExperimentWrapper'},
+        'mecat.project': {
+            'Meta': {'object_name': 'Project'},
             'experiment': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['tardis_portal.Experiment']"}),
             'forcode1': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'forcode2': ('django.db.models.fields.TextField', [], {'blank': 'True'}),

@@ -5,7 +5,8 @@ def validate_spaces(value):
     if value.strip() == '':
         raise ValidationError(u'Value cannot be empty')
 
-class ExperimentWrapper(models.Model):
+class Project(models.Model):
+        
     experiment = models.ForeignKey(Experiment)
     forcode1 = models.TextField(blank=True)
     forcode2 = models.TextField(blank=True)
@@ -16,9 +17,14 @@ class ExperimentWrapper(models.Model):
     objects = OracleSafeManager()
 
     def __unicode__(self):
-        return 'wrapper for ' + self.experiment.description
+        return 'Project for Experiment \'' + self.experiment.description + '\''
     
 class Sample(models.Model):
+    
+    class Meta:
+        verbose_name = 'Project Experiment'
+        verbose_name_plural = 'Project Experiments'
+        
     experiment = models.ForeignKey(Experiment)
     description = models.TextField(blank=False, validators=[validate_spaces])
     name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
@@ -33,9 +39,10 @@ class Sample(models.Model):
         return self.description
 
 class DatasetWrapper(models.Model):
+        
     sample = models.ForeignKey(Sample)
-    description = models.TextField(blank=True) # temporary
-    dataset = models.ForeignKey(Dataset, null=True)
+    description = models.TextField(blank=False)
+    dataset = models.ForeignKey(Dataset)
     immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()
 
