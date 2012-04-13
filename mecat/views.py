@@ -128,17 +128,20 @@ def edit_sample(request, experiment_id, sample_id):
     sample = Sample.objects.get(id=sample_id)
     c['sample_count'] = sample.name
     
-    from .samples import SampleFormHandler
     if request.POST:
-        form = SampleForm(request.POST)
+        form = SampleForm(request.POST, instance=sample, extra=0)
         if form.is_valid():
-            SampleFormHandler(experiment_id).edit_sample(form.cleaned_data, sample_id)
+            full_sample = form.save(experiment_id, commit=False)
+            full_sample.save_m2m()
+            request.POST = {'status': "Sample Created."}
             return _redirect(experiment_id)
+        c['status'] = "Errors exist in form."
+        c["error"] = 'true'
     else:
-        sample_handler = SampleFormHandler(experiment_id)
-        form = SampleForm(initial=sample_handler.form_data(sample_id))
-        
+        form = SampleForm(instance=sample, extra=0)
+    
     c['form'] = form    
+    c['status'] = form.errors
     return HttpResponse(render_response_index(request,
                         'tardis_portal/experiment_sample.html', c))
 

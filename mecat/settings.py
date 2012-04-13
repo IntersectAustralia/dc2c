@@ -266,7 +266,7 @@ DEFAULT_INSTITUTION = "University of Sydney"
 #Are the datasets ingested via METS xml (web services) to be immutable?
 IMMUTABLE_METS_DATASETS = True
 
-SINGLE_SEARCH_ENABLED=True
+SINGLE_SEARCH_ENABLED=False
 # Settings for the single search box
 # Set HAYSTACK_SOLR_URL to the location of the SOLR server instance
 #SINGLE_SEARCH_ENABLED = True

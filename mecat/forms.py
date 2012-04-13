@@ -8,8 +8,20 @@ from tardis.tardis_portal import models
 from tardis.tardis_portal.fields import MultiValueCommaSeparatedField
 from tardis.tardis_portal.widgets import CommaSeparatedInput
 import logging
+import re
 
 logger = logging.getLogger(__name__)
+
+class redict(dict):
+    def __init__(self, d):
+        dict.__init__(self, d)
+
+    def __getitem__(self, regex):
+        r = re.compile(regex)
+        mkeys = filter(r.match, self.keys())
+        if len(mkeys) == 1:
+            return self.get(mkeys[0])
+        return None
 
 class Author_Experiment(forms.ModelForm):
 
@@ -256,10 +268,11 @@ class SampleForm(forms.ModelForm):
                                              error_class=error_class,
                                              label_suffix=label_suffix,
                                              empty_permitted=False)
-        
+
+          
         def custom_dataset_field(field):
             if field.name == 'description':
-                return field.formfield(
+                return field.formfield(required=True, 
                     widget=TextInput(attrs={'size': '80'}))
             elif field.name == 'dataset':
                 return None
@@ -267,7 +280,7 @@ class SampleForm(forms.ModelForm):
                 return field.formfield()             
                     
         # initialise formsets
-        if instance == None or instance.dataset_set.count() == 0:
+        if instance == None or instance.datasetwrapper_set.count() == 0:
             extra = 1
         dataset_formset = inlineformset_factory(
             Sample,
@@ -295,30 +308,40 @@ class SampleForm(forms.ModelForm):
         for number, form in enumerate(self.datasets.forms):
             yield form
                 
-            
+    def _is_datasets_valid(self):
+        for key, dataset in enumerate(self.datasets.forms):
+            if not dataset.is_valid():
+                return False           
+        return True
+      
+    def is_valid(self):
+        sample_fields_valid = super(SampleForm, self).is_valid()
+        datasets_valid = self._is_datasets_valid()
+        return sample_fields_valid and datasets_valid    
+                
+    def _description_is_empty(self, dw_form):
+        data = redict(dw_form.data)
+        return data[r"dataset-.*-description"] is None or data[r"dataset-.*-description"][0] is u''
+        
     def save(self, experiment_id, commit=True): 
         sample = super(SampleForm, self).save(commit)
         dataset_wrappers = []
-        for key, dw in enumerate(self.datasets.forms):
-            if dw.is_valid():
-                if dw not in self.datasets.deleted_forms:
-                    # XXX for some random reason the link between
-                    # the instance needs
-                    # to be reinitialised
-                    dw.instance.sample = sample
+        for key, dw_form in enumerate(self.datasets.forms):
+            if dw_form.is_valid():
+                if dw_form not in self.datasets.deleted_forms:
+                    dw_form.instance.sample = sample
                     exp = models.Experiment.objects.get(pk=experiment_id)
-                    # create real dw
+                    # create real dataset wrapper IF the description is not 
+                    # empty
                     real_dataset = models.Dataset(experiment=exp)
                     real_dataset.save(commit)
-                    dw_instance = dw.save(commit)  
+                    dw_instance = dw_form.save(commit)  
                     dataset_wrappers.append((dw_instance,real_dataset))
-            else:
-                raise Exception(self.datasets)
             
         if hasattr(self.datasets, 'deleted_forms'):
-            for dw in self.datasets.deleted_forms:
-                if not dw.instance.immutable:
-                    dw.instance.delete() 
+            for dw_form in self.datasets.deleted_forms:
+                if not dw_form.instance.immutable:
+                    dw_form.instance.delete() 
         
         return FullSampleModel({'sample': sample, 'dataset_wrappers': dataset_wrappers})      
               

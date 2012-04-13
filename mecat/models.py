@@ -39,10 +39,9 @@ class Sample(models.Model):
         return self.description
 
 class DatasetWrapper(models.Model):
-        
     sample = models.ForeignKey(Sample)
-    description = models.TextField(blank=False)
-    dataset = models.ForeignKey(Dataset)
+    description = models.TextField(blank=False, validators=[validate_spaces])
+    dataset = models.ForeignKey(Dataset, null=True, blank=True)
     immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()
 
