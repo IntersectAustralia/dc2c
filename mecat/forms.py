@@ -19,6 +19,8 @@ class redict(dict):
     def __getitem__(self, regex):
         r = re.compile(regex)
         mkeys = filter(r.match, self.keys())
+        
+        raise Exception(mkeys)
         if len(mkeys) == 1:
             return self.get(mkeys[0])
         return None
@@ -190,6 +192,7 @@ class ExperimentForm(forms.ModelForm):
             yield form
             
     def _is_samples_valid(self):
+        raise Exception(self.samples)
         for key, sample in enumerate(self.samples.forms):
             if not sample.is_valid():
                 return False           
@@ -271,7 +274,7 @@ class SampleForm(forms.ModelForm):
 
           
         def custom_dataset_field(field):
-            if field.name == 'description':
+            if field.name == 'description' or field.name == 'name':
                 return field.formfield(required=True, 
                     widget=TextInput(attrs={'size': '80'}))
             elif field.name == 'dataset':
@@ -285,7 +288,7 @@ class SampleForm(forms.ModelForm):
         dataset_formset = inlineformset_factory(
             Sample,
             DatasetWrapper,
-            formfield_callback=custom_dataset_field,
+            formfield_callback=custom_dataset_field, 
             extra=extra, can_delete=True) 
     
         # fill formsets
@@ -310,19 +313,27 @@ class SampleForm(forms.ModelForm):
                 
     def _is_datasets_valid(self):
         for key, dataset in enumerate(self.datasets.forms):
-            if not dataset.is_valid():
+            if not dataset.is_valid() or self._description_is_empty(dataset):
                 return False           
         return True
       
-    def is_valid(self):
+    def is_valid(self):  
         sample_fields_valid = super(SampleForm, self).is_valid()
         datasets_valid = self._is_datasets_valid()
         return sample_fields_valid and datasets_valid    
-                
+
     def _description_is_empty(self, dw_form):
         data = redict(dw_form.data)
-        return data[r"dataset-.*-description"] is None or data[r"dataset-.*-description"][0] is u''
-        
+        empty = False
+        if data[r"dataset-.*-description"] is None or data[r"dataset-.*-description"][0] is u'':
+            raise Exception(dw_form)
+            self.errors["Dataset Description : "] = "This field is empty"
+            empty = True
+        if data[r"dataset-.*-name"] is None or data[r"dataset-.*-name"][0] is u'':
+            self.errors["Dataset Name : "] = "This field is empty"
+            emtpy = True
+        return empty
+    
     def save(self, experiment_id, commit=True): 
         sample = super(SampleForm, self).save(commit)
         dataset_wrappers = []

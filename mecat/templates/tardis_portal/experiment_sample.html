@@ -124,7 +124,9 @@
                     <div class="fieldWrapper">
                     	<input type="hidden" name="dataset-0-dataset" value="{{dataset_id}}" id="id_dataset-0-dataset"/>
                         <input type="hidden" name="dataset-0-sample" value="{{sample_id}}" id="id_dataset-0-sample" />
-                        <input type="hidden" name="dataset-0-id" value id="id_dataset-0-id" />
+                        <input type="hidden" name="dataset-0-id" value id="id_dataset-0-id" /> 
+                        Name:
+                        <input name="dataset-0-name" value="" type="text" id="id_dataset-0-name" size="80" />
                         Description:
                         <input name="dataset-0-description" value="" type="text" id="id_dataset-0-description" size="80" />
                         <input type="hidden" name="dataset-0-immutable" value="False" id="id_dataset-0-immutable" />
@@ -235,13 +237,22 @@
                             </p>
                             <div class="msg_body">
                                 <div class="fieldWrapper">
-                                    {{ dataset_form.description.errors }}
+                                    {{ dataset_form.name.errors }}
+
+                                    {% for fld in dataset_form.hidden_fields %}{{ fld }}{% endfor %}
+                                    {% if dataset_form.instance.pk %}{{ dataset_form.DELETE }}{% endif %}
+                                    Name: {{ dataset_form.name }}
                                     {{ dataset_form.immutable.as_hidden }}
                                     {{ dataset_form.dataset.as_hidden }}
+                                </div>                            	
+                                <div class="fieldWrapper">
+                                    {{ dataset_form.description.errors }}
 
                                     {% for fld in dataset_form.hidden_fields %}{{ fld }}{% endfor %}
                                     {% if dataset_form.instance.pk %}{{ dataset_form.DELETE }}{% endif %}
                                     Description: {{ dataset_form.description }}
+                                    {{ dataset_form.immutable.as_hidden }}
+                                    {{ dataset_form.dataset.as_hidden }}
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 from tardis.tardis_portal.models import *
+from django.core.exceptions import ValidationError
 
 def validate_spaces(value):
-    from django.core.exceptions import ValidationError
     if value.strip() == '':
         raise ValidationError(u'Value cannot be empty')
 
@@ -40,6 +40,7 @@ class Sample(models.Model):
 
 class DatasetWrapper(models.Model):
     sample = models.ForeignKey(Sample)
+    name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
     description = models.TextField(blank=False, validators=[validate_spaces])
     dataset = models.ForeignKey(Dataset, null=True, blank=True)
     immutable = models.BooleanField(default=False)
@@ -52,4 +53,3 @@ class DatasetWrapper(models.Model):
            return 'wrapper: ' + self.description
        else:
            return 'wrapper for empty dataset'
-

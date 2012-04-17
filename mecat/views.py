@@ -161,7 +161,7 @@ def new_sample(request, experiment_id):
     samples = Sample.objects.filter(experiment=experiment_id)
     c['sample_count'] = samples.count() + 1
     
-    if request.POST:
+    if request.method == 'POST':
         form = SampleForm(request.POST)
         if form.is_valid():
             sample = form.save(experiment_id, commit=False)
