@@ -149,7 +149,7 @@ ANSTO_MEDIA_ROOT = path.abspath(path.join(path.dirname(__file__),
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 
-MEDIA_URL = '/site_media'
+MEDIA_URL = '/site_media/'
 
 
 #set to empty tuple () for no apps
@@ -256,10 +256,10 @@ SYSTEM_LOG_MAXBYTES = 0
 MODULE_LOG_MAXBYTES = 0
 
 # Uploadify root folder path, relative to MEDIA_ROOT
-UPLOADIFY_PATH = '%s%s' % (MEDIA_URL, 'js/uploadify/')
+UPLOADIFY_PATH = '%s%s' % (STATIC_URL, 'js/lib/uploadify/')
 
 # Upload path that files are sent to
-UPLOADIFY_UPLOAD_PATH = '%s%s' % (MEDIA_URL, 'uploads/')
+UPLOADIFY_UPLOAD_PATH = '%s%s' % (STATIC_URL, 'uploads/')
 
 DEFAULT_INSTITUTION = "University of Sydney"
 
