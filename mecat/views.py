@@ -107,10 +107,6 @@ def experiment_samples(request, experiment_id):
     if 'error' in request.GET:
         c['error'] = request.GET['error']
         
-    if len(c['samples']) is 0:
-        return HttpResponse(render_response_index(request,
-                        'tardis_portal/ajax/experiment_datasets.html', c))
-        
     return HttpResponse(render_response_index(request,
                         'tardis_portal/ajax/experiment_samples.html', c))
 
