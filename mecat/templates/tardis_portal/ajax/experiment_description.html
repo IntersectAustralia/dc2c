@@ -99,7 +99,7 @@
   </p>
 
   <p>
-    <strong>Experiment Last Updated:</strong>
+    <strong>Project Last Updated:</strong>
     {{ experiment.update_time|date:"jS F Y H:i" }}<br/>
   </p>
 	<p>
@@ -110,13 +110,13 @@
     {% for p in protocol %}
       <p>
 	{% if p.0 %}
-	  <strong><a href="{{p.1}}">Download Entire Experiment ({{p.0|upper}})</a></strong><br/>
+	  <strong><a href="{{p.1}}">Download Entire Project ({{p.0|upper}})</a></strong><br/>
 	{% else %}
-	  <strong><a href="{{p.1}}">Download Entire Experiment</a></strong><br/>
+	  <strong><a href="{{p.1}}">Download Entire Project</a></strong><br/>
 	{% endif %}
       </p>
     {% endfor %}
-    <p><strong><a href="/experiment/metsexport/{{experiment.id}}">Download Experiment Metadata (METS)</a></strong></p>
+    <p><strong><a href="/experiment/metsexport/{{experiment.id}}">Download Project Metadata (METS)</a></strong></p>
     {% get_log_book as log_book_file %}
     {% if log_book_file %}
     <p><strong><a href="{{ log_book_file.get_download_url }}" target="_blank" title="{{ log_book_file.filename }}">Download Log Book (PDF)</a></strong></p>
@@ -131,7 +131,7 @@
   <p align="right">
     <br/>
     {% if owners %}
-      <strong>Experiment Administrators </strong><br/>
+      <strong>Project Administrators </strong><br/>
       {% for owner in owners %}
         {% if owner.email %}
           <a href="mailto:{{owner.email}}">{{ owner.email}}</a>
@@ -145,7 +145,7 @@
 	</p>
 	<p align="right">
 	{% if experiment.public %}
-		<em>This experiment is public.</em>
+		<em>This project is public.</em>
 	{% endif %}
       
   </p>

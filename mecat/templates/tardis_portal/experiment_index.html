@@ -78,7 +78,7 @@
   </h1>
 
   {% if shared_experiments %}
-    <strong>{{ shared_experiments.count }}</strong> experiment{{ shared_experiments.count|pluralize}}
+    <strong>{{ shared_experiments.count }}</strong> [experiment]project{{ shared_experiments.count|pluralize}}
   {% endif %}
 
   {% if shared_experiments %}
@@ -109,7 +109,7 @@
 </table>
 
 {% else %}
-  There are no experiments shared with you.
+  There are no projects shared with you.
 {% endif %}
 </div> <!-- post -->
 
@@ -155,7 +155,7 @@
       </table>
 
       {% else %}
-        No public experiments at the moment.
+        No public projects at the moment.
       {% endif %}
 
   </div> <!-- post -->
