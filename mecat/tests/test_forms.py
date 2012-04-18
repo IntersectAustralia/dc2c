@@ -4,7 +4,7 @@ test_forms.py
 
 from django.test import TestCase          
 from mecat.models import Sample
-from mecat.forms import SampleForm, ExperimentWrapperForm
+from mecat.forms import SampleForm, ProjectForm
 from tardis.tardis_portal import models
 from django.contrib.auth.models import User
 
@@ -139,12 +139,12 @@ class ExperimentFormTestCase(TestCase):
         
     def test_validation_correct_data(self):
         post = self._data_to_post()
-        f = ExperimentWrapperForm(post)
+        f = ProjectForm(post)
         self.assertTrue(f.is_valid())   
         
     def test_validation_instance_data(self):   
         exp = self._create_experiment()  
-        f = ExperimentWrapperForm(instance=exp)
+        f = ProjectForm(instance=exp)
         # WIP
         #f.is_valid()
         #raise Exception(f)
@@ -160,7 +160,7 @@ class ExperimentFormTestCase(TestCase):
                                    ('sample-INITIAL_FORMS', '0'),
                                    ('sample-TOTAL_FORMS', '0'),
                                    ])        
-        f = ExperimentWrapperForm(post)
+        f = ProjectForm(post)
 
         self.assertFalse(f.is_valid())
         self.assertTrue('authors' in f.errors)
