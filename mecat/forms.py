@@ -111,8 +111,7 @@ class ExperimentForm(forms.ModelForm):
             if field.name == 'description' or field.name == 'name':
                 return field.formfield(
                     widget=TextInput(attrs={'size': '80'}))
-            else:
-                return field.formfield()
+            return None
                     
         # initialise formsets
         if instance == None or instance.sample_set.count() == 0:
