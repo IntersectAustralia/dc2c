@@ -197,7 +197,7 @@ class ExperimentForm(forms.ModelForm):
       
     def is_valid(self):
         experiment_fields_valid = super(ExperimentForm, self).is_valid()
-        samples_valid = self._is_samples_valid()
+        samples_valid = self._is_samples_valid()     
         return experiment_fields_valid and samples_valid  
 
 
@@ -248,6 +248,7 @@ class ProjectForm(ExperimentForm):
     forcode_2 = forms.CharField(max_length=100, required=False, initial="060199 Biochemistry and cell Biology not elsewhere classified", widget=forms.TextInput(attrs={'class':'sample_forcode'}))
     forcode_3 = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'sample_forcode'}))
     funded_by = forms.ChoiceField(initial=None, choices=FUNDED_BY, required=False)
+    funding_code = forms.CharField(max_length=100, required=False)
     notes = forms.CharField(required=False, widget=Textarea)    
     
 class SampleForm(forms.ModelForm):

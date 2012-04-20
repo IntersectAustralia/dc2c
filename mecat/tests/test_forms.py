@@ -94,6 +94,7 @@ class ExperimentFormTestCase(TestCase):
                         ('forcode_1', '010101112 Structural Biology'),
                         ('forcode_2', '010101113 General Biology'),
                         ('funded_by', 'Medical Research Council (NHMRC)'),
+                        ('funding_code', "1020203dfg"),
                         ('notes', 'some random notes'),
                         ('sample-MAX_NUM_FORMS', ''),
                         ('sample-INITIAL_FORMS', '0'),
@@ -145,10 +146,13 @@ class ExperimentFormTestCase(TestCase):
     def test_validation_instance_data(self):   
         exp = self._create_experiment()  
         f = ProjectForm(instance=exp)
-        # WIP
-        #f.is_valid()
-        #raise Exception(f)
-        #self.assertTrue(f.is_valid())
+        # A default empty experiment makes the project form invalid
+        self.assertFalse(f.is_valid())
+        
+        post = self._data_to_post()
+        f = ProjectForm(instance=exp, data=post)
+        self.assertTrue(f.is_valid())
+        
     
     def test_validation_blank_data(self):
         post = self._data_to_post([('authors', ''),

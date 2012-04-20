@@ -12,6 +12,7 @@ class Project(models.Model):
     forcode2 = models.TextField(blank=True)
     forcode3 = models.TextField(blank=True)
     funded_by = models.TextField(blank=True)
+    funding_code = models.TextField(blank=True)
     notes = models.TextField(blank=True)
     immutable = models.BooleanField(default=False)
     objects = OracleSafeManager()

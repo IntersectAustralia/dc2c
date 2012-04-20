@@ -29,11 +29,13 @@ class ModelTestCase(TestCase):
         forcode2 = "0002"
         forcode3 = "0003 - three"
         funded_by = "NHMRC"
+        funding_code = "1001011"
         notes = "A note that is not that long"
         project.forcode1 = forcode1
         project.forcode2 = forcode2
         project.forcode3 = forcode3
         project.funded_by = funded_by
+        project.funding_code = funding_code
         project.notes = notes
         project.save()
         self.assertEqual(project.experiment, self.experiment)
@@ -42,6 +44,7 @@ class ModelTestCase(TestCase):
         self.assertEqual(project.forcode3, forcode3)
         self.assertEqual(project.notes, notes)
         self.assertEqual(project.funded_by, funded_by)
+        self.assertEquals(project.funding_code, funding_code)
         
         project_from_db = Project.objects.get(experiment__description=self.desc)
         self.assertEqual(project_from_db.experiment, self.experiment)
