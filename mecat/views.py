@@ -313,3 +313,11 @@ def edit_experiment(request, experiment_id,
 
     return HttpResponse(render_response_index(request,
                         template, c))
+    
+def partners(request):
+
+    c = Context({'subtitle': 'Partners',
+                 'about_pressed': True,
+                 'nav': [{'name': 'Partners', 'link': '/partners/'}]})
+    return HttpResponse(render_response_index(request,
+                        'tardis_portal/partners.html', c))    

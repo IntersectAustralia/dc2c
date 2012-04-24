@@ -1,41 +1,24 @@
 from django.template import Context 
 from tardis.tardis_portal.models import ExperimentParameter, ParameterName, Schema  
 
-import tardis.tardis_portal.publish.provider.schemarifcsprovider as schemarifcsprovider
+import tardis.tardis_portal.publish.provider.rifcsprovider as rifcsprovider
     
-SERVER_URL = "https://tardis.nbi.ansto.gov.au"
-HARVEST_URL = "http://tardis.nbi.ansto.gov.au/oai/provider"
+SERVER_URL = "https://dc2c.server.gov.au"
+HARVEST_URL = "http://dc2c.server.gov.au/oai/provider"
 
-INSTRUMENT_SERVICE_IDS = {
-    'Echidna' : '766',
-    'Kowari' : '767',
-    'Platypus' : '768',
-    'Quokka' : '769',
-    'Wombat' : '770'
-    }
     
-class AnstoRifCsProvider(schemarifcsprovider.SchemaRifCsProvider):      
+class DC2CRifCsProvider(rifcsprovider.RifCsProvider):      
     
     def __init__(self):
-        super(AnstoRifCsProvider, self).__init__()
-        self.namespace = 'http://www.tardis.edu.au/schemas/ansto/experiment/2011/06/21'  
-        self.sample_desc_schema_ns = 'http://www.tardis.edu.au/schemas/ansto/sample/2011/06/21'
+        super(DC2CRifCsProvider, self).__init__()
       
     def get_description(self, experiment):
         from tardis.apps.ands_register.publishing import PublishHandler        
         phandler = PublishHandler(experiment.id) 
         desc = phandler.custom_description()
         if not desc:
-            # We do not want the abstract to be available in the description when
-            # no custom description is available
-            desc = ""
-        return super(AnstoRifCsProvider, self).format_desc(desc)
-    
-    def get_emails(self, beamlines):
-        emails = []
-        for bl in beamlines:
-            emails.append("%s@ansto.gov.au" % bl)
-        return emails
+            desc = experiment.description
+        return super(DC2CRifCsProvider, self).format_desc(desc)
         
     def get_originating_source(self):
         return HARVEST_URL
@@ -43,13 +26,14 @@ class AnstoRifCsProvider(schemarifcsprovider.SchemaRifCsProvider):
     def get_key(self, experiment):
         return "research-data.ansto.gov.au/collection/bragg/%s" % (experiment.id)  
          
-    def get_produced_bys(self, beamlines):
-        pbs = []
-        for bl in beamlines:
-            id = INSTRUMENT_SERVICE_IDS.get(bl, None)
-            if id is not None:
-                pbs.append('research-data.ansto.gov.au/collection/%s' % id)
-        return pbs
+    def get_url(self, experiment, url):
+        return url + "/" + str(experiment.id)
+
+    def get_produced_bys(self):
+        return None
+    
+    def get_forcodes(self):
+        return "123445566"
 
     def get_rights(self, experiment):
         if self.get_license_uri(experiment):
@@ -71,15 +55,13 @@ class AnstoRifCsProvider(schemarifcsprovider.SchemaRifCsProvider):
                 'interest.')]
 
     def get_rifcs_context(self, experiment):
-        c = super(AnstoRifCsProvider, self).get_rifcs_context(experiment)
-        beamlines = c['beamlines']
+        c = super(DC2CRifCsProvider, self).get_rifcs_context(experiment)
         c['blnoun'] = 'instrument'
         c['originating_source'] = self.get_originating_source()
-        c['emails'] = self.get_emails(beamlines)
         c['key'] = self.get_key(experiment)
         c['url'] = self.get_url(experiment, SERVER_URL)
-        c['produced_bys'] = self.get_produced_bys(beamlines)
-        c['anzsrcfor'].extend(['029904'])
-        c['rights'] = self.get_rights(experiment)
-        c['access_rights'] = self.get_access_rights(experiment)
+        c['produced_bys'] = self.get_produced_bys()
+        c['anzsrcfor'] = self.get_forcodes()
+        #c['rights'] = self.get_rights(experiment)
+        #c['access_rights'] = self.get_access_rights(experiment)
         return c
