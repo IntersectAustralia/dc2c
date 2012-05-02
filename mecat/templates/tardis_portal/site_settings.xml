@@ -2,8 +2,8 @@
         <email-endswith>sydney.edu.au</email-endswith>
         <register>
             <url>{{baseurl}}experiment/register/</url>
-                <username>sync</username>
-                <password>S.0105.transfer</password>
+                <username>CHANGEME</username>
+                <password>CHANGEME</password>
             <fileProtocol>tardis</fileProtocol>
         </register>
         <transfer>
