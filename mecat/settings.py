@@ -154,7 +154,7 @@ MEDIA_URL = '/site_media/'
 
 #set to empty tuple () for no apps
 #TARDIS_APPS = ('mrtardis', )
-TARDIS_APPS = ('summary_table','related_info','ands_register')
+TARDIS_APPS = ('summary_table','ands_register')
 TARDIS_APP_ROOT = 'tardis.apps'
 
 if TARDIS_APPS:
@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.staticfiles',
     'tardis.template.loaders',
+    'tardis.apps.sync', 
     'tardis.tardis_portal',
     'tardis.tardis_portal.templatetags',
     'registration',
@@ -184,6 +185,12 @@ INSTALLED_APPS = (
     'djcelery',
     'djkombu',
     ) + apps
+
+MYTARDIS_SITE_URL = 'http://gridftp.intersect.org.au'
+
+SYNC_ADMINS = ('tardis-admin@intersect.org.au')
+
+SYNC_CLIENT_KEY = 'I4VRnZONl0dEoxyn3dBgmxoU0kfUovBk'
 
 JASMINE_TEST_DIRECTORY = path.abspath(path.join(path.dirname(__file__),
                                                 'tardis_portal',
