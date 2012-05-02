@@ -192,6 +192,8 @@ SYNC_ADMINS = ('tardis-admin@intersect.org.au')
 
 SYNC_CLIENT_KEY = 'I4VRnZONl0dEoxyn3dBgmxoU0kfUovBk'
 
+GRID_PROXY_FILE = '/var/mytardis/proxy/proxy.cert'
+
 JASMINE_TEST_DIRECTORY = path.abspath(path.join(path.dirname(__file__),
                                                 'tardis_portal',
                                                 'tests',
