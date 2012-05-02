@@ -1,0 +1,24 @@
+<site-settings>
+        <email-endswith>sydney.edu.au</email-endswith>
+        <register>
+            <url>{{baseurl}}experiment/register/</url>
+                <username>sync</username>
+                <password>S.0105.transfer</password>
+            <fileProtocol>tardis</fileProtocol>
+        </register>
+        <transfer>
+                <type>gridftp</type>
+                <user>tardis</user>
+                <password>{{proxy}}
+</password>
+                <sl>gsiftp://gridftp.intersect.org.au</sl>
+                <serversite>{{filestorepath}}</serversite>
+                <optionFast>true</optionFast>
+                <optionPenable>true</optionPenable>
+                <optionP>10</optionP>
+                <optionBSenable>false</optionBSenable>
+                <optionBS>0</optionBS>
+                <optionTCPBSenable>false</optionTCPBSenable>
+                <optionTCPBS>0</optionTCPBS>
+        </transfer>
+</site-settings>
