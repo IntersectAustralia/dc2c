@@ -175,7 +175,7 @@ def new_sample(request, experiment_id):
                         'tardis_portal/experiment_sample.html', c))
 
 def retrieve_datasets(request, sample_id):
-    datasetwrappers = DatasetWrapper.objects.filter(sample=sample_id)
+    datasetwrappers = DatasetWrapper.objects.filter(sample=sample_id).order_by('pk')
     datasets = [wrapper.dataset for wrapper in datasetwrappers]
     sample = Sample.objects.get(pk=sample_id)
     has_write_permissions = \
