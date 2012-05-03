@@ -54,3 +54,17 @@ class DatasetWrapper(models.Model):
            return 'wrapper: ' + self.description
        else:
            return 'wrapper for empty dataset'
+
+@receiver(post_save, sender=Experiment)
+@receiver(post_delete, sender=Experiment)
+@receiver(post_save, sender=Dataset)
+@receiver(post_delete, sender=Dataset)
+@receiver(post_save, sender=Project)
+@receiver(post_delete, sender=Project)
+@receiver(post_save, sender=DatasetWrapper)
+@receiver(post_delete, sender=DatasetWrapper)
+def post_save_experiment(sender, **kwargs):
+    # TODO: create party and dataset rifcs too - note that the activity rifcs
+    # is taken care of in the core model
+    return
+    
