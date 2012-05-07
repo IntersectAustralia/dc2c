@@ -321,3 +321,11 @@ def partners(request):
                  'nav': [{'name': 'Partners', 'link': '/partners/'}]})
     return HttpResponse(render_response_index(request,
                         'tardis_portal/partners.html', c))    
+    
+
+@login_required
+def change_password(request):
+    from django.contrib.auth.views import password_change
+    return password_change(request)
+
+    
