@@ -54,6 +54,15 @@ class DatasetWrapper(models.Model):
            return 'wrapper: ' + self.description
        else:
            return 'wrapper for empty dataset'
+       
+class OwnerDetails(models.Model):
+    title = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
+    first_name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
+    last_name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
+    email = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
+    
+    def __unicode__(self):
+        return 'details for ' + self.first_name + ' ' + self.last_name    
 
 @receiver(post_save, sender=Experiment)
 @receiver(post_delete, sender=Experiment)
@@ -64,7 +73,20 @@ class DatasetWrapper(models.Model):
 @receiver(post_save, sender=DatasetWrapper)
 @receiver(post_delete, sender=DatasetWrapper)
 def post_save_experiment(sender, **kwargs):
-    # TODO: create party and dataset rifcs too - note that the activity rifcs
+    # create party and dataset rifcs too - note that the activity rifcs
     # is taken care of in the core model
-    return
+    experiment = kwargs['instance']
+    _publish_public_expt_rifcs(experiment)
     
+def _publish_public_expt_rifcs(experiment):
+    try:
+        providers = settings.RIFCS_PROVIDERS
+    except:
+        providers = None
+    from mecat.rifcs.publishservice import PartyPublishService, CollectionPublishService
+    # Handles party rifcs
+    pservice = PartyPublishService(providers, experiment)
+    pservice.manage_rifcs(settings.OAI_DOCS_PATH)
+    # Handles dataset rifcs
+    pservice = CollectionPublishService(providers, experiment)
+    pservice.manage_rifcs(settings.OAI_DOCS_PATH)

@@ -12,8 +12,8 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def __init__(self):
         super(DC2CRifCsProvider, self).__init__()
       
-    def get_template(self, experiment):
-        return settings.RIFCS_TEMPLATE_DIR + "activity.xml"  
+    def get_template(self, experiment=None, type="activity"):
+        return settings.RIFCS_TEMPLATE_DIR + "%s.xml" % type  
       
     def get_description(self, experiment):
         from tardis.apps.ands_register.publishing import PublishHandler        
