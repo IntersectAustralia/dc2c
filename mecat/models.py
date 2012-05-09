@@ -56,6 +56,7 @@ class DatasetWrapper(models.Model):
            return 'wrapper for empty dataset'
        
 class OwnerDetails(models.Model):
+    user = models.ForeignKey(User, blank=False)
     title = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
     first_name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
     last_name = models.CharField(max_length=100, blank=False, validators=[validate_spaces])

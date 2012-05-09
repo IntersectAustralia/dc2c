@@ -1,0 +1,60 @@
+{% extends "tardis_portal/portal_template.html" %}
+{% include "tardis_portal/javascript_libraries.html" %} <script type="text/javascript" src="{{ STATIC_URL }}/js/lib/jquery.customised-formset.js" ></script>
+
+{% block content %}
+<div class="jqmAlertLoading" id="jqmAlertLoading">
+    <div class="jqmAlertWindowLoading">
+        <div class="jqmAlertTitle clearfix">
+            <h1>Please Wait...</h1>
+        </div>
+        <div align="center" class="jqmAlertContentLoading" id="jqmAlertContentLoading">
+            <img src="{{ STATIC_URL }}/images/ajax-loader-big.gif">
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div>
+        <h1 class="title">My Details</h1>    
+        <p>(*) = required field</p>
+                        
+        <div class="entry">
+            <form id="my_details_form" action="" method="POST">
+                {{ form.non_field_errors }}
+                <div class="msg_list">
+                    <div class="exp_body">
+                        <div class="fieldWrapper">
+                            {{ form.title.errors }} <label for="id_title">Title*:</label>
+                            <br/>
+                            {{ form.title }}
+                        </div>
+                        <br/>
+                        <div class="fieldWrapper">
+                            {{ form.first_name.errors }} <label for="id_first_name">First Name*:</label>
+                            <br/>
+                            {{ form.first_name }}
+                        </div>
+                        <br/>
+                        <div class="fieldWrapper">
+                            {{ form.last_name.errors }} <label for="id_last_name">Last Name*:</label>
+                            <br/>
+                            {{ form.last_name }}
+                        </div>
+                        <br/>
+                        <div class="fieldWrapper">
+                            {{ form.email.errors }} <label for="id_email">Email*:</label>
+                            <br/>
+                            {{ form.email }}
+                        </div>
+                        <br/>
+                    </div>
+                    <br/>
+                    <input type="hidden" name="user" value="{{user.id}}" id="user" />
+                    <input id="button" type="submit" value="Save"/>
+                    <a href="/" >Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br/>
+{% endblock %}
