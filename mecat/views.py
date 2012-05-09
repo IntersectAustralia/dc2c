@@ -16,8 +16,8 @@ from tardis.tardis_portal.staging import get_full_staging_path
 from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, SearchQueryString
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
-from mecat.models import Sample, DatasetWrapper
-from mecat.forms import ProjectForm, SampleForm
+from mecat.models import Sample, DatasetWrapper, OwnerDetails
+from mecat.forms import ProjectForm, SampleForm, OwnerDetailsForm
 from mecat.subject_codes import FOR_CODE_LIST
 import logging
 
@@ -313,7 +313,37 @@ def edit_experiment(request, experiment_id,
 
     return HttpResponse(render_response_index(request,
                         template, c))
+
+@login_required
+def mydetails(request):
+    c = Context()
+    existing_details = OwnerDetails.objects.filter(user=request.user)
+    if existing_details.count() == 1:
+        owner_details = existing_details[0]
+    else:
+        owner_details = None
+    if request.method == 'POST':
+        form = OwnerDetailsForm(request.POST, instance=owner_details)
+        if form.is_valid():
+            form.save()
+            request.POST = {'status': 'Details Saved'}
+            c['status'] = 'Details Saved'
+        else:
+            c['status'] = "Errors exist in form."
+            c["error"] = 'true'
+    else:
+        if not owner_details:
+            owner_details = OwnerDetails(user=request.user, 
+                                    first_name=request.user.first_name, 
+                                    last_name=request.user.last_name, 
+                                    email=request.user.email)
+        form = OwnerDetailsForm(instance=owner_details)
     
+    c['form'] = form    
+    return HttpResponse(render_response_index(request,
+                        'tardis_portal/rif-cs/mydetails.html', c))
+    
+        
 def partners(request):
 
     c = Context({'subtitle': 'Partners',
@@ -321,11 +351,9 @@ def partners(request):
                  'nav': [{'name': 'Partners', 'link': '/partners/'}]})
     return HttpResponse(render_response_index(request,
                         'tardis_portal/partners.html', c))    
-    
 
 @login_required
 def change_password(request):
     from django.contrib.auth.views import password_change
     return password_change(request)
-
     

@@ -1,6 +1,6 @@
 from django.template import Context 
 from tardis.tardis_portal.models import ExperimentParameter, ParameterName, Schema  
-
+from django.conf import settings
 import tardis.tardis_portal.publish.provider.rifcsprovider as rifcsprovider
     
 SERVER_URL = "https://dc2c.server.gov.au"
@@ -11,6 +11,9 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     
     def __init__(self):
         super(DC2CRifCsProvider, self).__init__()
+      
+    def get_template(self, experiment=None, type="activity"):
+        return settings.RIFCS_TEMPLATE_DIR + "%s.xml" % type  
       
     def get_description(self, experiment):
         from tardis.apps.ands_register.publishing import PublishHandler        
@@ -24,16 +27,29 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         return HARVEST_URL
         
     def get_key(self, experiment):
-        return "research-data.ansto.gov.au/collection/bragg/%s" % (experiment.id)  
-         
-    def get_url(self, experiment, url):
-        return url + "/" + str(experiment.id)
-
-    def get_produced_bys(self):
-        return None
+        return "mytardis-nsw-activity-%s" % (experiment.id)  
+        
+    def get_notes(self, experiment):
+        # TODO
+        return "Some notes"
     
-    def get_forcodes(self):
-        return "123445566"
+    def get_owners(self, experiment):
+        # TODO
+        return ["Some owner key"]
+
+    def get_related_datasets(self, experiment):
+        # TODO
+        return ["dataset key 1", "dataset key 2"]
+    
+    
+    def get_funded_by(self, experiment):
+        # TODO
+        return ["http://purl.org/au-research/grants/nhmrc/100009",
+                "http://purl.org/au-research/grants/arc/DP0559024"]
+    
+    def get_forcodes(self, experiment):
+        # TODO
+        return ["1103", "1117"]
 
     def get_rights(self, experiment):
         if self.get_license_uri(experiment):
@@ -56,12 +72,11 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
 
     def get_rifcs_context(self, experiment):
         c = super(DC2CRifCsProvider, self).get_rifcs_context(experiment)
-        c['blnoun'] = 'instrument'
         c['originating_source'] = self.get_originating_source()
         c['key'] = self.get_key(experiment)
-        c['url'] = self.get_url(experiment, SERVER_URL)
-        c['produced_bys'] = self.get_produced_bys()
-        c['anzsrcfor'] = self.get_forcodes()
-        #c['rights'] = self.get_rights(experiment)
-        #c['access_rights'] = self.get_access_rights(experiment)
+        c['anzsrcfor'] = self.get_forcodes(experiment)
+        c['funded_by'] = self.get_funded_by(experiment)
+        c['notes']= self.get_notes(experiment)
+        c['related_datasets'] = self.get_related_datasets(experiment)
+        c['owners'] = self.get_owners(experiment)
         return c

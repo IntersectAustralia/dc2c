@@ -3,7 +3,7 @@ from django.forms.util import ErrorList
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import Textarea, TextInput
 from UserDict import UserDict
-from mecat.models import Sample, DatasetWrapper
+from mecat.models import Sample, DatasetWrapper, OwnerDetails
 from tardis.tardis_portal import models
 from tardis.tardis_portal.fields import MultiValueCommaSeparatedField
 from tardis.tardis_portal.widgets import CommaSeparatedInput
@@ -250,10 +250,17 @@ class ProjectForm(ExperimentForm):
     funding_code = forms.CharField(max_length=100, required=False)
     notes = forms.CharField(required=False, widget=Textarea)    
     
+    
+class OwnerDetailsForm(forms.ModelForm):
+    class Meta:
+        model = OwnerDetails    
+
+
 class SampleForm(forms.ModelForm):
 
     class Meta:
         model = Sample
+        exclude = ('user')
         
     def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=':',
