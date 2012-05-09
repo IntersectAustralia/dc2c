@@ -67,17 +67,31 @@ class OwnerDetails(models.Model):
 
 @receiver(post_save, sender=Experiment)
 @receiver(post_delete, sender=Experiment)
-@receiver(post_save, sender=Dataset)
-@receiver(post_delete, sender=Dataset)
-@receiver(post_save, sender=Project)
-@receiver(post_delete, sender=Project)
-@receiver(post_save, sender=DatasetWrapper)
-@receiver(post_delete, sender=DatasetWrapper)
 def post_save_experiment(sender, **kwargs):
     # create party and dataset rifcs too - note that the activity rifcs
     # is taken care of in the core model
     experiment = kwargs['instance']
     _publish_public_expt_rifcs(experiment)
+    
+@receiver(post_save, sender=DatasetWrapper)
+@receiver(post_delete, sender=DatasetWrapper)    
+def post_save_datasetwrapper(sender, **kwargs):
+    datasetwrapper = kwargs['instance']
+
+
+@receiver(post_save, sender=Project) 
+@receiver(post_delete, sender=Project) 
+def post_save_project(sender, **kwargs):
+    project = kwargs['instance']
+    experiment = project.experiment
+    _publish_public_expt_rifcs(experiment)
+
+@receiver(post_delete, sender=Project)    
+def post_delete_project(sender, **kwargs):
+    project = kwargs['instance']
+    experiment = project.experiment
+    experiment.delete()
+    
     
 def _publish_public_expt_rifcs(experiment):
     try:

@@ -16,6 +16,12 @@
                     <li><a href="{% url tardis.tardis_portal.views.control_panel %}">Project Access</a></li>
                     <li><a href="{% url tardis.tardis_portal.views.manage_groups %}">Group Management</a></li>
                 </ul>
+                <br />
+                <h2>Personal</h2>
+                <ul>
+                    <li><a href="/mydetails">My Details</a></li>
+                    <li><a href="/accounts/password">Change My Password</a></li>
+                </ul>
             {% endif %}
 
             {% if perms.tardis_portal.embargo_admin %}
