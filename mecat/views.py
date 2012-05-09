@@ -331,6 +331,7 @@ def mydetails(request):
         else:
             c['status'] = "Errors exist in form."
             c["error"] = 'true'
+        return redirect(reverse('tardis.tardis_portal.views.experiment_index'))
     else:
         if not owner_details:
             owner_details = OwnerDetails(user=request.user, 
