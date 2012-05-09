@@ -3,7 +3,7 @@ test_forms.py
 """
 
 from django.test import TestCase          
-from mecat.models import Sample
+from mecat.models import Sample, DatasetWrapper
 from mecat.forms import SampleForm, ProjectForm
 from tardis.tardis_portal import models
 from django.contrib.auth.models import User
@@ -172,3 +172,27 @@ class ExperimentFormTestCase(TestCase):
         self.assertTrue('institution_name' in f.errors)
         self.assertTrue('title' in f.errors)
     
+    def test_existing_datasetwrappers(self):
+        s1 = Sample(name='s1', description='s1 description', 
+                        experiment=self._create_experiment())
+        s2 = Sample(name='s2', description='s2 description', 
+                        experiment=self._create_experiment())
+        s1.save()
+        s2.save()
+        
+        d1 = DatasetWrapper(name="dw1", description="dw1 description", sample=s1)
+        d2 = DatasetWrapper(name="dw2", description="dw2 description", sample=s1)
+        d3 = DatasetWrapper(name="dw1", description="dw1 description", sample=s2)
+        d4 = DatasetWrapper(name="dw2", description="dw2 description", sample=s1)
+        d5 = DatasetWrapper(name="", description="", sample=s1)
+        d1.save()
+        d2.save()
+        from mecat.forms import existing
+        self.assertTrue(existing(d1))
+        self.assertTrue(existing(d2))
+        self.assertFalse(existing(d3))
+        self.assertTrue(existing(d4)) # d4 is identical to d2 so it's considered existing
+        self.assertFalse(existing(d5))
+        d5.save()
+        self.assertTrue(existing(d5))
+        

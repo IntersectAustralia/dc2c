@@ -23,11 +23,19 @@ class redict(dict):
         for i in mkeys:
             yield dict.__getitem__(self, i)
 
+def existing(datasetwrapper):
+    if DatasetWrapper.objects.filter(description=datasetwrapper.description, 
+                                     name=datasetwrapper.name, 
+                                     sample=datasetwrapper.sample).count() > 0:
+        return True
+    return False
+
 class Author_Experiment(forms.ModelForm):
 
     class Meta:
         model = models.Author_Experiment
         exclude = ('experiment',)
+    
 
 class FullSampleModel(UserDict):
     def save_m2m(self):
@@ -36,11 +44,11 @@ class FullSampleModel(UserDict):
         'sample': sample, 
         'dataset_wrappers' : [(dataset_wrapper, dataset),..]
         }
-        """        
+        """       
         sample = self.data['sample']
         sample.save()
         for dw, ds in self.data['dataset_wrappers']:
-            if not dw.immutable:
+            if not dw.immutable and not existing(dw):
                 ds.description = dw.description
                 ds.save()
                 dw.dataset = ds
@@ -50,7 +58,9 @@ class FullSampleModel(UserDict):
         if hasattr(self.data['dataset_wrappers'], 'deleted_forms'):
             for dw, ds in self.data['dataset_wrappers'].deleted_forms:
                 if not dw.instance.immutable:
+                    raise Exception(self.data)
                     dw.instance.delete() 
+                    ds.instance.delete()
 
 class FullExperimentModel(UserDict):
     """
@@ -358,7 +368,7 @@ class SampleForm(forms.ModelForm):
                     # create real dataset wrapper IF the description is not 
                     # empty
                     real_dataset = models.Dataset(experiment=exp)
-                    real_dataset.save(commit)
+                    #real_dataset.save(commit)
                     dw_instance = dw_form.save(commit)  
                     dataset_wrappers.append((dw_instance,real_dataset))
             

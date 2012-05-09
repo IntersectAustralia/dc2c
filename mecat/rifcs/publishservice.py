@@ -15,7 +15,7 @@ class PartyPublishService(PublishService):
         from tardis.tardis_portal.xmlwriter import XMLWriter
         xmlwriter = XMLWriter()
         xmlwriter.write_template_to_dir(oaipath, PARTY_RIFCS_FILENAME % self.experiment.id, 
-                                        self.get_template(type="party"), self.get_context())
+                                        self.get_template(), self.get_context()) # TODO add type
         
         
 class CollectionPublishService(PublishService):
@@ -30,4 +30,4 @@ class CollectionPublishService(PublishService):
         from tardis.tardis_portal.xmlwriter import XMLWriter
         xmlwriter = XMLWriter()
         xmlwriter.write_template_to_dir(oaipath, PARTY_RIFCS_FILENAME % self.experiment.id, 
-                                        self.get_template(type="collection"), self.get_context())
+                                        self.get_template(), self.get_context()) # TODO add type

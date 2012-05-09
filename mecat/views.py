@@ -128,6 +128,7 @@ def edit_sample(request, experiment_id, sample_id):
         form = SampleForm(request.POST, instance=sample, extra=0)
         if form.is_valid():
             full_sample = form.save(experiment_id, commit=False)
+            
             full_sample.save_m2m()
             request.POST = {'status': "Sample Created."}
             return _redirect(experiment_id)

@@ -92,6 +92,11 @@ def post_delete_project(sender, **kwargs):
     experiment = project.experiment
     experiment.delete()
     
+@receiver(post_delete, sender=DatasetWrapper)
+def post_delete_datasetwrapper(sender, **kwargs):    
+    datasetwrapper = kwargs['instance']
+    dataset = datasetwrapper.dataset
+    dataset.delete()
     
 def _publish_public_expt_rifcs(experiment):
     try:
