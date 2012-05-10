@@ -49,10 +49,16 @@ class FullSampleModel(UserDict):
         sample.save()
         for dw, ds in self.data['dataset_wrappers']:
             if not dw.immutable and not existing(dw):
-                ds.description = dw.description
-                ds.save()
-                dw.dataset = ds
-                dw.sample = sample
+                if dw.dataset:
+                    # Dataset already exist, just modify attributes
+                    dw.dataset.description = dw.description
+                    dw.dataset.save()
+                else:
+                    # No dataset yet, save the created one
+                    ds.description = dw.description
+                    ds.save()
+                    dw.dataset = ds
+                    dw.sample = sample
                 dw.save() 
                 
         if hasattr(self.data['dataset_wrappers'], 'deleted_forms'):
