@@ -7,11 +7,6 @@
             <name type="primary">
                 <namePart>{{experiment.title}}</namePart>
             </name>
-            <relatedInfo type="publication">
-                <identifier type="uri">http://dx.doi.org/10.1007/s11852-008-0011-1</identifier> 
-                <title>title</title>
-                <notes>Publicised in the protein data bank</notes>
-            </relatedInfo> 
             <description type="brief">{{description}}</description> 
 
 {% for funded_by_url in funded_by %}

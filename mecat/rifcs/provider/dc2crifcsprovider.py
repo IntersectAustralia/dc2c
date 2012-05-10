@@ -2,6 +2,7 @@ from django.template import Context
 from tardis.tardis_portal.models import ExperimentParameter, ParameterName, Schema  
 from django.conf import settings
 import tardis.tardis_portal.publish.provider.rifcsprovider as rifcsprovider
+from mecat.models import *
     
 SERVER_URL = "https://dc2c.server.gov.au"
 HARVEST_URL = "http://dc2c.server.gov.au/oai/provider"
@@ -30,8 +31,8 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         return "mytardis-nsw-activity-%s" % (experiment.id)  
         
     def get_notes(self, experiment):
-        # TODO
-        return "Some notes"
+        project = Project.objects.get(experiment=experiment)
+        return project.notes
     
     def get_owners(self, experiment):
         # TODO
@@ -40,16 +41,28 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def get_related_datasets(self, experiment):
         # TODO
         return ["dataset key 1", "dataset key 2"]
-    
-    
+
     def get_funded_by(self, experiment):
-        # TODO
-        return ["http://purl.org/au-research/grants/nhmrc/100009",
-                "http://purl.org/au-research/grants/arc/DP0559024"]
+        project = Project.objects.get(experiment=experiment)
+        funded_by = project.funded_by
+        if funded_by == "Australian Research Council (ARC)":
+            return ["http://purl.org/au-research/grants/arc/DP0559024"]
+        elif funded_by == "Medical Research Council (NHMRC)":
+            return ["http://purl.org/au-research/grants/nhmrc/100009"]
     
     def get_forcodes(self, experiment):
-        # TODO
-        return ["1103", "1117"]
+        project = Project.objects.get(experiment=experiment)
+        forcodes = []
+        forcode1 = project.forcode1
+        if forcode1 and forcode1 != '':
+            forcodes.append(forcode1[:forcode1.index(' ')])
+        forcode2 = project.forcode2
+        if forcode2 and forcode2 != '':
+            forcodes.append(forcode2[:forcode2.index(' ')])
+        forcode3 = project.forcode3
+        if forcode3 and forcode3 != '':
+            forcodes.append(forcode3[:forcode3.index(' ')])            
+        return forcodes
 
     def get_rights(self, experiment):
         if self.get_license_uri(experiment):
