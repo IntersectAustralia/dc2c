@@ -45,6 +45,41 @@ class SampleFormTestCase(TestCase):
         post = self._data_to_post()
         f = SampleForm(post)
         self.assertTrue(f.is_valid())   
+    
+    def test_create_and_save_data(self):
+        experiment = self._create_experiment()
+        post = self._data_to_post(data=[('name', 'Sample Name'),
+                                    ('description', 'Sample Description'),
+                                    ('dataset-MAX_NUM_FORMS', ''),
+                                    ('dataset-INITIAL_FORMS', '0'),
+                                    ('dataset-TOTAL_FORMS', '2'),
+                                    ('dataset-0-id', ''),
+                                    ('dataset-0-name', 'dataset 0 name'),
+                                    ('dataset-0-description', 'dataset 0 description'),
+                                    ('dataset-0-immutable', 'False'),
+                                    ('dataset-1-id', ''),
+                                    ('dataset-1-name', 'dataset 1 name'),
+                                    ('dataset-1-description', 'dataset 1 description'),
+                                    ('dataset-1-immutable', 'False'),                                    
+                                    ('experiment', experiment.id)
+                                   ])        
+        f = SampleForm(post)
+        self.assertTrue(f.is_valid())   
+        full_sample = f.save(experiment.id, False)
+        full_sample.save_m2m()
+        sample = Sample.objects.get(name="Sample Name", description="Sample Description")
+        self.assertTrue(DatasetWrapper.objects.get(name="dataset 0 name", description="dataset 0 description"))
+        self.assertTrue(models.Dataset.objects.get(description="dataset 0 description"))
+        self.assertTrue(DatasetWrapper.objects.get(name="dataset 1 name", description="dataset 1 description"))
+        self.assertTrue(models.Dataset.objects.get(description="dataset 1 description"))
+        
+        # Ensure that there's only 1 instance of DatasetWrappers and Datasets
+        f2 = SampleForm(instance=sample)
+        f2.save(experiment.id, False).save_m2m()
+        self.assertEqual(1, DatasetWrapper.objects.filter(name="dataset 0 name", description="dataset 0 description").count())
+        self.assertEqual(1, models.Dataset.objects.filter(description="dataset 0 description").count())
+        self.assertEqual(1, DatasetWrapper.objects.filter(name="dataset 1 name", description="dataset 1 description").count())
+        self.assertEqual(1, models.Dataset.objects.filter(description="dataset 1 description").count())
         
     def test_validation_blank_data(self):
         experiment = self._create_experiment()
