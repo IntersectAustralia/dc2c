@@ -3,43 +3,9 @@
     <registryObject group="The University of Sydney">
         <key>{{key}}</key>
         <originatingSource>{{originating_source}}</originatingSource>
-        <activity type="project">
-            <name type="primary">
-                <namePart>{{experiment.title}}</namePart>
-            </name>
-            <relatedInfo type="publication">
-                <identifier type="uri">http://dx.doi.org/10.1007/s11852-008-0011-1</identifier> 
-                <title>title</title>
-                <notes>Publicised in the protein data bank</notes>
-            </relatedInfo> 
-            <description type="brief">{{description}}</description> 
+        <party type="member">
 
-{% for funded_by_url in funded_by %}
-            <identifier type="purl">{{funded_by_url}}</identifier> 
-{% endfor %}
-
-{% for forcode in anzsrcfor %}
-            <subject type="anzsrc-for" xml:lang="en">{{forcode}}</subject>
-{% endfor %}
-
-{% if notes %}
-            <description type="note">{{note}}</description>
-{% endif %}
-
-{% for dataset_key in related_datasets %}
-            <relatedObject> 
-                <key>{{dataset_key}}</key> 
-                <relation type="hasOutput"/> 
-            </relatedObject>  
-{% endfor %}
-{% for party_key in owners %}
-            <relatedObject> 
-                <key>{{party_key}}</key> 
-                <relation type="isManagedBy"/> 
-            </relatedObject>  
-{% endfor %}
-
-        </activity>
+        </party>
 
     </registryObject>
 </registryObjects>
