@@ -1,0 +1,3901 @@
+[
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/as/chemical/2011/09/20", 
+            "name": "Chemical", 
+            "immutable": false, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalName", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Name", 
+            "units": "", 
+            "order": 0, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/chemical/2011/09/20"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalAmount", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Amount", 
+            "units": "", 
+            "order": 1, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/chemical/2011/09/20"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalFormula", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Formula", 
+            "units": "", 
+            "order": 2, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/chemical/2011/09/20"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalPercent", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Percentage", 
+            "units": "", 
+            "order": 3, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/chemical/2011/09/20"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalCAS", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "CAS", 
+            "units": "", 
+            "order": 4, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/chemical/2011/09/20"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/as/experiment/2010/09/21", 
+            "name": "ID", 
+            "immutable": true, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "beamline", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "(MX1:MX1), (MX2:MX2), (SAXS:SAXS), (IR1:IR1), (IR2:IR2)", 
+            "comparison_type": 1, 
+            "full_name": "Beamline", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/experiment/2010/09/21"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "EPN", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 8, 
+            "full_name": "EPN", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/experiment/2010/09/21"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 3, 
+            "namespace": "http://www.tardis.edu.au/schemas/as/jpeg/2011/08/09", 
+            "name": "General JPG", 
+            "immutable": false, 
+            "subtype": "JPG"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "filetype", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 8, 
+            "full_name": "File Type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/jpeg/2011/08/09"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "height", 
+            "data_type": 1, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 3, 
+            "full_name": "Height", 
+            "units": "pixels", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/jpeg/2011/08/09"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "previewImage", 
+            "data_type": 5, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Preview Image", 
+            "units": "image/png", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/jpeg/2011/08/09"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "width", 
+            "data_type": 1, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 3, 
+            "full_name": "Width", 
+            "units": "pixels", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/jpeg/2011/08/09"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/as/sample/2011/01/24", 
+            "name": "Sample", 
+            "immutable": false, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleDescription", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Description", 
+            "units": "", 
+            "order": 0, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleSafety", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Safety", 
+            "units": "", 
+            "order": 1, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalAmount", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "ChemicalAmount", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalCAS", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "ChemicalCAS", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalFormula", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "ChemicalFormula", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalName", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "ChemicalName", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ChemicalPercent", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "ChemicalPercent", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/as/sample/2011/01/24"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/creative_commons/2011/05/17", 
+            "name": "License", 
+            "immutable": true, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "license_image", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "License Image", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/creative_commons/2011/05/17"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "license_name", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "License Name", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/creative_commons/2011/05/17"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "license_uri", 
+            "data_type": 3, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "License URI", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/creative_commons/2011/05/17"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/doi/2011/12/07", 
+            "name": "DOI", 
+            "immutable": true, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "doi", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "DOI", 
+            "units": "", 
+            "order": 1, 
+            "immutable": true, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/doi/2011/12/07"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/experiment/annotation/2011/07/07", 
+            "name": "Annotation", 
+            "immutable": false, 
+            "subtype": "exp"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "exp_comment", 
+            "data_type": 7, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 8, 
+            "full_name": "Comment", 
+            "units": "", 
+            "order": 1, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/experiment/annotation/2011/07/07"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anzsrcfor_codes", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Field of Research code", 
+            "units": "", 
+            "order": 2, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/experiment/annotation/2011/07/07"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "local_subject_codes", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Local Subject code", 
+            "units": "", 
+            "order": 3, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/experiment/annotation/2011/07/07"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "exp_address", 
+            "data_type": 7, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Address", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/experiment/annotation/2011/07/07"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "exp_notes", 
+            "data_type": 7, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Notes", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/experiment/annotation/2011/07/07"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 2, 
+            "namespace": "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1", 
+            "name": "MX auto-processing results", 
+            "immutable": false, 
+            "subtype": "mx"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anomcompletenessall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "anomcompletenessall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anomcompletenesshigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "anomcompletenesshigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anomcompletenesslow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "anomcompletenesslow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anommultiplicityall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "anommultiplicityall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anommultiplicityhigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "anommultiplicityhigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "anommultiplicitylow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "anommultiplicitylow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "attenuation", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "attenuation", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "cella", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "cella", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "cellalpha", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "cellalpha", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "cellb", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "cellb", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "cellbeta", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "cellbeta", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "cellc", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "cellc", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "cellgamma", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "cellgamma", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "completenessall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "completenessall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "completenesshigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "completenesshigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "completenesslow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "completenesslow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "created", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "created", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "delanomcorrbtwnhalfsetsall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "delanomcorrbtwnhalfsetsall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "delanomcorrbtwnhalfsetshigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "delanomcorrbtwnhalfsetshigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "delanomcorrbtwnhalfsetslow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "delanomcorrbtwnhalfsetslow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "deltaphi", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "deltaphi", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "firstimage", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "firstimage", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "framesdir", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "framesdir", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "highres", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "highres", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "IoverSigasymp", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "IoverSigasymp", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "lastimage", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "lastimage", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "meanIoversdIall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "meanIoversdIall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "meanIoversdIhigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "meanIoversdIhigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "meanIoversdIlow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "meanIoversdIlow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "midslopeanomnormprob", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "midslopeanomnormprob", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "multiplicityall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "multiplicityall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "multiplicityhigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "multiplicityhigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "multiplicitylow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "multiplicitylow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "pointlesslog", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "pointlesslog", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "processingdir", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "processingdir", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "processingid", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "processingid", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Ranom", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Ranom", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Rmergeall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Rmergeall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Rmergehigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Rmergehigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Rmergelow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Rmergelow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "rootname", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "rootname", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RpimIplusandIminusall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RpimIplusandIminusall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RpimIplusandIminushigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RpimIplusandIminushigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RpimIplusandIminuslow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RpimIplusandIminuslow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RpimwithinIplusoverIminusall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RpimwithinIplusoverIminusall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RpimwithinIplusoverIminushigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RpimwithinIplusoverIminushigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RpimwithinIplusoverIminuslow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RpimwithinIplusoverIminuslow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "runno", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "runno", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "scalalog", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "scalalog", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "spacegroup", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "spacegroup", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "totalobsall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "totalobsall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "totalobshigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "totalobshigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "totalobslow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "totalobslow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "totaluniqall", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "totaluniqall", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "totaluniqhigh", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "totaluniqhigh", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "totaluniqlow", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "totaluniqlow", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "wavelength", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "wavelength", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "XDSlog", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "XDSlog", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/mxautoprocessingresults/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 3, 
+            "namespace": "http://www.tardis.edu.au/schemas/opusDatafile/1", 
+            "name": "OPUS datafile", 
+            "immutable": false, 
+            "subtype": "ir"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "previewImage", 
+            "data_type": 5, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Preview Image", 
+            "units": "image/png", 
+            "order": 0, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "BLOCKS", 
+            "data_type": 1, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 3, 
+            "full_name": "BLOCKS", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "DATATYPE", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "DATATYPE", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "DATE", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "DATE", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "DELTAX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "DELTAX", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "FIRSTX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FIRSTX", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "LASTX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "LASTX", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "NPOINTS", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "NPOINTS", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ORIGIN", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "ORIGIN", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "PEAK", 
+            "data_type": 1, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "PEAK", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RESOLUTION", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "RESOLUTION", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SAMPLINGPROCEDURE", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "SAMPLINGPROCEDURE", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "TITLE", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "TITLE", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "XUNITS", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "XUNITS", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "YUNITS", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "YUNITS", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/opusDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 2, 
+            "namespace": "http://www.tardis.edu.au/schemas/opusDataset/1", 
+            "name": "OPUS dataset", 
+            "immutable": false, 
+            "subtype": "ir"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/related_info/2011/11/10", 
+            "name": "Related Information", 
+            "immutable": true, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "identifier", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Identifier", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_info/2011/11/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "identifier_type", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Identifier Type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_info/2011/11/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "notes", 
+            "data_type": 7, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Notes", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_info/2011/11/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "title", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Title", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_info/2011/11/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "type", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_info/2011/11/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/related_object/2012/01/12", 
+            "name": "RIF-CS related object", 
+            "immutable": false, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "description", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Description", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_object/2012/01/12"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "key", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Key", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_object/2012/01/12"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "relation_type", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "(describes:describes), (hasPart:hasPart), (hasAssociationWith:hasAssociationWith), (hasCollector:hasCollector), (isDescribedBy:isDescribedBy), (isLocatedIn,isLocatedIn), (isLocationFor:isLocationFor), (isManagedBy:isManagedBy), (isOutputOf:isOutputOf), (isOwnedBy:isOwnedBy), (isPartOf:isPartOf), (supports:supports), (isEnrichedBy:isEnrichedBy), (isDerivedFrom:isDerivedFrom), (hasDerivedCollection:hasDerivedCollection)", 
+            "comparison_type": 1, 
+            "full_name": "Relation type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_object/2012/01/12"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "url", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "URL", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/related_object/2012/01/12"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 3, 
+            "namespace": "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10", 
+            "name": "SAXS datafile", 
+            "immutable": false, 
+            "subtype": "saxs"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "previewImage", 
+            "data_type": 5, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Preview Image", 
+            "units": "image", 
+            "order": 0, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "countingSecs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Exposure Time", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ibs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Beamstop Itensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ibsBgnd", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Beamstop Detector Dark Current", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "io", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Incident Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "ioBgnd", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Incident Detector Dark Current", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "it", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Transmission Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "itBgnd", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Transmission Detector Dark Current", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "positionerString", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Positioner Value Label", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "positionerValues", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "User Defined PV Values", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "timeStampString", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "TimeStamp", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 3, 
+            "namespace": "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28", 
+            "name": "SAXS datafile", 
+            "immutable": false, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "PreviewImage", 
+            "data_type": 5, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Preview Image", 
+            "units": "image", 
+            "order": 0, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "1M_X", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Pilatus 1M Horizontal (x) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "1M_Y", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Pilatus 1M Vertical (y) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Concentration", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Concentration", 
+            "units": "mg/ml", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "CTRL_Temp", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Control Temperature", 
+            "units": "\u00b0C", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Energy", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Photon Beam Energy", 
+            "units": "keV", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "exptime", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Exposure Time", 
+            "units": "seconds", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "FPLC_Abs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FPLC_Abs", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "I0", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Incident Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Ibs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Beamstop Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "It", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Transmitted Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "NumericTimeStamp", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Seconds since Epoch", 
+            "units": "seconds", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "OO_UV_Abs_1", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Ocean Optics UV Absorption Wavelength 1", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "OO_UV_Abs_2", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Ocean Optics UV Absorption Wavelength 2", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "RID", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FPLC Refractive Index", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Ring_Current", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Storage Ring Current", 
+            "units": "mA", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SEC_UV_Abs_1", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FPLC UV Absorption Wavelength 1", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SEC_UV_Abs_2", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FPLC UV Absorption Wavelength 2", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Chi", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Chi Angle ", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Letter_Coord", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "96 Well plate stage letter coordinate", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_NUMBER_COORD", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "96 Well plate stage number coordinate", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Omega", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Omega Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Phi", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Phi Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Plate_Num ", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "96 Well plate ID", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Raw_Coord", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "96 Well plate stage numerical coordinate", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_TBL_X", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": " Sample Table Horizontal (x) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_TBL_Y", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Table Vertical (y) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SMPL_Temp", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Temperature", 
+            "units": "\u00b0C", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "TimeStamp", 
+            "data_type": 6, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Human Readable Timestamp", 
+            "units": "%a %b %d %Y %H:%M:%S.", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "WAXS_Angle", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "WAXS Detector Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "WAXS_I0", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "WAXS Incident Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "WAXS_Ibs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "WAXS Beamstop Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "WAXS_It", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "WAXS Transmitted Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2011/09/28"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 3, 
+            "namespace": "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08", 
+            "name": "SAXS datafile", 
+            "immutable": false, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "previewImage", 
+            "data_type": 5, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Preview Image", 
+            "units": "image", 
+            "order": 0, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Concentration", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Concentration", 
+            "units": "mg/ml", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Energy", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Photon Beam Energy", 
+            "units": "keV", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "exptime", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Exposure Time", 
+            "units": "seconds", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "FPLC_Abs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FPLC_Abs", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "I0", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Incident Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Ibs", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Beamstop Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "It", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Transmitted Intensity", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "NumericTimeStamp", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Seconds since Epoch", 
+            "units": "seconds", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleChi", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Chi Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleOmega", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Omega Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SamplePhi", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Phi Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleTableX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": " Sample Table Horizontal (x) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleTableY", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Table Vertical (y) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Horizontal (x) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "SampleY", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Sample Vertical (y) Position", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Temperature1", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Temperature1", 
+            "units": "\u00b0C", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "Temperature2", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Temperature2", 
+            "units": "\u00b0C", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "TimeStamp", 
+            "data_type": 6, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Human Readable Timestamp", 
+            "units": "%a %b %d %Y %H:%M:%S.", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/datafile/2012/05/08"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 2, 
+            "namespace": "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10", 
+            "name": "SAXS dataset", 
+            "immutable": false, 
+            "subtype": "saxs"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "detang", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "DETANG", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frleng", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRLENG", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frqimn", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRQIMN", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frqimx", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRQIMX", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frtype", 
+            "data_type": 4, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRTYPE", 
+            "units": "/equipment/", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frwlen", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRWLEN", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frxcen", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRXCEN", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "frycen", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "FRYCEN", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/saxs/dataset/2010/08/10"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 1, 
+            "namespace": "http://www.tardis.edu.au/schemas/sync_publish/2011/09/19", 
+            "name": "ANDS Register", 
+            "immutable": true, 
+            "subtype": ""
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "access_type", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "access_type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": true, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/sync_publish/2011/09/19"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "custom_authors", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "custom_authors", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": true, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/sync_publish/2011/09/19"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "custom_description", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "custom_description", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": true, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/sync_publish/2011/09/19"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 3, 
+            "namespace": "http://www.tardis.edu.au/schemas/trdDatafile/1", 
+            "name": "TRD datafile", 
+            "immutable": false, 
+            "subtype": "mx"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "collectionDate", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Collection Date", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "detectorSN", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Detector S/N", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "directBeamXPos", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Direct Beam X-Pos", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "directBeamYPos", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Direct Beam Y-Pos", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "DistanceToDetector", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Detector Distance", 
+            "units": "mm", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "exposureTime", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Exposure Time", 
+            "units": "s", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "imageSizeX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Image Size X", 
+            "units": "px", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "imageSizeY", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Image Size Y", 
+            "units": "px", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "imageType", 
+            "data_type": 2, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Image Type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "oscillationRangeEnd", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Oscillation Range End", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "oscillationRangeStart", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Oscillation Range Start", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "PixelSizeX", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "PixelSizeX", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "PixelSizeY", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "PixelSizeY", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "previewImage", 
+            "data_type": 5, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Preview Image", 
+            "units": "image/jpg", 
+            "order": 9999, 
+            "immutable": true, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "twoThetaValue", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Two Theta", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "wavelength", 
+            "data_type": 1, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "X-Ray Wavelength", 
+            "units": "\u00c5", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDatafile/1"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.schema", 
+        "fields": {
+            "type": 2, 
+            "namespace": "http://www.tardis.edu.au/schemas/trdDataset/2", 
+            "name": "TRD dataset", 
+            "immutable": false, 
+            "subtype": "mx"
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "chiAngle", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Chi Angle", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDataset/2"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "crystalName", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Crystal Name", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDataset/2"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "diffractometerType", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "(Synchrotron:Synchrotron), (Rotating Anode:Rotating Anode), (Tube:Tube)", 
+            "comparison_type": 1, 
+            "full_name": "Diffractometer Type", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDataset/2"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "mosaicSpread", 
+            "data_type": 1, 
+            "is_searchable": false, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Mosaic Spread", 
+            "units": "\u00b0", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDataset/2"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "resolutionLimit", 
+            "data_type": 1, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "Resolution Limit", 
+            "units": "\u00c5", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDataset/2"
+            ]
+        }
+    }, 
+    {
+        "pk": null, 
+        "model": "tardis_portal.parametername", 
+        "fields": {
+            "name": "xraySource", 
+            "data_type": 2, 
+            "is_searchable": true, 
+            "choices": "", 
+            "comparison_type": 1, 
+            "full_name": "X-Ray Source", 
+            "units": "", 
+            "order": 9999, 
+            "immutable": false, 
+            "schema": [
+                "http://www.tardis.edu.au/schemas/trdDataset/2"
+            ]
+        }
+    }
+]
