@@ -18,7 +18,7 @@
 {% endfor %}
 
 {% if notes %}
-            <description type="note">{{note}}</description>
+            <description type="note">{{notes}}</description>
 {% endif %}
 
 {% for dataset_key in related_datasets %}

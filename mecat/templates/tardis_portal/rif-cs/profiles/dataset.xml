@@ -21,6 +21,17 @@
 {% if rights %}
            <description type="rights">{{rights}}</description>             
 {% endif %}
+{% if uri %}
+           <location> 
+                <address> 
+                    <electronic type="uri"> 
+                        <value>{{uri}}</value> 
+                    </electronic> 
+                </address> 
+           </location>           
+{% endif %}
+
+
 {% if license_uri %}         
             <relatedInfo>
                 <identifier type="uri">{{license_uri}}</identifier>

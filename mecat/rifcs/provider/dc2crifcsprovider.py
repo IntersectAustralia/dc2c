@@ -4,8 +4,8 @@ from django.conf import settings
 import tardis.tardis_portal.publish.provider.rifcsprovider as rifcsprovider
 from mecat.models import *
     
-SERVER_URL = "https://dc2c.server.gov.au"
-HARVEST_URL = "http://dc2c.server.gov.au/oai/provider"
+SERVER_URL = "https://nswtardis.intersect.org.au"
+HARVEST_URL = "https://nswtardis.intersect.org.au/oai/provider"
 
     
 class DC2CRifCsProvider(rifcsprovider.RifCsProvider):      
@@ -13,7 +13,16 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def __init__(self):
         super(DC2CRifCsProvider, self).__init__()
         self.dataset_id = None
-    
+
+    def _is_mediated(self, experiment):
+        import tardis.apps.ands_register.publishing as publishing
+        from tardis.apps.ands_register.publishing import PublishHandler      
+        phandler = PublishHandler(experiment.id) 
+        return phandler.access_type() == publishing.MEDIATED
+
+    def can_publish(self, experiment):       
+        return experiment.public or self._is_mediated(experiment)
+        
     def set_dataset_id(self, dataset_id):
         self.dataset_id = dataset_id
         
@@ -30,13 +39,17 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         
     def get_originating_source(self):
         return HARVEST_URL
+    
+    def get_uri(self, experiment):
+        if experiment.public and not self._is_mediated(experiment):
+            return "%s/experiment/view/%s" % (SERVER_URL, experiment.id)
         
     def get_activity_key(self, experiment):
         return "mytardis-nsw-activity-%s" % experiment.id
  
     def get_party_key(self, experiment):
         user = experiment.created_by
-        return "mytardis-nsw.party-%s" % user.id
+        return "mytardis-nsw-party-%s" % user.id
         
     def get_dataset_key(self):
         return "mytardis-nsw-dataset-%s" % self.dataset_id
@@ -65,12 +78,12 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def get_owners(self, experiment):
         # for now there will only be 1 owner
         user = experiment.created_by
-        return ["mytardis-nsw.party-%s" % user.id]
+        return ["mytardis-nsw-party-%s" % user.id]
 
     
     def get_related_projects(self, experiment):
         project = Project.objects.get(experiment=experiment)
-        return ["mytardis-nsw.activity-%s" % project.id]
+        return ["mytardis-nsw-activity-%s" % project.id]
 
     def get_related_activities(self, experiment):
         activity_keys = []
@@ -79,7 +92,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         for experiment_vals in experiments.values():
             e_id = experiment_vals['id']
             project = Project.objects.get(experiment__id=e_id)
-            activity_keys.append("mytardis-nsw.activity-%s" % project.id)
+            activity_keys.append("mytardis-nsw-activity-%s" % project.id)
         return activity_keys
     
     def get_related_datasets(self, experiment):
@@ -112,8 +125,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         forcode3 = sample.forcode3
         if forcode3 and forcode3 != '':
             forcodes.append(forcode3[:forcode3.index(' ')])            
-        return forcodes
-        
+        return forcodes       
     
     def get_forcodes(self, experiment):
         project = Project.objects.get(experiment=experiment)
@@ -144,6 +156,9 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         return srp.get_related_info_list(experiment)
 
     def get_access_rights(self, experiment):
+        if self._is_mediated(experiment):
+           return "This Dataset is available via mediated access by contacting the researcher"
+       
         from tardis.tardis_portal.publish.provider.schemarifcsprovider import SchemaRifCsProvider
         srp = SchemaRifCsProvider()         
         if srp.get_license_uri(experiment):
@@ -160,6 +175,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def get_license_uri(self, experiment):
         from tardis.tardis_portal.publish.provider.schemarifcsprovider import SchemaRifCsProvider
         srp = SchemaRifCsProvider()        
+        
         if srp.get_license_uri(experiment):
             return srp.get_license_uri(experiment)
         else:
@@ -187,4 +203,5 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         c['ownerdetails'] = self.get_owner_details(experiment)
         c['license_uri'] = self.get_license_uri(experiment)
         c['related_info_list'] = self.get_related_info_list(experiment)
+        c['uri'] = self.get_uri(experiment)
         return c

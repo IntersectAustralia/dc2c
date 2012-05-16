@@ -1,6 +1,6 @@
 from tardis.tardis_portal.publish.publishservice import PublishService
 
-PARTY_RIFCS_FILENAME = "MyTARDIS-%s-party.xml"
+PARTY_RIFCS_FILENAME = "MyTARDIS-party-%s.xml"
 COLLECTION_RIFCS_FILENAME = "MyTARDIS-%s-dataset-%s.xml"
 
 class PartyPublishService(PublishService):
@@ -8,15 +8,17 @@ class PartyPublishService(PublishService):
         return self.provider.get_template(type=type)    
         
     def _remove_rifcs_from_oai_dir(self, oaipath):    
+        owner = self.experiment.created_by
         import os
-        filename = os.path.join(oaipath, PARTY_RIFCS_FILENAME % self.experiment.id)
+        filename = os.path.join(oaipath, PARTY_RIFCS_FILENAME % owner.id)
         if os.path.exists(filename):
             os.remove(filename)
     
     def _write_rifcs_to_oai_dir(self, oaipath):
         from tardis.tardis_portal.xmlwriter import XMLWriter
         xmlwriter = XMLWriter()
-        xmlwriter.write_template_to_dir(oaipath, PARTY_RIFCS_FILENAME % self.experiment.id, 
+        owner = self.experiment.created_by
+        xmlwriter.write_template_to_dir(oaipath, PARTY_RIFCS_FILENAME % owner.id, 
                                         self.get_template(type="party"), self.get_context())
         
         
