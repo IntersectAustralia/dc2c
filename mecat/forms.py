@@ -206,7 +206,10 @@ class ExperimentForm(forms.ModelForm):
             
     def _is_samples_valid(self):
         for key, sample in enumerate(self.samples.forms):
-            if not sample.is_valid():
+            if not sample.is_valid() or self._description_or_name_is_empty(sample):
+                if not (self.errors.has_key("Experiment Description is required ")) and \
+                   not (self.errors.has_key("Experiment Name is required ")):
+                    self.errors["Errors in "] = "Experiment Fields"                 
                 return False           
         return True
       
@@ -214,6 +217,23 @@ class ExperimentForm(forms.ModelForm):
         experiment_fields_valid = super(ExperimentForm, self).is_valid()
         samples_valid = self._is_samples_valid()     
         return experiment_fields_valid and samples_valid  
+
+    def _description_or_name_is_empty(self, dw_form):
+        data = redict(dw_form.data)
+        empty = False
+        matching_vals = data[r"sample-.*-description"]
+        for val in matching_vals:  
+            if val[0] is u'' or val is None:
+                self.errors["Experiment Description is required "] = ""
+                empty = True
+                break
+        matching_vals = data[r"sample-.*-name"]
+        for val in matching_vals:      
+            if val[0] is u'' or val is None:
+                self.errors["Experiment Name is required"] = ""
+                empty = True
+                break
+        return empty
 
 
     def save(self, commit=True):

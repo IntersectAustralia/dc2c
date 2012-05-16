@@ -254,7 +254,7 @@ def create_experiment(request,
 
     c['form'] = form
     c['default_institution'] = settings.DEFAULT_INSTITUTION
-    
+    c['status'] = form.errors   
     return HttpResponse(render_response_index(request, template_name, c))
 
 @login_required
@@ -311,7 +311,7 @@ def edit_experiment(request, experiment_id,
         form = ProjectForm(initial=experiment_handler.form_data(experiment_id), instance=experiment, extra=0)
 
     c['form'] = form
-
+    c['status'] = form.errors   
     return HttpResponse(render_response_index(request,
                         template, c))
 
