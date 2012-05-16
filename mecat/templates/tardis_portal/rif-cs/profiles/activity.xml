@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjectshttp://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
     <registryObject group="The University of Sydney">
-        <key>{{key}}</key>
+        <key>{{unique_activity_key}}</key>
         <originatingSource>{{originating_source}}</originatingSource>
         <activity type="project">
             <name type="primary">
