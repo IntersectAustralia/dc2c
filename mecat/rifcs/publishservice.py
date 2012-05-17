@@ -8,11 +8,12 @@ class PartyPublishService(PublishService):
         return self.provider.get_template(type=type)    
         
     def _remove_rifcs_from_oai_dir(self, oaipath):    
-        owner = self.experiment.created_by
-        import os
-        filename = os.path.join(oaipath, PARTY_RIFCS_FILENAME % owner.id)
-        if os.path.exists(filename):
-            os.remove(filename)
+        #owner = self.experiment.created_by
+        #import os
+        #filename = os.path.join(oaipath, PARTY_RIFCS_FILENAME % owner.id)
+        #if os.path.exists(filename):
+        #    os.remove(filename)
+        return 
     
     def _write_rifcs_to_oai_dir(self, oaipath):
         from tardis.tardis_portal.xmlwriter import XMLWriter
