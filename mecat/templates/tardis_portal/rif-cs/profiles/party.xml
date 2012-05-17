@@ -7,8 +7,7 @@
             <name type="primary">
                 <namePart type="title">{{ownerdetails.title}}</namePart>
                 <namePart type="given">{{ownerdetails.first_name}}</namePart>
-                <namePart type="family">{{ownerdetails.last_name}}</namePart>    
-                    
+                <namePart type="family">{{ownerdetails.last_name}}</namePart>                  
             </name>
             <location>
                 <address>
@@ -18,20 +17,12 @@
                 </address>
                 
             </location>
-
 {% for activity_key in related_activities %}
             <relatedObject>
                 <key>{{activity_key}}</key>
                 <relation type="isManagerOf"/>
             </relatedObject>
-{% endfor %}
-{% for dataset_key in related_datasets %}        
-            <relatedObject>
-                <key>{{dataset_key}}</key>
-                <relation type="isCollectorOf"/>
-            </relatedObject>            
-
-{% endfor %}        
+{% endfor %}       
      </party>
         
   </registryObject>

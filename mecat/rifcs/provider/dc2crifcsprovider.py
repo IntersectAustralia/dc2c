@@ -73,7 +73,15 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     
     def get_owner_details(self, experiment):
         user = experiment.created_by
-        return OwnerDetails.objects.get(user=user)
+        details_list = OwnerDetails.objects.filter(user=user)
+        if details_list.count == 0:
+            details = OwnerDetails(user=user, first_name=user.first_name, 
+                                   last_name=user.last_name, email=user.email)
+        elif details_list.count == 1:
+            details = details_list[0]
+        else:
+            details = None
+        return details
     
     def get_owners(self, experiment):
         # for now there will only be 1 owner
@@ -104,10 +112,11 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def get_funded_by(self, experiment):
         project = Project.objects.get(experiment=experiment)
         funded_by = project.funded_by
+        funding_code = project.funding_code
         if funded_by == "Australian Research Council (ARC)":
-            return ["http://purl.org/au-research/grants/arc/DP0559024"]
+            return ["http://purl.org/au-research/grants/arc/%s" % funding_code]
         elif funded_by == "Medical Research Council (NHMRC)":
-            return ["http://purl.org/au-research/grants/nhmrc/100009"]
+            return ["http://purl.org/au-research/grants/nhmrc/%s" % funding_code]
     
     def get_dataset_forcodes(self, experiment):
         if not self.dataset_id:
@@ -158,19 +167,14 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def get_access_rights(self, experiment):
         if self._is_mediated(experiment):
            return "This Dataset is available via mediated access by contacting the researcher"
-       
-        from tardis.tardis_portal.publish.provider.schemarifcsprovider import SchemaRifCsProvider
-        srp = SchemaRifCsProvider()         
-        if srp.get_license_uri(experiment):
-            return None
-        return [('This collection of data is released as-is. Where data is '
-                'publicly accessible, data will no longer be subject to embargo '
-                'and can be used freely provided attribution for the source is '
-                'given. It is encouraged that persons interested in using the '
-                'data contact the parties listed for this record to obtain '
-                'guidance and context in applying this data set and to stay '
-                'informed about upcoming revisions and related releases of '
-                'interest.')]
+        return 'This collection of data is released as-is. Where data is ' \
+                'publicly accessible, data will no longer be subject to embargo ' \
+                'and can be used freely provided attribution for the source is ' \
+                'given. It is encouraged that persons interested in using the '\
+                'data contact the parties listed for this record to obtain '\
+                'guidance and context in applying this data set and to stay '\
+                'informed about upcoming revisions and related releases of '\
+                'interest.'
 
     def get_license_uri(self, experiment):
         from tardis.tardis_portal.publish.provider.schemarifcsprovider import SchemaRifCsProvider
@@ -178,6 +182,15 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         
         if srp.get_license_uri(experiment):
             return srp.get_license_uri(experiment)
+        else:
+            return None
+        
+    def get_license_title(self, experiment):
+        from tardis.tardis_portal.publish.provider.schemarifcsprovider import SchemaRifCsProvider
+        srp = SchemaRifCsProvider()        
+        
+        if srp.get_license_uri(experiment):
+            return srp.get_license_title(experiment)
         else:
             return None
         
@@ -202,6 +215,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         c['access_rights'] = self.get_access_rights(experiment)
         c['ownerdetails'] = self.get_owner_details(experiment)
         c['license_uri'] = self.get_license_uri(experiment)
+        c['license_title'] = self.get_license_title(experiment)
         c['related_info_list'] = self.get_related_info_list(experiment)
         c['uri'] = self.get_uri(experiment)
         return c

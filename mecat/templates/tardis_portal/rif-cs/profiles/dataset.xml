@@ -5,7 +5,7 @@
         <originatingSource>{{originating_source}}</originatingSource>
         <collection type="dataset">
             <name type="primary">
-                <namePart>{{dataset.title}}</namePart>
+                <namePart>{{dataset.name}}</namePart>
             </name>
 
 {% for forcode in dataset_anzsrcfor %}
@@ -15,7 +15,7 @@
 {% if dataset_notes %}
             <description type="note">{{dataset_notes}}</description>
 {% endif %}
-{% if accessRights %}
+{% if access_rights %}
            <description type="accessRights">{{access_rights}}</description> 
 {% endif %}
 {% if rights %}
@@ -38,13 +38,7 @@
                 <title>{{license_title}}</title>
             </relatedInfo>            
 {% endif %}
-{% for rel_inf in related_info_list %}
-            <relatedInfo type="{{rel_inf.type}}">
-                <identifier type="{{rel_inf.identifier_type}}">{{rel_inf.identifier}}</identifier>
-                <title>{{rel_inf.title}}</title>
-{% if rel_inf.notes %}                <notes>{{rel_inf.notes}}</notes>{% endif %}
-            </relatedInfo>         
-{% endfor %}
+
 {% for project_key in related_projects %}
             <relatedObject> 
                 <key>{{project_key}}</key> 

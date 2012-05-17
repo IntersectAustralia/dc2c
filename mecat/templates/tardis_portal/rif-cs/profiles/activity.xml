@@ -8,19 +8,22 @@
                 <namePart>{{experiment.title}}</namePart>
             </name>
             <description type="brief">{{description}}</description> 
-
 {% for funded_by_url in funded_by %}
             <identifier type="purl">{{funded_by_url}}</identifier> 
 {% endfor %}
-
 {% for forcode in anzsrcfor %}
             <subject type="anzsrc-for" xml:lang="en">{{forcode}}</subject>
 {% endfor %}
-
 {% if notes %}
             <description type="note">{{notes}}</description>
 {% endif %}
-
+{% for rel_inf in related_info_list %}
+            <relatedInfo type="{{rel_inf.type}}">
+                <identifier type="{{rel_inf.identifier_type}}">{{rel_inf.identifier}}</identifier>
+                <title>{{rel_inf.title}}</title>
+{% if rel_inf.notes %}                <notes>{{rel_inf.notes}}</notes>{% endif %}
+            </relatedInfo>         
+{% endfor %}
 {% for dataset_key in related_datasets %}
             <relatedObject> 
                 <key>{{dataset_key}}</key> 
@@ -33,7 +36,6 @@
                 <relation type="isManagedBy"/> 
             </relatedObject>  
 {% endfor %}
-
         </activity>
 
     </registryObject>
