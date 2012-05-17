@@ -1,4 +1,11 @@
 
+from urllib import urlencode, urlopen
+from os import path
+from django.db import transaction
+from tardis.tardis_portal.auth.localdb_auth import auth_key as localdb_auth_key
+from tardis.tardis_portal.metsparser import parseMets
+from tardis.tardis_portal.forms import RegisterExperimentForm
+
 from django.views.decorators.cache import never_cache
 from django.shortcuts import redirect
 from tardis.tardis_portal.auth import decorators as authz
@@ -6,6 +13,7 @@ from django.conf import settings
 from django.template import Context
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
+from tardis.tardis_portal.auth import auth_service
 from tardis.tardis_portal.auth.localdb_auth import django_user
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from tardis.tardis_portal.shortcuts import render_response_index, \
@@ -16,14 +24,14 @@ from tardis.tardis_portal.staging import get_full_staging_path
 from tardis.tardis_portal.views import getNewSearchDatafileSelectionForm, SearchQueryString
 from haystack.query import SearchQuerySet
 from tardis.tardis_portal.models import Experiment, Dataset, ExperimentACL
-from mecat.models import Sample, DatasetWrapper, OwnerDetails
+from mecat.models import Project, Sample, DatasetWrapper, OwnerDetails
 from mecat.forms import ProjectForm, SampleForm, OwnerDetailsForm
 from mecat.subject_codes import FOR_CODE_LIST
 import logging
 
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('tardis.tardis_portal.views')
 
 def _redirect(experiment_id):
     return redirect(reverse('tardis.tardis_portal.views.view_experiment', args=[experiment_id]))
@@ -393,3 +401,184 @@ def view_party_rifcs(request, experiment_id):
     return HttpResponse(render_response_index(request,
                         template, context), mimetype="text/xml")
 
+def _create_wrappers_for_datasets(sample, experiment):
+    datasets = experiment.dataset_set.values()
+    for ds_details in datasets:
+        ds_id = ds_details['id']
+        # Create DatasetWrapper and assign dataset it to it
+        ds = Dataset.objects.get(pk=ds_id)
+        dw = DatasetWrapper(dataset=ds, sample=sample)
+        dw.save()
+
+# TODO removed username from arguments
+@transaction.commit_on_success
+def _registerExperimentDocument(filename, created_by, expid=None,
+                                owners=[], username=None):
+    '''
+    Register the experiment document and return the experiment id.
+
+    :param filename: path of the document to parse (METS or notMETS)
+    :type filename: string
+    :param created_by: a User instance
+    :type created_by: :py:class:`django.contrib.auth.models.User`
+    :param expid: the experiment ID to use
+    :type expid: int
+    :param owners: a list of owners
+    :type owner: list
+    :param username: **UNUSED**
+    :rtype: int
+
+    '''
+
+    f = open(filename)
+    firstline = f.readline()
+    f.close()
+
+    if firstline.startswith('<experiment'):
+        logger.debug('processing simple xml')
+        processExperiment = ProcessExperiment()
+        eid = processExperiment.process_simple(filename, created_by, expid)
+
+    else:
+        logger.debug('processing METS')
+        eid = parseMets(filename, created_by, expid)
+ 
+    # Create a DatasetWrapper for each Dataset
+    experiment = Experiment.objects.get(pk=eid)
+    sample = Sample(experiment=experiment, name="Default Sample", 
+                    description="A default sample for %s" % experiment.title)
+    sample.save()
+    _create_wrappers_for_datasets(sample, experiment)  
+    
+    # Create a Project to wraps the experiment, then create a Sample that
+    # points to the experiment  
+    project = Project(experiment=experiment)
+    project.save()
+    
+    auth_key = ''
+    try:
+        auth_key = settings.DEFAULT_AUTH
+    except AttributeError:
+        logger.error('no default authentication for experiment ownership set (settings.DEFAULT_AUTH)')
+
+    force_user_create = False
+    try:
+        force_user_create = settings.DEFAULT_AUTH_FORCE_USER_CREATE
+    except AttributeError:
+        pass
+
+    if auth_key:
+        for owner in owners:
+            # for each PI
+            if not owner:
+                continue
+
+            owner_username = None
+            if '@' in owner:
+                owner_username = auth_service.getUsernameByEmail(auth_key,
+                                    owner)
+            if not owner_username:
+                owner_username = owner
+
+            owner_user = auth_service.getUser(auth_key, owner_username,
+                      force_user_create=force_user_create)
+            # if exist, create ACL
+            if owner_user:
+                logger.debug('registering owner: ' + owner)
+                e = Experiment.objects.get(pk=eid)
+
+                acl = ExperimentACL(experiment=e,
+                                    pluginId=django_user,
+                                    entityId=str(owner_user.id),
+                                    canRead=True,
+                                    canWrite=True,
+                                    canDelete=True,
+                                    isOwner=True,
+                                    aclOwnershipType=ExperimentACL.OWNER_OWNED)
+                acl.save()
+
+    return eid
+
+# web service (overiding the existing one in tardis core view)
+def register_experiment_ws_xmldata(request):
+
+    status = ''
+    if request.method == 'POST':  # If the form has been submitted...
+
+        # A form bound to the POST data
+        form = RegisterExperimentForm(request.POST, request.FILES)
+        if form.is_valid():  # All validation rules pass
+
+            xmldata = request.FILES['xmldata']
+            username = form.cleaned_data['username']
+            originid = form.cleaned_data['originid']
+            from_url = form.cleaned_data['from_url']
+
+            user = auth_service.authenticate(request=request,
+                                             authMethod=localdb_auth_key)
+            if user:
+                if not user.is_active:
+                    return return_response_error(request)
+            else:
+                return return_response_error(request)
+
+            e = Experiment(
+                title='Placeholder Title',
+                approved=True,
+                created_by=user,
+                )
+            e.save()
+            eid = e.id
+
+            filename = path.join(e.get_or_create_directory(),
+                                 'mets_upload.xml')
+            f = open(filename, 'wb+')
+            for chunk in xmldata.chunks():
+                f.write(chunk)
+            f.close()
+
+            logger.info('=== processing experiment: START')
+            owners = request.POST.getlist('experiment_owner')
+            try:
+                _registerExperimentDocument(filename=filename,
+                                            created_by=user,
+                                            expid=eid,
+                                            owners=owners,
+                                            username=username)
+                logger.info('=== processing experiment %s: DONE' % eid)
+            except:
+                logger.exception('=== processing experiment %s: FAILED!' % eid)
+                return return_response_error(request)
+
+            if from_url:
+                logger.debug('=== sending file request')
+                try:
+                    file_transfer_url = from_url + '/file_transfer/'
+                    data = urlencode({
+                            'originid': str(originid),
+                            'eid': str(eid),
+                            'site_settings_url':
+                                request.build_absolute_uri(
+                                    '/site-settings.xml/'),
+                            })
+                    urlopen(file_transfer_url, data)
+                    logger.info('=== file-transfer request submitted to %s'
+                                % file_transfer_url)
+                except:
+                    logger.exception('=== file-transfer request to %s FAILED!'
+                                     % file_transfer_url)
+
+            response = HttpResponse(str(eid), status=200)
+            response['Location'] = request.build_absolute_uri(
+                '/experiment/view/' + str(eid))
+            return response
+    else:
+        form = RegisterExperimentForm()  # An unbound form
+
+    c = Context({
+        'form': form,
+        'status': status,
+        'subtitle': 'Register Experiment',
+        'searchDatafileSelectionForm': getNewSearchDatafileSelectionForm()})
+    return HttpResponse(render_response_index(request,
+                        'tardis_portal/register_experiment.html', c))

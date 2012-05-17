@@ -20,8 +20,16 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         phandler = PublishHandler(experiment.id) 
         return phandler.access_type() == publishing.MEDIATED
 
-    def can_publish(self, experiment):       
-        return experiment.public or self._is_mediated(experiment)
+    def _has_no_project(self, experiment):
+        result = Project.objects.filter(experiment=experiment)
+        if result.count() == 0:
+            return True
+        return False
+
+    def can_publish(self, experiment):             
+        if self._has_no_project(experiment):
+            return False
+        return experiment.public or self._is_mediated(experiment) 
         
     def set_dataset_id(self, dataset_id):
         self.dataset_id = dataset_id
@@ -90,18 +98,28 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
 
     
     def get_related_projects(self, experiment):
-        project = Project.objects.get(experiment=experiment)
-        return ["mytardis-nsw-activity-%s" % project.id]
+        try:
+            project = Project.objects.get(experiment=experiment)
+            return ["mytardis-nsw-activity-%s" % project.id]
+        except Project.DoesNotExist:
+            return None
 
     def get_related_activities(self, experiment):
         activity_keys = []
         user = experiment.created_by
         experiments = user.experiment_set
         for experiment_vals in experiments.values():
+            # Skip any non-public experiments
+            if experiment_vals['public'] == False:
+                continue
             e_id = experiment_vals['id']
-            project = Project.objects.get(experiment__id=e_id)
-            activity_keys.append("mytardis-nsw-activity-%s" % project.id)
+            try:
+                project = Project.objects.get(experiment__id=e_id)
+                activity_keys.append("mytardis-nsw-activity-%s" % project.id)
+            except Project.DoesNotExist:
+                continue
         return activity_keys
+
     
     def get_related_datasets(self, experiment):
         dataset_keys = []
@@ -117,7 +135,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
             return ["http://purl.org/au-research/grants/arc/%s" % funding_code]
         elif funded_by == "Medical Research Council (NHMRC)":
             return ["http://purl.org/au-research/grants/nhmrc/%s" % funding_code]
-    
+
     def get_dataset_forcodes(self, experiment):
         if not self.dataset_id:
             return None
@@ -149,6 +167,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         if forcode3 and forcode3 != '':
             forcodes.append(forcode3[:forcode3.index(' ')])            
         return forcodes
+
 
     def get_rights(self, experiment):
         from tardis.tardis_portal.publish.provider.schemarifcsprovider import SchemaRifCsProvider
