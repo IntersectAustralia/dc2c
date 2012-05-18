@@ -31,7 +31,16 @@ class DC2CRifCsProviderTestCase(TestCase):
  
     def testInitialisation(self):
         self.assertIsNotNone(self.provider)
+        
 
+    def testCanPublishNoProject(self):
+        self.e1.public = True
+        self.e1.save()
+        ph = PublishHandler(self.e1.id, create=True)
+        ph.update(self.publish_data)
+        self.assertTrue(self.provider.can_publish(self.e1))    
+        self.p1.delete()
+        self.assertFalse(self.provider.can_publish(self.e1))    
 
     def testCanPublishNotPublicAndUnpublished(self):
         # (experiment.public : False, access type : Unpublished) -> FALSE
