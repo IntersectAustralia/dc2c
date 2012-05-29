@@ -228,6 +228,8 @@ AUTH_PROVIDERS = (
 # ingestion? Must be one of the above authentication provider names
 DEFAULT_AUTH = 'localdb'
 
+DEFAULT_AUTH_FORCE_USER_CREATE = True
+
 AUTH_PROFILE_MODULE = 'tardis_portal.UserProfile'
 
 

@@ -65,6 +65,13 @@ class OwnerDetails(models.Model):
     def __unicode__(self):
         return 'details for ' + self.first_name + ' ' + self.last_name    
 
+@receiver(post_save, sender=OwnerDetails)
+def post_save_owner_details(sender, **kwargs):
+    ownerdetails = kwargs['instance']
+    experiments = Experiment.objects.filter(created_by=ownerdetails.user)
+    for experiment in experiments:
+        _publish_public_expt_rifcs(experiment)
+
 @receiver(post_save, sender=Experiment)
 @receiver(post_delete, sender=Experiment)
 def post_save_experiment(sender, **kwargs):
@@ -77,7 +84,9 @@ def post_save_experiment(sender, **kwargs):
 @receiver(post_delete, sender=DatasetWrapper)    
 def post_save_datasetwrapper(sender, **kwargs):
     datasetwrapper = kwargs['instance']
-
+    sample = datasetwrapper.sample
+    experiment = sample.experiment
+    _publish_public_expt_rifcs(experiment)
 
 @receiver(post_save, sender=Project) 
 @receiver(post_delete, sender=Project) 
@@ -90,14 +99,27 @@ def post_save_project(sender, **kwargs):
 def post_delete_project(sender, **kwargs):
     project = kwargs['instance']
     experiment = project.experiment
+    samples = Sample.objects.filter(experiment=experiment)
+    for sample in samples:
+        try:
+            sample.delete()
+        except:
+            # Do nothing if cannot delete
+            continue
     experiment.delete()
     
-@receiver(post_delete, sender=DatasetWrapper)
-def post_delete_datasetwrapper(sender, **kwargs):    
-    datasetwrapper = kwargs['instance']
-    dataset = datasetwrapper.dataset
-    dataset.delete()
-    
+@receiver(post_delete, sender=Sample)    
+def post_delete_sample(sender, **kwargs):
+    sample = kwargs['instance']
+    dws = DatasetWrapper.objects.filter(sample=sample)
+    for dw in dws:
+        try:
+            dw.delete()
+        except:
+            # Do nothing if cannot delete
+            continue
+    _publish_public_expt_rifcs(sample.experiment)    
+        
 def _publish_public_expt_rifcs(experiment):
     try:
         providers = settings.RIFCS_PROVIDERS
