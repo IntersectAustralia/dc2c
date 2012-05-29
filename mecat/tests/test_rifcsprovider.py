@@ -1,5 +1,5 @@
 from django.test import TestCase
-from tardis.tardis_portal.models import User, Experiment
+from tardis.tardis_portal.models import User, Experiment, Schema
 import mecat.rifcs.provider.dc2crifcsprovider as dc2crifcsprovider
 from mecat.rifcs.provider.dc2crifcsprovider import DC2CRifCsProvider
 from tardis.apps.ands_register.publishing import PublishHandler
@@ -13,6 +13,7 @@ class DC2CRifCsProviderTestCase(TestCase):
     random_custom_description = 'a custom description'
     
     def setUp(self):
+        Schema.objects.get_or_create(namespace="http://www.tardis.edu.au/schemas/related_info/2011/11/10", name='Related Info')
         self.user = User.objects.create_user(username='TestUser',
                                              email='user@test.com',
                                              password='secret')
@@ -30,21 +31,29 @@ class DC2CRifCsProviderTestCase(TestCase):
  
     def testInitialisation(self):
         self.assertIsNotNone(self.provider)
+        
 
+    def testCanPublishNoProject(self):
+        self.e1.public = True
+        self.e1.save()
+        ph = PublishHandler(self.e1.id, create=True)
+        ph.update(self.publish_data)
+        self.assertTrue(self.provider.can_publish(self.e1))    
+        self.p1.delete()
+        self.assertFalse(self.provider.can_publish(self.e1))    
 
     def testCanPublishNotPublicAndUnpublished(self):
         # (experiment.public : False, access type : Unpublished) -> FALSE
         self.assertFalse(self.provider.can_publish(self.e1))    
 
 
-''' 
     def testCanPublishNotPublicAndMediated(self):     
         # (experiment public: False, access type: mediated) -> True
         self.publish_data[self.access_type_key] = "mediated"
         ph = PublishHandler(self.e1.id, create=True)
         ph.update(self.publish_data)
         self.assertTrue(self.provider.can_publish(self.e1))      
-       
+
     def testCanPublishNotPublicAndPrivate(self):  
         # (experiment public: False, access type: private) -> True
         self.publish_data[self.access_type_key] = "private"
@@ -52,8 +61,7 @@ class DC2CRifCsProviderTestCase(TestCase):
         ph.update(self.publish_data)
         self.assertFalse(self.provider.can_publish(self.e1))            
      
-     
-              
+            
     def testCanPublishPublicAndMediated(self):    
         # (experiment public: True, access type: mediated) -> True
         self.e1.public = True
@@ -72,10 +80,8 @@ class DC2CRifCsProviderTestCase(TestCase):
         self.publish_data[self.access_type_key] = "private"
         ph = PublishHandler(self.e1.id, create=True)
         ph.update(self.publish_data)      
-        self.assertFalse(self.provider.can_publish(self.e1))
-       
-
-             
+        self.assertFalse(self.provider.can_publish(self.e1))      
+          
     def testCanPublishPublicAndPublished(self):
         # (experiment public: True, access type: published) -> True
         self.e1.public = True
@@ -99,4 +105,3 @@ class DC2CRifCsProviderTestCase(TestCase):
         ph.update(self.publish_data)
         self.assertTrue(self.provider.can_publish(self.e1))       
     
-'''
