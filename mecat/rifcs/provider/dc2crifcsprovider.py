@@ -82,10 +82,11 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def get_owner_details(self, experiment):
         user = experiment.created_by
         details_list = OwnerDetails.objects.filter(user=user)
-        if details_list.count == 0:
+        if details_list.count() == 0:
             details = OwnerDetails(user=user, first_name=user.first_name, 
                                    last_name=user.last_name, email=user.email)
-        elif details_list.count == 1:
+            details.save()
+        elif details_list.count() == 1:
             details = details_list[0]
         else:
             details = None
