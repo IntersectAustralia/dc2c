@@ -469,21 +469,24 @@ def _registerExperimentDocument(filename, created_by, expid=None,
 
     if auth_key:
         for owner in owners:
+            logger.debug('** Owner : %s' %owner)
             # for each PI
             if not owner:
                 continue
 
             owner_username = None
             if '@' in owner:
+                logger.debug('** Email as username **')
                 owner_username = auth_service.getUsernameByEmail(auth_key,
                                     owner)
             if not owner_username:
+                logger.debug('** No existing user!! **')
                 owner_username = owner
 
             owner_user = auth_service.getUser(auth_key, owner_username,
                       force_user_create=force_user_create)
-            # if exist, create ACL
             if owner_user:
+                # if exist, create ACL
                 logger.debug('registering owner: ' + owner)
                 e = Experiment.objects.get(pk=eid)
 
@@ -496,6 +499,10 @@ def _registerExperimentDocument(filename, created_by, expid=None,
                                     isOwner=True,
                                     aclOwnershipType=ExperimentACL.OWNER_OWNED)
                 acl.save()
+                # Also update email
+                if '@' in owner:
+                    owner_user.email = owner
+                    owner_user.save()
 
     return eid
 
