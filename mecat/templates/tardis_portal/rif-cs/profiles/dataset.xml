@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjectshttp://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+    <registryObject group="The University of Sydney">
+        <key>{{unique_dataset_key}}</key>
+        <originatingSource>{{originating_source}}</originatingSource>
+        <collection type="dataset">
+            <name type="primary">
+                <namePart>{{dataset.name}}</namePart>
+            </name>
+
+{% for forcode in dataset_anzsrcfor %}
+            <subject type="anzsrc-for" xml:lang="en">{{forcode}}</subject>
+{% endfor %}
+            <description type="brief">{{dataset.description}}</description> 
+{% if dataset_notes %}
+            <description type="note">{{dataset_notes}}</description>
+{% endif %}
+{% if access_rights %}
+           <description type="accessRights">{{access_rights}}</description> 
+{% endif %}
+{% if rights %}
+           <description type="rights">{{rights}}</description>             
+{% endif %}
+{% if uri %}
+           <location> 
+                <address> 
+                    <electronic type="uri"> 
+                        <value>{{uri}}</value> 
+                    </electronic> 
+                </address> 
+           </location>           
+{% endif %}
+
+
+{% if license_uri %}         
+            <relatedInfo>
+                <identifier type="uri">{{license_uri}}</identifier>
+                <title>{{license_title}}</title>
+            </relatedInfo>            
+{% endif %}
+
+{% for project_key in related_projects %}
+            <relatedObject> 
+                <key>{{project_key}}</key> 
+                <relation type="isOutputOf"/> 
+            </relatedObject>  
+{% endfor %}
+{% for party_key in owners %}
+            <relatedObject> 
+                <key>{{party_key}}</key> 
+                <relation type="isManagedBy"/> 
+            </relatedObject>  
+{% endfor %}
+{% for party_key in write_access_users %}
+            <relatedObject> 
+                <key>{{party_key}}</key> 
+                <relation type="hasCollector"/> 
+            </relatedObject>  
+{% endfor %}
+        </activity>
+
+    </registryObject>
+</registryObjects>

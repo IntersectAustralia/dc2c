@@ -3,7 +3,7 @@ from django.forms.util import ErrorList
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import Textarea, TextInput
 from UserDict import UserDict
-from mecat.models import Sample, DatasetWrapper
+from mecat.models import Sample, DatasetWrapper, OwnerDetails
 from tardis.tardis_portal import models
 from tardis.tardis_portal.fields import MultiValueCommaSeparatedField
 from tardis.tardis_portal.widgets import CommaSeparatedInput
@@ -23,11 +23,19 @@ class redict(dict):
         for i in mkeys:
             yield dict.__getitem__(self, i)
 
+def existing(datasetwrapper):
+    if DatasetWrapper.objects.filter(description=datasetwrapper.description, 
+                                     name=datasetwrapper.name, 
+                                     sample=datasetwrapper.sample).count() > 0:
+        return True
+    return False
+
 class Author_Experiment(forms.ModelForm):
 
     class Meta:
         model = models.Author_Experiment
         exclude = ('experiment',)
+    
 
 class FullSampleModel(UserDict):
     def save_m2m(self):
@@ -36,21 +44,29 @@ class FullSampleModel(UserDict):
         'sample': sample, 
         'dataset_wrappers' : [(dataset_wrapper, dataset),..]
         }
-        """        
+        """       
         sample = self.data['sample']
         sample.save()
         for dw, ds in self.data['dataset_wrappers']:
-            if not dw.immutable:
-                ds.description = dw.description
-                ds.save()
-                dw.dataset = ds
-                dw.sample = sample
+            if not dw.immutable and not existing(dw):
+                if dw.dataset:
+                    # Dataset already exist, just modify attributes
+                    dw.dataset.description = dw.description
+                    dw.dataset.save()
+                else:
+                    # No dataset yet, save the created one
+                    ds.description = dw.description
+                    ds.save()
+                    dw.dataset = ds
+                    dw.sample = sample
                 dw.save() 
                 
         if hasattr(self.data['dataset_wrappers'], 'deleted_forms'):
             for dw, ds in self.data['dataset_wrappers'].deleted_forms:
                 if not dw.instance.immutable:
+                    raise Exception(self.data)
                     dw.instance.delete() 
+                    ds.instance.delete()
 
 class FullExperimentModel(UserDict):
     """
@@ -190,7 +206,10 @@ class ExperimentForm(forms.ModelForm):
             
     def _is_samples_valid(self):
         for key, sample in enumerate(self.samples.forms):
-            if not sample.is_valid():
+            if not sample.is_valid() or self._description_or_name_is_empty(sample):
+                if not (self.errors.has_key("Experiment Description is required ")) and \
+                   not (self.errors.has_key("Experiment Name is required ")):
+                    self.errors["Errors in "] = "Experiment Fields"                 
                 return False           
         return True
       
@@ -198,6 +217,23 @@ class ExperimentForm(forms.ModelForm):
         experiment_fields_valid = super(ExperimentForm, self).is_valid()
         samples_valid = self._is_samples_valid()     
         return experiment_fields_valid and samples_valid  
+
+    def _description_or_name_is_empty(self, dw_form):
+        data = redict(dw_form.data)
+        empty = False
+        matching_vals = data[r"sample-.*-description"]
+        for val in matching_vals:  
+            if val[0] is u'' or val is None:
+                self.errors["Experiment Description is required "] = ""
+                empty = True
+                break
+        matching_vals = data[r"sample-.*-name"]
+        for val in matching_vals:      
+            if val[0] is u'' or val is None:
+                self.errors["Experiment Name is required"] = ""
+                empty = True
+                break
+        return empty
 
 
     def save(self, commit=True):
@@ -250,10 +286,17 @@ class ProjectForm(ExperimentForm):
     funding_code = forms.CharField(max_length=100, required=False)
     notes = forms.CharField(required=False, widget=Textarea)    
     
+    
+class OwnerDetailsForm(forms.ModelForm):
+    class Meta:
+        model = OwnerDetails    
+
+
 class SampleForm(forms.ModelForm):
 
     class Meta:
         model = Sample
+        exclude = ('user')
         
     def __init__(self, data=None, files=None, auto_id='%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=':',
@@ -351,7 +394,7 @@ class SampleForm(forms.ModelForm):
                     # create real dataset wrapper IF the description is not 
                     # empty
                     real_dataset = models.Dataset(experiment=exp)
-                    real_dataset.save(commit)
+                    #real_dataset.save(commit)
                     dw_instance = dw_form.save(commit)  
                     dataset_wrappers.append((dw_instance,real_dataset))
             

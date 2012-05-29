@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjectshttp://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+    <registryObject group="The University of Sydney">
+        <key>{{unique_activity_key}}</key>
+        <originatingSource>{{originating_source}}</originatingSource>
+        <activity type="project">
+            <name type="primary">
+                <namePart>{{experiment.title}}</namePart>
+            </name>
+            <description type="brief">{{description}}</description> 
+{% for funded_by_url in funded_by %}
+            <identifier type="purl">{{funded_by_url}}</identifier> 
+{% endfor %}
+{% for forcode in anzsrcfor %}
+            <subject type="anzsrc-for" xml:lang="en">{{forcode}}</subject>
+{% endfor %}
+{% if notes %}
+            <description type="note">{{notes}}</description>
+{% endif %}
+{% for rel_inf in related_info_list %}
+            <relatedInfo type="{{rel_inf.type}}">
+                <identifier type="{{rel_inf.identifier_type}}">{{rel_inf.identifier}}</identifier>
+                <title>{{rel_inf.title}}</title>
+{% if rel_inf.notes %}                <notes>{{rel_inf.notes}}</notes>{% endif %}
+            </relatedInfo>         
+{% endfor %}
+{% for dataset_key in related_datasets %}
+            <relatedObject> 
+                <key>{{dataset_key}}</key> 
+                <relation type="hasOutput"/> 
+            </relatedObject>  
+{% endfor %}
+{% for party_key in owners %}
+            <relatedObject> 
+                <key>{{party_key}}</key> 
+                <relation type="isManagedBy"/> 
+            </relatedObject>  
+{% endfor %}
+        </activity>
+
+    </registryObject>
+</registryObjects>

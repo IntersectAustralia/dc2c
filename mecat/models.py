@@ -54,3 +54,59 @@ class DatasetWrapper(models.Model):
            return 'wrapper: ' + self.description
        else:
            return 'wrapper for empty dataset'
+       
+class OwnerDetails(models.Model):
+    user = models.ForeignKey(User, blank=False)
+    title = models.CharField(max_length=30, blank=True, validators=[validate_spaces])
+    first_name = models.CharField(max_length=200, blank=False, validators=[validate_spaces])
+    last_name = models.CharField(max_length=200, blank=False, validators=[validate_spaces])
+    email = models.CharField(max_length=100, blank=False, validators=[validate_spaces])
+    
+    def __unicode__(self):
+        return 'details for ' + self.first_name + ' ' + self.last_name    
+
+@receiver(post_save, sender=Experiment)
+@receiver(post_delete, sender=Experiment)
+def post_save_experiment(sender, **kwargs):
+    # create party and dataset rifcs too - note that the activity rifcs
+    # is taken care of in the core model
+    experiment = kwargs['instance']
+    _publish_public_expt_rifcs(experiment)
+    
+@receiver(post_save, sender=DatasetWrapper)
+@receiver(post_delete, sender=DatasetWrapper)    
+def post_save_datasetwrapper(sender, **kwargs):
+    datasetwrapper = kwargs['instance']
+
+
+@receiver(post_save, sender=Project) 
+@receiver(post_delete, sender=Project) 
+def post_save_project(sender, **kwargs):
+    project = kwargs['instance']
+    experiment = project.experiment
+    _publish_public_expt_rifcs(experiment)
+
+@receiver(post_delete, sender=Project)    
+def post_delete_project(sender, **kwargs):
+    project = kwargs['instance']
+    experiment = project.experiment
+    experiment.delete()
+    
+@receiver(post_delete, sender=DatasetWrapper)
+def post_delete_datasetwrapper(sender, **kwargs):    
+    datasetwrapper = kwargs['instance']
+    dataset = datasetwrapper.dataset
+    dataset.delete()
+    
+def _publish_public_expt_rifcs(experiment):
+    try:
+        providers = settings.RIFCS_PROVIDERS
+    except:
+        providers = None
+    from mecat.rifcs.publishservice import PartyPublishService, CollectionPublishService
+    # Handles party rifcs
+    pservice = PartyPublishService(providers, experiment)
+    pservice.manage_rifcs(settings.OAI_DOCS_PATH)
+    # Handles dataset rifcs
+    pservice = CollectionPublishService(providers, experiment)
+    pservice.manage_rifcs(settings.OAI_DOCS_PATH)

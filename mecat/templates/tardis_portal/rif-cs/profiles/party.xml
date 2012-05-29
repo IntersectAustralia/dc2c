@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd"> 
+    <registryObject group="The University of Sydney">
+        <key>{{unique_party_key}}</key>
+        <originatingSource>{{originating_source}}</originatingSource>
+        <party type="person">
+            <name type="primary">
+                <namePart type="title">{{ownerdetails.title}}</namePart>
+                <namePart type="given">{{ownerdetails.first_name}}</namePart>
+                <namePart type="family">{{ownerdetails.last_name}}</namePart>                  
+            </name>
+            <location>
+                <address>
+                    <electronic type="email">
+                        <value>{{ownerdetails.email}}</value>
+                    </electronic>
+                </address>
+                
+            </location>
+{% for activity_key in related_activities %}
+            <relatedObject>
+                <key>{{activity_key}}</key>
+                <relation type="isManagerOf"/>
+            </relatedObject>
+{% endfor %}       
+     </party>
+        
+  </registryObject>
+</registryObjects>

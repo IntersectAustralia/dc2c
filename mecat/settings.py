@@ -310,8 +310,6 @@ OAI_DOCS_PATH = 'var/oai'
 RIFCS_PROVIDERS = ('mecat.rifcs.provider.dc2crifcsprovider.DC2CRifCsProvider',)
 RIFCS_TEMPLATE_DIR = 'tardis_portal/rif-cs/profiles/'
 RELATED_INFO_SCHEMA_NAMESPACE = 'http://www.tardis.edu.au/schemas/related_info/2011/11/10'
-RIFCS_GROUP = "NSW TARDIS Node"
-RIFCS_MYTARDIS_KEY = "dc2c.server.gov.au/collection/???"
 
 djcelery.setup_loader()
 
