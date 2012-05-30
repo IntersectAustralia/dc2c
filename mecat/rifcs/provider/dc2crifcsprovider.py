@@ -3,6 +3,7 @@ from tardis.tardis_portal.models import Dataset, ExperimentParameter, ParameterN
 from django.conf import settings
 import tardis.tardis_portal.publish.provider.rifcsprovider as rifcsprovider
 from mecat.models import *
+from html2text import html2text
     
 SERVER_URL = "https://nswtardis.intersect.org.au"
 HARVEST_URL = "https://nswtardis.intersect.org.au/oai/provider"
@@ -13,7 +14,13 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
     def __init__(self):
         super(DC2CRifCsProvider, self).__init__()
         self.dataset_id = None
-
+        
+    def format_desc(self, desc):
+        formatted_desc = desc
+        if self._is_html_formatted(desc):
+            formatted_desc = html2text(desc)
+        return formatted_desc.strip()
+    
     def _is_mediated(self, experiment):
         import tardis.apps.ands_register.publishing as publishing
         from tardis.apps.ands_register.publishing import PublishHandler      
@@ -43,7 +50,7 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
         desc = phandler.custom_description()
         if not desc:
             desc = experiment.description
-        return super(DC2CRifCsProvider, self).format_desc(desc)
+        return self.format_desc(desc)
         
     def get_originating_source(self):
         return HARVEST_URL
@@ -215,7 +222,9 @@ class DC2CRifCsProvider(rifcsprovider.RifCsProvider):
             return None
         
     def get_rifcs_context(self, experiment):
+    
         c = super(DC2CRifCsProvider, self).get_rifcs_context(experiment)
+        c['description'] = self.get_description(experiment)
         c['unique_party_key'] = self.get_party_key(experiment)
         c['unique_activity_key'] = self.get_activity_key(experiment)
         c['unique_dataset_key'] = self.get_dataset_key()
