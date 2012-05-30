@@ -121,15 +121,18 @@
                     Dataset
                 </p>
                 <div class="msg_body">
+                	<input type="hidden" name="dataset-0-dataset" value="{{dataset_id}}" id="id_dataset-0-dataset"/>
+                    <input type="hidden" name="dataset-0-sample" value="{{sample_id}}" id="id_dataset-0-sample" />
+                    <input type="hidden" name="dataset-0-id" value id="id_dataset-0-id" /> 
+                    <input type="hidden" name="dataset-0-immutable" value="False" id="id_dataset-0-immutable" />
+                        
                     <div class="fieldWrapper">
-                    	<input type="hidden" name="dataset-0-dataset" value="{{dataset_id}}" id="id_dataset-0-dataset"/>
-                        <input type="hidden" name="dataset-0-sample" value="{{sample_id}}" id="id_dataset-0-sample" />
-                        <input type="hidden" name="dataset-0-id" value id="id_dataset-0-id" /> 
                         Name:
-                        <input name="dataset-0-name" value="" type="text" id="id_dataset-0-name" size="80" />
+                        <br/><input name="dataset-0-name" value="" type="text" id="id_dataset-0-name" size="80" />
+                    </div>
+                    <div class="fieldWrapper">     
                         Description:
-                        <input name="dataset-0-description" value="" type="text" id="id_dataset-0-description" size="80" />
-                        <input type="hidden" name="dataset-0-immutable" value="False" id="id_dataset-0-immutable" />
+                        <br/><input name="dataset-0-description" value="" type="text" id="id_dataset-0-description" size="80" />
                     </div>
                 </div>
             </div>
@@ -236,23 +239,17 @@
                                 Dataset {% if dataset_form.instance.immutable %}(Immutable){% endif %}
                             </p>
                             <div class="msg_body">
+                                {% for fld in dataset_form.hidden_fields %}{{ fld }}{% endfor %}
+                                {% if dataset_form.instance.pk %}{{ dataset_form.DELETE }}{% endif %}
+                                {{ dataset_form.immutable.as_hidden }}
+                                {{ dataset_form.dataset.as_hidden }}
                                 <div class="fieldWrapper">
                                     {{ dataset_form.name.errors }}
-
-                                    {% for fld in dataset_form.hidden_fields %}{{ fld }}{% endfor %}
-                                    {% if dataset_form.instance.pk %}{{ dataset_form.DELETE }}{% endif %}
-                                    Name: {{ dataset_form.name }}
-                                    {{ dataset_form.immutable.as_hidden }}
-                                    {{ dataset_form.dataset.as_hidden }}
+                                    Name: <br/>{{ dataset_form.name }}
                                 </div>                            	
                                 <div class="fieldWrapper">
                                     {{ dataset_form.description.errors }}
-
-                                    {% for fld in dataset_form.hidden_fields %}{{ fld }}{% endfor %}
-                                    {% if dataset_form.instance.pk %}{{ dataset_form.DELETE }}{% endif %}
-                                    Description: {{ dataset_form.description }}
-                                    {{ dataset_form.immutable.as_hidden }}
-                                    {{ dataset_form.dataset.as_hidden }}
+                                    Description: <br/>{{ dataset_form.description }}
                                 </div>
                             </div>
                         </div>
