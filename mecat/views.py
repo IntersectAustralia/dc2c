@@ -559,21 +559,12 @@ def register_experiment_ws_xmldata(request):
 
             if from_url:
                 logger.debug('=== sending file request')
-                try:
-                    file_transfer_url = from_url + '/file_transfer/'
-                    data = urlencode({
-                            'originid': str(originid),
-                            'eid': str(eid),
-                            'site_settings_url':
-                                request.build_absolute_uri(
-                                    '/site-settings.xml/'),
-                            })
-                    urlopen(file_transfer_url, data)
-                    logger.info('=== file-transfer request submitted to %s'
-                                % file_transfer_url)
-                except:
-                    logger.exception('=== file-transfer request to %s FAILED!'
-                                     % file_transfer_url)
+                logger.info('Sending received_remote signal')
+                from tardis.tardis_portal.signals import received_remote
+                received_remote.send(sender=Experiment,
+                        instance=e,
+                        uid=origin_id,
+                        from_url=from_url)
 
             response = HttpResponse(str(eid), status=200)
             response['Location'] = request.build_absolute_uri(

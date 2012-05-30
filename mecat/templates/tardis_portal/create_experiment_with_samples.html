@@ -115,14 +115,16 @@
                     Experiment
                 </p>
                 <div class="msg_body">
-                    <div class="fieldWrapper">
-                        <input type="hidden" name="sample-0-experiment" value="{{experiment_id}}" id="id_sample-0-experiment" />
-                        <input type="hidden" name="sample-0-id" value id="id_sample-0-id" />
+                    <input type="hidden" name="sample-0-experiment" value="{{experiment_id}}" id="id_sample-0-experiment" />
+                    <input type="hidden" name="sample-0-id" value id="id_sample-0-id" />                    
+                    <input type="hidden" name="sample-0-immutable" value="False" id="id_sample-0-immutable" />
+                    <div class="fieldWrapper">                       
                         Name:
-                        <input name="sample-0-name" value="" type="text" id="id_sample-0-description" size="80" />
+                        <br/><input name="sample-0-name" value="" type="text" id="id_sample-0-name" size="80" />
+                    </div>    
+                    <div class="fieldWrapper">    
                         Description:
-                        <input name="sample-0-description" value="" type="text" id="id_sample-0-description" size="80" />
-                        <input type="hidden" name="sample-0-immutable" value="False" id="id_sample-0-immutable" />
+                        <br/><input name="sample-0-description" value="" type="text" id="id_sample-0-description" size="80" />
                     </div>
                 </div>
             </div>
@@ -249,21 +251,16 @@
                                 Experiment {% if sample_form.instance.immutable %}(Immutable){% endif %}
                             </p>
                             <div class="msg_body">
+                                {% for fld in sample_form.hidden_fields %}{{ fld }}{% endfor %}
+                                {% if sample_form.instance.pk %}{{ sample_form.DELETE }}{% endif %}
+                                {{ sample_form.immutable.as_hidden }}
                                 <div class="fieldWrapper">
                                     {{ sample_form.name.errors }}
-
-                                    {% for fld in sample_form.hidden_fields %}{{ fld }}{% endfor %}
-                                    {% if sample_form.instance.pk %}{{ sample_form.DELETE }}{% endif %}
-                                    Name: {{ sample_form.name }}
-                                    {{ sample_form.immutable.as_hidden }}
+                                    Name: <br/>{{ sample_form.name }}
                                 </div>          
                                 <div class="fieldWrapper">
                                     {{ sample_form.description.errors }}
-
-                                    {% for fld in sample_form.hidden_fields %}{{ fld }}{% endfor %}
-                                    {% if sample_form.instance.pk %}{{ sample_form.DELETE }}{% endif %}
-                                    Description: {{ sample_form.description }}
-                                    {{ sample_form.immutable.as_hidden }}
+                                    Description: <br/>{{ sample_form.description }}
                                 </div>                      
                             </div>
                         </div>
