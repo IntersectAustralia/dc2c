@@ -21,13 +21,18 @@ class PartyPublishService(PublishService):
         owner = self.experiment.created_by
         xmlwriter.write_template_to_dir(oaipath, PARTY_RIFCS_FILENAME % owner.id, 
                                         self.get_template(type="party"), self.get_context())
-        
-        
+           
 class CollectionPublishService(PublishService):
    
     def get_template(self, type):
         return self.provider.get_template(type=type)
         
+    def remove_specific_rifcs(self, oaipath, dataset_id):
+        import os    
+        filename = os.path.join(oaipath, COLLECTION_RIFCS_FILENAME % (self.experiment.id, dataset_id) )
+        if os.path.exists(filename):
+            os.remove(filename)
+            
     def _remove_rifcs_from_oai_dir(self, oaipath):    
         import os
         datasets = self.experiment.dataset_set

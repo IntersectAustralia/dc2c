@@ -80,8 +80,7 @@ def post_save_experiment(sender, **kwargs):
     experiment = kwargs['instance']
     _publish_public_expt_rifcs(experiment)
     
-@receiver(post_save, sender=DatasetWrapper)
-@receiver(post_delete, sender=DatasetWrapper)    
+@receiver(post_save, sender=DatasetWrapper)  
 def post_save_datasetwrapper(sender, **kwargs):
     datasetwrapper = kwargs['instance']
     sample = datasetwrapper.sample
@@ -119,7 +118,29 @@ def post_delete_sample(sender, **kwargs):
             # Do nothing if cannot delete
             continue
     _publish_public_expt_rifcs(sample.experiment)    
-        
+    
+@receiver(post_delete, sender=DatasetWrapper)
+def post_delete_datasetwrapper(sender, **kwargs):
+    dw = kwargs['instance']
+    ds = dw.dataset
+    if dw.dataset:
+        sample = dw.sample
+        if not sample:
+            return 
+        ds_id = ds.id
+        ds.delete()
+        _publish_public_expt_rifcs(sample.experiment) 
+        _remove_deleted_collection_rifcs(sample.experiment, ds_id)   
+
+def _remove_deleted_collection_rifcs(experiment, ds_id):   
+    try:
+        providers = settings.RIFCS_PROVIDERS
+    except:
+        providers = None
+    from mecat.rifcs.publishservice import CollectionPublishService
+    pservice = CollectionPublishService(providers, experiment)
+    pservice.remove_specific_rifcs(settings.OAI_DOCS_PATH, ds_id)
+             
 def _publish_public_expt_rifcs(experiment):
     try:
         providers = settings.RIFCS_PROVIDERS
