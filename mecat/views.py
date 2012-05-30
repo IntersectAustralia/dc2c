@@ -518,7 +518,7 @@ def register_experiment_ws_xmldata(request):
 
             xmldata = request.FILES['xmldata']
             username = form.cleaned_data['username']
-            originid = form.cleaned_data['originid']
+            origin_id = form.cleaned_data['originid']
             from_url = form.cleaned_data['from_url']
 
             user = auth_service.authenticate(request=request,
