@@ -132,6 +132,21 @@ def post_delete_datasetwrapper(sender, **kwargs):
         _publish_public_expt_rifcs(sample.experiment) 
         _remove_deleted_collection_rifcs(sample.experiment, ds_id)   
 
+@receiver(post_delete, sender=Dataset_File)
+def post_delete_datafile(sender, **kwargs):
+    df = kwargs['instance']
+    filepath = df.get_absolute_filepath()
+    import os.path
+    if os.path.exists(filepath):
+        import os
+        os.remove(filepath)
+        # remove parent dir
+    parent_dir = os.path.dirname(filepath)
+    if os.path.exists(parent_dir):
+        if len(os.listdir(parent_dir)) == 0:
+            os.rmdir(parent_dir)
+        
+
 def _remove_deleted_collection_rifcs(experiment, ds_id):   
     try:
         providers = settings.RIFCS_PROVIDERS
