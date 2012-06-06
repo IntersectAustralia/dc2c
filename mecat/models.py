@@ -107,30 +107,77 @@ def post_delete_project(sender, **kwargs):
             continue
     experiment.delete()
     
+@receiver(post_delete, sender=Experiment)
+def post_delete_experiment(sender, **kwargs):
+    experiment = kwargs['instance']
+    # Delete the experiment folder created in the FILE_STORE_PATH (if any)
+    folder = experiment.get_absolute_filepath()
+    import os.path
+    if os.path.exists(folder):
+        import shutil
+        shutil.rmtree(folder)
+    _publish_public_expt_rifcs(experiment)
+    
+    
 @receiver(post_delete, sender=Sample)    
 def post_delete_sample(sender, **kwargs):
     sample = kwargs['instance']
+    
     dws = DatasetWrapper.objects.filter(sample=sample)
     for dw in dws:
-        try:
-            dw.delete()
-        except:
-            # Do nothing if cannot delete
-            continue
+        ds = dw.dataset
+        ds_id = ds.id
+        # Delete the dataset folders created in FILE_STORE_PATH (if any)
+        folder = dw.dataset.get_absolute_filepath()
+
+        import os.path
+        if os.path.exists(folder):
+            import shutil
+            shutil.rmtree(folder)     
+        # Now delete the dataset wrapper                     
+        dw.delete()
+        _remove_deleted_collection_rifcs(sample.experiment, ds_id)
+        
     _publish_public_expt_rifcs(sample.experiment)    
     
 @receiver(post_delete, sender=DatasetWrapper)
 def post_delete_datasetwrapper(sender, **kwargs):
     dw = kwargs['instance']
-    ds = dw.dataset
-    if dw.dataset:
-        sample = dw.sample
-        if not sample:
-            return 
-        ds_id = ds.id
+    try:
+        ds = dw.dataset
+        if dw.dataset:
+            sample = dw.sample
+            ds_id = ds.id
+            ds.delete()
+            _publish_public_expt_rifcs(sample.experiment) 
+            _remove_deleted_collection_rifcs(sample.experiment, ds_id)  
+    except Dataset.DoesNotExist:
+        # Do nothing if cannot delete
+        return 
+    except Sample.DoesNotExist:
+        ds = dw.dataset
         ds.delete()
-        _publish_public_expt_rifcs(sample.experiment) 
-        _remove_deleted_collection_rifcs(sample.experiment, ds_id)   
+
+
+@receiver(post_delete, sender=Dataset_File)
+def post_delete_datafile(sender, **kwargs):
+    df = kwargs['instance']
+    try:
+        filepath = df.get_absolute_filepath()
+        import os.path
+        if os.path.exists(filepath):
+            import os
+            os.remove(filepath)
+            # remove parent dir
+        parent_dir = os.path.dirname(filepath)
+        if os.path.exists(parent_dir):
+            if len(os.listdir(parent_dir)) == 0:
+                os.rmdir(parent_dir)
+    except Dataset.DoesNotExist, Experiment.DoesNotExist:
+        # Models up the chain were deleted, if that's the 
+        # case the files should already be gone, so do nothing
+        return
+        
 
 def _remove_deleted_collection_rifcs(experiment, ds_id):   
     try:
