@@ -113,7 +113,9 @@ def post_delete_sample(sender, **kwargs):
     dws = DatasetWrapper.objects.filter(sample=sample)
     for dw in dws:
         try:
+            ds_id = dw.dataset.id
             dw.delete()
+            _remove_deleted_collection_rifcs(sample.experiment, ds_id)  
         except:
             # Do nothing if cannot delete
             continue
@@ -122,15 +124,21 @@ def post_delete_sample(sender, **kwargs):
 @receiver(post_delete, sender=DatasetWrapper)
 def post_delete_datasetwrapper(sender, **kwargs):
     dw = kwargs['instance']
-    ds = dw.dataset
-    if dw.dataset:
-        sample = dw.sample
-        if not sample:
-            return 
-        ds_id = ds.id
+    try:
+        ds = dw.dataset
+        if dw.dataset:
+            sample = dw.sample
+            ds_id = ds.id
+            ds.delete()
+            _publish_public_expt_rifcs(sample.experiment) 
+            _remove_deleted_collection_rifcs(sample.experiment, ds_id)  
+    except Dataset.DoesNotExist:
+        # Do nothing if cannot delete
+        return 
+    except Sample.DoesNotExist:
+        ds = dw.dataset
         ds.delete()
-        _publish_public_expt_rifcs(sample.experiment) 
-        _remove_deleted_collection_rifcs(sample.experiment, ds_id)   
+
 
 @receiver(post_delete, sender=Dataset_File)
 def post_delete_datafile(sender, **kwargs):
