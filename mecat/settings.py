@@ -64,7 +64,7 @@ USE_I18N = True
 
 STATIC_ROOT = path.abspath(path.join(path.dirname(__file__),'..','static'))
 
-STATIC_URL = '/static'
+STATIC_URL = '/static/'
 
 def get_admin_media_path():
     import pkgutil
@@ -154,7 +154,7 @@ MEDIA_URL = '/site_media/'
 
 #set to empty tuple () for no apps
 #TARDIS_APPS = ('mrtardis', )
-TARDIS_APPS = ('summary_table','ands_register')
+TARDIS_APPS = ('summary_table','ands_register', 'related_info')
 TARDIS_APP_ROOT = 'tardis.apps'
 
 if TARDIS_APPS:
@@ -186,13 +186,23 @@ INSTALLED_APPS = (
     'djkombu',
     ) + apps
 
-MYTARDIS_SITE_URL = 'http://gridftp.intersect.org.au'
+MYTARDIS_SITE_URL = 'https://nswtardis.intersect.org.au'
 
 SYNC_ADMINS = ('tardis-admin@intersect.org.au')
 
 SYNC_CLIENT_KEY = 'I4VRnZONl0dEoxyn3dBgmxoU0kfUovBk'
 
 GRID_PROXY_FILE = '/var/mytardis/proxy/proxy.cert'
+
+from datetime import timedelta
+
+CELERYBEAT_SCHEDULE = {
+    "runs-every-30-seconds": {
+        "task": "tardis.apps.sync.tasks.clock_tick",
+        "schedule": timedelta(seconds=30),
+#        "args": ()
+    },
+}
 
 JASMINE_TEST_DIRECTORY = path.abspath(path.join(path.dirname(__file__),
                                                 'tardis_portal',
@@ -234,6 +244,8 @@ AUTH_PROFILE_MODULE = 'tardis_portal.UserProfile'
 
 
 ACCOUNT_ACTIVATION_DAYS = 3
+
+BROKER_TRANSPORT = 'django'
 
 # Email Configuration
 
@@ -277,7 +289,7 @@ DEFAULT_INSTITUTION = "University of Sydney"
 #Are the datasets ingested via METS xml (web services) to be immutable?
 IMMUTABLE_METS_DATASETS = True
 
-SINGLE_SEARCH_ENABLED=False
+SINGLE_SEARCH_ENABLED=True
 # Settings for the single search box
 # Set HAYSTACK_SOLR_URL to the location of the SOLR server instance
 #SINGLE_SEARCH_ENABLED = True

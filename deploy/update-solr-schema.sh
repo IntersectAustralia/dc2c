@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DJANGO=/opt/mecat/mecat-ansto/bin/django
+DJANGO=/opt/dc2c/bin/django
 SCHEMA_FILE=/usr/local/tomcat6/solr/conf/schema.xml
 TMP_SCHEMA_FILE=/tmp/solr-schema.xml
 LOG_FILE=/var/mytardis/log/solr-indexing.log
@@ -16,7 +16,7 @@ if [ $? -eq 1 ]; then
     echo "Schema changed... updating $SCHEMA_FILE." >> $LOG_FILE
     cp $TMP_SCHEMA_FILE $SCHEMA_FILE >> $LOG_FILE 2>&1
     # reload solr to pick up the schema changes.
-    curl -n --silent "http://localhost:8080/manager/reload?path=/solr" >> $LOG_FILE 2>&1
+    #curl -n --silent "http://localhost:8080/manager/reload?path=/solr" >> $LOG_FILE 2>&1
     echo "Rebuilding solr index." >> $LOG_FILE
     $DJANGO rebuild_index --noinput >> $LOG_FILE 2>&1
     echo "Rebuild finished at `date`" >> $LOG_FILE
