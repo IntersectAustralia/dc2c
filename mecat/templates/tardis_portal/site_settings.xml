@@ -11,7 +11,7 @@
                 <user>tardis</user>
                 <password>{{proxy}}
 </password>
-                <sl>gsiftp://gridftp.intersect.org.au</sl>
+                <sl>gsiftp://nswtardis.intersect.org.au</sl>
                 <serversite>{{filestorepath}}</serversite>
                 <optionFast>true</optionFast>
                 <optionPenable>true</optionPenable>
