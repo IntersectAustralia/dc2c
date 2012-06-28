@@ -1,0 +1,55 @@
+# Name of nodes to start, here we have a single node
+CELERYD_NODES="w1"
+# or we could have three nodes:
+#CELERYD_NODES="w1 w2 w3"
+
+# Where to chdir at start.
+CELERYD_CHDIR="/opt/dc2c"
+
+# How to call "manage.py celeryd_multi"
+CELERYD_MULTI="$CELERYD_CHDIR/bin/django celeryd_multi"
+
+# How to call "manage.py celeryctl"
+CELERYCTL="$CELERYD_CHDIR/bin/django celeryctl"
+
+# Extra arguments to celeryd
+CELERYD_OPTS="--time-limit=300 --concurrency=1"
+
+# Name of the celery config module.
+#CELERY_CONFIG_MODULE="celeryconfig"
+
+# %n will be replaced with the nodename.
+CELERYD_LOG_FILE="/var/log/celery/%n.log"
+CELERYD_PID_FILE="/var/run/celery/%n.pid"
+
+# Workers should run as an unprivileged user.
+CELERYD_USER="apache"
+CELERYD_GROUP="apache"
+
+# Name of the projects settings module.
+export DJANGO_SETTINGS_MODULE="mecat.settings-deploy"
+
+
+# Where to chdir at start.
+CELERYBEAT_CHDIR="/opt/dc2c"
+
+# Path to celerybeat
+CELERYBEAT="$CELERYBEAT_CHDIR/bin/django celerybeat"
+
+# Extra arguments to celerybeat.  This is a file that will get
+# created for scheduled tasks.  It's generated automatically
+# when Celerybeat starts.
+CELERYBEAT_OPTS="--schedule=/var/run/celerybeat-schedule"
+
+# Log level. Can be one of DEBUG, INFO, WARNING, ERROR or CRITICAL.
+CELERYBEAT_LOG_LEVEL="INFO"
+
+# Log file locations
+CELERYBEAT_LOGFILE="/var/log/celerybeat.log"
+CELERYBEAT_PIDFILE="/var/run/celerybeat.pid"
+
+# Celerybeat should run as an unprivileged user. Don't run as root!
+CELERYBEAT_USER="apache"
+CELERYBEAT_GROUP="apache"
+
+
