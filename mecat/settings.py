@@ -176,7 +176,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.staticfiles',
     'tardis.template.loaders',
-    #'tardis.apps.sync', 
+    'tardis.apps.sync', 
     'tardis.tardis_portal',
     'tardis.tardis_portal.templatetags',
     'registration',
