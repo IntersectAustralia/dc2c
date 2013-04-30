@@ -279,10 +279,10 @@ SYSTEM_LOG_MAXBYTES = 0
 MODULE_LOG_MAXBYTES = 0
 
 # Uploadify root folder path, relative to MEDIA_ROOT
-UPLOADIFY_PATH = '%s%s' % (STATIC_URL, 'js/lib/uploadify/')
+UPLOADIFIVE_PATH = '%s%s' % (STATIC_URL, 'js/lib/uploadifive/')
 
 # Upload path that files are sent to
-UPLOADIFY_UPLOAD_PATH = '%s%s' % (STATIC_URL, 'uploads/')
+UPLOADIFIVE_UPLOAD_PATH = '%s%s' % (STATIC_URL, 'uploads/')
 
 DEFAULT_INSTITUTION = "University of Sydney"
 

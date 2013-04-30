@@ -1,6 +1,5 @@
 {% extends "tardis_portal/data_browsing_template.html" %}
 {% load basiccomparisonfilters %}
-{% load uploadify_tags %}
 {% load dynurl %}
 
 {% block script %}
@@ -25,7 +24,7 @@
         }
     };
 
-    $("#uploadify").live("allUploadsComplete", function(e, data){
+    $("#uploadifive").live("allUploadsComplete", function(e, data){
         // refresh datafile list
         var dataset_id = $(this).attr('data-dataset_id');
         $(this).parents('.datafile_list').load("/ajax/datafile_list/" + dataset_id + "/");
